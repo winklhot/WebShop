@@ -1,0 +1,16 @@
+﻿2. Why does it Jump to Customer Hash on seter in View Model
+4. Task in Desktop App function not 100 Perc. clear / is set to null to end when closing ok??
+5. Messagebox leave is in english?
+6. Generates DB Access f.e. in MainViewModel when a Function is written, how to prevent from using?
+7. Why doese delete db file not work, exception process use them - which are they??
+8. Why doese hover over not work / Datasetback
+9. Why is before view of data not shown again
+10. Complete Documentation
+11. Complete Unit Tests
+12. After data new load no confirmation message because SetMessage() is used by other Task?
+
+
+For Next Version:
+
+1. Load display GUI when datareset is triggert
+2. Menue Settings with customizable settings for colour, fontsize

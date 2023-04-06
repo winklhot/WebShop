@@ -1,0 +1,70 @@
+﻿@page
+@using ShopBase
+@using WebApp.Pages
+@model WebApp.Pages.Index
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+
+<div align='center'>
+    <form method="post">
+        <table>
+            <tr>
+                <td>
+                    Suchbegriff
+                    <input type="text" asp-for="Suchbegriff" />
+                    <button type="submit" asp-page-handler="Suche" class="btn btn-primary btn-block custom" id="marketplacesearchbtn">Suchen</button>
+                </td>
+            </tr>
+        </table>
+       
+        @{
+            int i = 0;
+        }
+        @foreach (Article a in Model.lArtikel.FindAll(item => Model.lArtikel.IndexOf(item) < 50))
+        {
+            i++;
+            <form method="post">
+                <table class="marketplace">
+                    <tr>
+                        <td class="marketplacename">@a.Name</td>
+                        @{Picture p = Picture.Get(a.Id);}
+                        <td rowspan="3"><img class="article" id="marketplaceimg" width="90" height="100" src="@(p != null ? p.GetAsString() : Picture.Get(10).GetAsString())" /></td>
+                        <td class="marketplaceprice">@a.Price.ToString("#0.00") EUR</td>
+                    </tr>
+                    <tr>
+                        <td class="marketplacedesc">@a.Description</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="marketplacecount">
+                            <p>
+                                Menge: <input value="1" maxlength="3" size="1" type="text" name="menge" />
+                                @if (a.Count < 10)
+                                {
+                                    <code>Auf Lager:&nbsp;&nbsp;@a.Count</code>
+                                }
+                                else
+                                {
+                                    <code>Auf Lager:&nbsp;@a.Count</code>
+                                }
+                            </p>
+                        </td>
+                        <td class="marketplacetobasket"><button type="submit" size=5 asp-page-handler="Add" asp-route-id="@a.Id" class="btn btn-primary btn-block custom" id="marketplacetobasketbtn">Warenkorb</button></td>
+                    </tr>
+                </table>
+                @if (Model.ErrorMessage != null && Model.ErrorMessage.Contains(a.Id.ToString()))
+                {
+                    <p class="false">@Model.ErrorMessage.Remove(Model.ErrorMessage.Length - 1)</p>
+                }
+            </form>
+        }
+        <br />
+        @if (Model.lArtikel.Count > 50)
+        {
+            <p>Angezeigt 50 von @Model.lArtikel.Count</p>
+        }
+    </form>
+</div>

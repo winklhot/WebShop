@@ -1,0 +1,122 @@
+﻿@page
+@model WebApp.Pages.RegisterModel
+@{
+}
+
+<div class="center">
+
+
+
+    <form class="max" method="post">
+
+        <h1 class="boldandleft">Neues Kundenkonto anlegen</h1>
+
+        <input type="checkbox" class="check" onchange="insertSampleRegister()" id="sampleDataRegisterCheckbox" /> Beispieldaten einfügen<br />
+
+        @if (Model.ResultMessage != null)
+        {
+            if (Model.ResultMessage.Contains("Fehler"))
+            {
+                <p class="false">@Model.ResultMessage</p>
+            }
+            else if (Model.ResultMessage.ToLower().Contains("erfolg"))
+            {
+                <p class="true">@Model.ResultMessage</p>
+            }
+        }
+
+
+
+        <!-- Firstname input -->
+        <label class="form-label" >Vorname</label>
+        <input asp-for="Firstname" type="text" id="registerFirstname" class="form-control" />
+
+        <!-- Lastname input-->
+        <label class="form-label" >Name</label>
+        <input asp-for="Name" type="text" id="registerName" class="form-control" />
+
+        <input asp-for=Gender type="hidden" id="GenderInput" />
+        <div class="left">
+            <div class="form-check">
+                <input onclick="radioCheck();" class="form-check-input" type="radio" name="exampleRadios" id="registerRadio1" value="option1" checked />
+                <label class="form-check-label" for="exampleRadios1">
+                    Männlich
+                </label>
+            </div>
+            <div class="form-check">
+                <input onclick="radioCheck();" class="form-check-input" type="radio" name="exampleRadios" id="registerRadio2" value="option2" />
+                <label class="form-check-label" for="exampleRadios2">
+                    Weiblich
+                </label>
+            </div>
+            <div class="form-check">
+                <input onclick="radioCheck();" class="form-check-input" type="radio" name="exampleRadios" id="registerRadio3" value="option3" />
+                <label class="form-check-label" for="exampleRadios3">
+                    Divers
+                </label>
+            </div>
+        </div>
+
+
+        <!-- Email input -->
+        <label class="form-label" >Email</label>
+        <input asp-for="EMail" type="email" id="registerEMail" class="form-control" />
+
+        <div style="display:flex; width:100%; justify-content:space-between">
+            <div style="width:60%; margin-left:0">
+                <label class="form-label" for="registerName">Straße</label>
+                <input asp-for="Street" type="text" id="registerStreet" class="form-control" />
+            </div>
+
+            <div id="3" style="width:35%; margin-right:0">
+                <label class="form-label" for="registerName">Haus</label>
+                <input asp-for="HouseNumber" type="number" id="registerHouseNumber" class="form-control" />
+            </div>
+        </div>
+
+        <div style="display:flex; width:100%; justify-content:space-between">
+            <div style="width:35%; margin-left:0">
+                <label class="form-label" for="registerName">Plz</label>
+                <input asp-for="PostalCode" type="number" id="registerPostalCode" class="form-control" />
+            </div>
+
+            <div id="3" style="width:60%; margin-right:0">
+                <label class="form-label" for="registerName">Stadt</label>
+                <input asp-for="City" type="text" id="registerCity" class="form-control" />
+            </div>
+        </div>
+
+        <!-- Lastname input-->
+        <label class="form-label" for="registerName">Land</label>
+        <input asp-for="Country" type="text" id="registerCountry" class="form-control" />
+
+        <!-- Password input -->
+        <label class="form-label" for="registerPassword">Password</label>
+        <input type="password" id="registerPasswordClear" class="form-control" />
+
+        <!-- Hidden Element for PasswordHash1-->
+        <input asp-for="Password" id="registerPassword" class="displayNone" />
+
+        <!-- Repeat Password input -->
+        <label class="form-label" for="registerRepeatPassword">Repeat password</label>
+        <input type="password" id="registerPasswordClear2" class="form-control" onchange="hashInputValueRegister()" />
+
+        <!-- Hidden Element for PasswordHash2-->
+        <input asp-for="Password2" id="registerPassword2" class="displayNone" />
+
+        <input asp-for="IsChecked" id="registerAGBs" class="check" type="checkbox" /> Ich bin mit den <a asp-page="/Impressum">AGBs</a> einverstanden
+
+        <button type="submit" asp-page-handler="Register" class="btn btn-primary btn-block custom">Registrieren</button>
+
+        <!-- Submit button -->
+
+
+    </form>
+
+
+
+
+
+</div>
+
+<!-- Pills content -->

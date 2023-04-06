@@ -1,0 +1,26 @@
+﻿@page
+@model WebApp.Pages.CheckOutNonCustomer1Model
+@{
+}
+
+
+<div class="container">
+    <h1>Sie sind nicht angemeldet</h1>
+    <table class="basket">
+        <tr>
+            <td>
+                <form method="post">
+                    <button asp-page-handler="ToRegister" id="nonCusBtnRegister" class="btn btn-primary btn-block mb-4">Ohne Kundenkonto bestellen</button>
+
+                    <button asp-page-handler="ToLogin" id="nonCusBtnLogin" class="btn btn-primary btn-block mb-4">Anmelden/Registrieren</button>
+                </form>
+            </td>
+
+        </tr>
+    </table>
+</div>
+
+
+
+
+

@@ -1,0 +1,91 @@
+﻿@page
+@using ShopBase
+@model WebApp.Pages.sessionBasketModel
+@{
+
+}
+
+<div class="container">
+
+    @if (Model.OrderSubmitted)
+    {
+        string pDataString = "";
+
+        foreach (Position p in @Model.sessionBasket.Positions)
+        {
+            pDataString += $"{p.Article.Name};{p.Count};{p.Article.Price};{p.Totalsum}$";
+        }
+
+        pDataString = pDataString.Remove(pDataString.Length - 1);
+
+        <h4 class="green">Ihre Bestellung wurde angenommen. <a href="/Basket" onclick="getPDF('@Model.OrderNumber.ToString()', '@(Model.Customer.Firstname + " " + Model.Customer.Lastname)', '@Model.Customer.Adress.Street', '@Model.Customer.Adress.HouseNumber.ToString()', '@Model.Customer.Adress.PostalCode.ToString()', '@Model.Customer.Adress.City', '@Model.Customer.Adress.Country', '@pDataString')">Zur Rechnung (Popup erlauben)</a></h4>
+
+        Model.sessionBasket = new Order();
+        HttpContext.Session.Clear();
+        Model.sessionBasket.Status = Status.Warenkorb;
+        HttpContext.Session.SetObject("sessionBasket", @Model.sessionBasket);
+    }
+
+    @if (Model.ResultMessage != null)
+    {
+        <p class="false">@Model.ResultMessage</p>
+    }
+
+
+    @if (Model.sessionBasket != null && Model.sessionBasket.Positions != null)
+    {
+        <table class="basket">
+            <thead>
+                <tr>
+                    <td>Artikel</td>
+                    <td>Einzelpreis</td>
+                    <td>Anzahl</td>
+                    <td>Gesamtpreis</td>
+                </tr>
+            </thead>
+            @foreach (Position item in Model.sessionBasket.Positions)
+            {
+                <form method="post">
+                <tr>
+                    <td>@item.Article.Name</td>
+                    <td>@item.Article.Price</td>
+                    <td>@item.Count</td>
+                    <td style="text-align:right">@item.Totalsum.ToString("#0.00")</td>
+                    <td><button class="btn btn-primary btn-block mb-4 basketbtnred marginleft" asp-page-handler="Delete" asp-route-id="@Model.sessionBasket.Positions.IndexOf(item)">Löschen</button></td>
+                </tr>
+                </form>
+            }
+            <tr>
+                <td colspan=3>Summe</td>
+                <td style="text-align:right">@Model.sessionBasket.Positions.Sum(item => item.Totalsum).ToString("#0.00")</td>
+            </tr>
+
+
+            <form method="post">
+            <tr>
+                <td colspan="4">
+                    <button asp-page-handler="Back" class="btn btn-primary btn-block mb-4 basketbtnred">Zurück zur Suche</button>
+                        @if (Model.sessionBasket.Customer != null || Model.sessionBasket.NonCustomer != null)
+                        {
+
+                        <button asp-page-handler="Order" id="basketbtnOrder" class="btn btn-primary btn-block mb-4">Zahlungspflichtig bestellen</button>
+                        }
+                        else
+                        {
+
+                        <button asp-page-handler="Cashier" id="basketbtnCashier" class="btn btn-primary btn-block mb-4">Weiter zur Kasse</button>
+
+                        }
+                </td>
+            </tr>
+            </form>
+        </table>
+
+
+    }
+    else if (!Model.OrderSubmitted)
+    {
+        <p>Der Warenkorb ist leer</p>
+    }
+</div>
+

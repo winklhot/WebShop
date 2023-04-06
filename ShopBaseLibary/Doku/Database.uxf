@@ -1,0 +1,2448 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <help_text>Space for diagram notes</help_text>
+  <zoom_level>15</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1290</x>
+      <y>1305</y>
+      <w>435</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Visualstudio 2022
+--
+ASP.Net Core Framework mit .Net 6
+Codierung mit C# und Razor-Syntax
+Direkter Export in Windows Server
+halign=left</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>960</x>
+      <y>1425</y>
+      <w>255</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Werkzeuge
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>345</x>
+      <y>1260</y>
+      <w>525</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>VS Code
+--
+Nutzung der UMLet Extension für Dokumentation
+halign=left</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1290</x>
+      <y>1560</y>
+      <w>450</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Windows 2022 Server
+--
+Hosten der Webanwendung bei 
+Cloudanbieter
+halign=left</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>345</x>
+      <y>1530</y>
+      <w>525</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>MySQL Database
+--
+Einfache selbst erstellende Datenbank. 
+Um den Source Code auf jedem Rechner zu testen,
+muss der Localhost eingestellt sein
+
+halign=left</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>720</x>
+      <y>1860</y>
+      <w>840</w>
+      <h>450</h>
+    </coordinates>
+    <panel_attributes>SQL-Database
+--
+bg=red
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>810</x>
+      <y>1935</y>
+      <w>660</w>
+      <h>330</h>
+    </coordinates>
+    <panel_attributes>Model
+--
+bg=orange
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>915</x>
+      <y>2040</y>
+      <w>450</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>View
+--
+bg=green
+layer=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>0</x>
+      <y>0</y>
+      <w>2550</w>
+      <h>1170</h>
+    </coordinates>
+    <panel_attributes>halign=left
+1. Überblick
+
+
+
+2. Betriebswirtschaftliche Anforderung der Anwendung Hofers Onlineshop
+
+Die Anforderung ist Online Anwendung. Als Anwender sind die Personengruppen Bestandskunde(Customer), Neukunde ohne Registrierung(NonCustomer), Mitarbeiter und das System vorgesehen. Die wichtigsten Codestellen werden am Ende jeder ASP-Page in entsprechenden HTML-Element angefügt.
+
+Es werden folgende Prozesse definiert: 
+    Mitarbeiter: Artikel anlegen, Artikel ändern, Kundendaten ändern mit/ohne Passwort neu vergeben, Bestellstatus ändern
+    Kunden:      Login, Warenkorb ändern, Bestellung auslösen
+    Neukunde:    Registrieren, Warenkorb ändern, Bestellung auslösen
+    System:      Warenkorb verschmelzen, Rechnung generieren, Session verwalten 
+
+3. Technische Anforderungen
+
+3.1 Werkzeuge 
+
+Die Umsetzung erfolgt über eine ASP.net Core Anwendung für den Kundenbereich und eine WPF Anwendung für die Mitarbeiter.
+
+Die ASP.net Anwendung wird nativ auf einen aktuellen Windows Server bei einen Cloud Anbieter gehostet.
+
+Da es sich um eine Demonstrationsanwendung handelt, wird eine sich selbst aufbauende MySQL-Datenbank genutzt. Die bei Github veröffentlichte Version soll die lokalen Zugangsdaten abfragen und dann auf dem Localhost laufen. Es wird .net 6 Famework verwendet. Um das Github Repo auszuführen ist eine MySQL Datenbank single oder im XAMP-Paket notwenig, eine aktuelle Visualstudio Version mit installierten ASP und WPF Entwicklungspaketen (VS Installer) benötigt.
+
+Die Codierung erfolgt von mir mit Visualstudio 2022, VS-Code mit UMLet-Extension, als Git Server wird Github benutzt.
+
+Die Vorteile bestehen in einer einfachen Wartbarkeit des C# Codes, Binding mit Razor-Pages, automatisches Rendern durch Asp.net und einen natürlichen Zusammenspiel zwischen Webanwendung und Windows Server. 
+
+Der Cloudanbieter sorgt automatisch für die Https-Zertifizierung, Ausfallsicherheit und Backup sowie Schutz gegen Ddos Angriffe.
+
+3.2 Komponentenaufteilung
+
+Verwenden eines 3-Schicht Modells im Programmcode bestehend aus View-, Model- und Database-Layer.
+
+Die Aufteilung:
+
+View-Ordner:
+
+- Browserauslieferung über .cshtml Datei
+- Binding der Html-Elemente und Vermittlung mit Modellayer in der .cshtmlcs Datei
+
+Model-Ordner:
+
+- Einstellen der objektorintieren Fachklassen, die zum Erstellen der notwendigen Businessobjekte verwendet werden
+- Überführung der relationellen Daten in die Objektorintierung
+
+Persistenz-Ordner:
+
+- Erstellen der Datenbank
+- Verbinden mit der DB
+- Ausführen der SQL-Befehle
+
+
+
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>720</x>
+      <y>1890</y>
+      <w>840</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Verbindungsaufbau, Befehlsausführung, Datenbank und Tabellenerstellung, Relationales Mapping</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>810</x>
+      <y>1980</y>
+      <w>525</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Fachklassen, Testdaten erstellen
+style=wordwrap
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>915</x>
+      <y>2085</y>
+      <w>450</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>Kunden-/Mitarbeiterinteraktion
+Grafische Darstellung 
+Rechnungsausgabe
+layer=4
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>0</x>
+      <y>3540</y>
+      <w>1500</w>
+      <h>390</h>
+    </coordinates>
+    <panel_attributes>4. Architektur
+
+4.1 Datenbankaufbau
+
+Die Modellierung der DB wird mit folgendem ER-Diagramm visualisiert.
+
+Besonderheiten: 
+
+PK: Primary Key
+FK: Forgein Key
+
+Constrain: TCustomer/TNonCustomer -&gt; TOrder (cascade) -&gt; TPosition (cascade) &lt;- TArticle
+
+Unique: TCustomer (EMail), TAdress(Street, HouseNumber, PostalCode, City, Country)
+ 
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>570</x>
+      <y>4140</y>
+      <w>195</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>TCustomer
+valign=center</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>450</x>
+      <y>3960</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>PK: CId</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>855</x>
+      <y>4125</y>
+      <w>90</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>hat
+type=decision
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>300</x>
+      <y>4020</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>CreditScore</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>255</x>
+      <y>4095</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>EMail</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>240</x>
+      <y>4185</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Password</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>285</x>
+      <y>4275</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Firstname</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>420</x>
+      <y>4335</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Lastname</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>870</x>
+      <y>3990</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>PK: OId</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1200</x>
+      <y>4020</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>FK: CNId (TNo.)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>750</x>
+      <y>4140</y>
+      <w>135</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-
+1</panel_attributes>
+    <additional_attributes>10.0;20.0;70.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1095</x>
+      <y>4050</y>
+      <w>150</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;60.0;80.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>420</x>
+      <y>4110</y>
+      <w>180</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>100.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>525</x>
+      <y>4155</y>
+      <w>75</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;120.0;30.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>435</x>
+      <y>4155</y>
+      <w>165</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;90.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>930</x>
+      <y>4140</y>
+      <w>105</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-
+n</panel_attributes>
+    <additional_attributes>10.0;20.0;50.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1095</x>
+      <y>4095</y>
+      <w>225</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;30.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1095</x>
+      <y>4020</y>
+      <w>60</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;80.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1545</x>
+      <y>4140</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-
+n</panel_attributes>
+    <additional_attributes>100.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>450</x>
+      <y>4050</y>
+      <w>150</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;80.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>945</x>
+      <y>4035</y>
+      <w>195</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>110.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>4155</y>
+      <w>195</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;40.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>4005</y>
+      <w>60</w>
+      <h>195</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;20.0;110.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1065</x>
+      <y>3975</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>FK: CId (TCus.)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1005</x>
+      <y>4140</y>
+      <w>195</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>TOrder
+valign=center</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1290</x>
+      <y>4080</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Status</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>555</x>
+      <y>4545</y>
+      <w>195</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>TAdressNode
+valign=center</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1695</x>
+      <y>4140</y>
+      <w>195</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>TPosition
+valign=center</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1185</x>
+      <y>4140</y>
+      <w>315</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-
+1</panel_attributes>
+    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>1470</x>
+      <y>4125</y>
+      <w>90</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>hat
+type=decision
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1800</x>
+      <y>4080</y>
+      <w>45</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1545</x>
+      <y>4050</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>PK: PId</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1740</x>
+      <y>4035</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>FK: OId (TOr.)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1935</x>
+      <y>4050</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>AId</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1995</x>
+      <y>4125</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Menge</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1800</x>
+      <y>4080</y>
+      <w>180</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;40.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1800</x>
+      <y>4350</y>
+      <w>45</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=-
+1</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1650</x>
+      <y>4095</y>
+      <w>195</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>110.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1875</x>
+      <y>4140</y>
+      <w>150</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>615</x>
+      <y>4335</y>
+      <w>90</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>hat
+type=decision
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>1770</x>
+      <y>4275</y>
+      <w>90</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>hat
+type=decision
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1905</x>
+      <y>4380</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Count</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1800</x>
+      <y>4185</y>
+      <w>45</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-
+n</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1725</x>
+      <y>4530</y>
+      <w>195</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>TArticle
+valign=center</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1065</x>
+      <y>4665</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>AId</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1935</x>
+      <y>4635</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Name</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>2025</x>
+      <y>4575</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Description</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>2010</x>
+      <y>4500</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Price</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1170</x>
+      <y>4575</y>
+      <w>165</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>90.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1905</x>
+      <y>4545</y>
+      <w>105</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>50.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1905</x>
+      <y>4515</y>
+      <w>135</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1800</x>
+      <y>4425</y>
+      <w>210</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1905</x>
+      <y>4545</y>
+      <w>150</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>80.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1230</x>
+      <y>4380</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>PK: PId</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>1515</x>
+      <y>4515</y>
+      <w>90</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>hat
+type=decision
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1590</x>
+      <y>4530</y>
+      <w>165</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-
+n</panel_attributes>
+    <additional_attributes>90.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1215</x>
+      <y>4530</y>
+      <w>195</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>TPicture
+valign=center</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1395</x>
+      <y>4530</y>
+      <w>150</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=-
+1</panel_attributes>
+    <additional_attributes>80.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1320</x>
+      <y>4665</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Data</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1290</x>
+      <y>4575</y>
+      <w>135</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>70.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>645</x>
+      <y>4410</y>
+      <w>45</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>lt=-
+n</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1290</x>
+      <y>4425</y>
+      <w>45</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>645</x>
+      <y>4185</y>
+      <w>45</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=-
+1</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>300</x>
+      <y>4545</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>PK: NId</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>315</x>
+      <y>4635</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>FK: CNId (TNo.)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>330</x>
+      <y>4455</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>FK: CId (TCus.)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>885</x>
+      <y>4545</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Adresstype</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>735</x>
+      <y>4560</y>
+      <w>180</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>480</x>
+      <y>4485</y>
+      <w>105</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>50.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>465</x>
+      <y>4560</y>
+      <w>120</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>465</x>
+      <y>4560</y>
+      <w>120</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1260</x>
+      <y>4725</y>
+      <w>45</w>
+      <h>300</h>
+    </coordinates>
+    <panel_attributes>lt=-
+1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>645</x>
+      <y>4590</y>
+      <w>60</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1170</x>
+      <y>4995</y>
+      <w>195</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>TAdress
+valign=center</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1470</x>
+      <y>4965</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Street</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>615</x>
+      <y>4695</y>
+      <w>90</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>hat
+type=decision
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1470</x>
+      <y>5070</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>HouseNumber</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1005</x>
+      <y>4890</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Score</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1350</x>
+      <y>4890</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>PK: Aid</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1260</x>
+      <y>4935</y>
+      <w>195</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1095</x>
+      <y>4935</y>
+      <w>210</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>120.0;40.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1350</x>
+      <y>4980</y>
+      <w>150</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;30.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1425</x>
+      <y>5160</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>PostalCode</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1350</x>
+      <y>5010</y>
+      <w>165</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>90.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1260</x>
+      <y>5040</y>
+      <w>255</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>150.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>690</x>
+      <y>4725</y>
+      <w>615</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>390.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1185</x>
+      <y>5175</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>City</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1260</x>
+      <y>5040</y>
+      <w>45</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;90.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>960</x>
+      <y>5175</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Country</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1065</x>
+      <y>5040</y>
+      <w>240</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;90.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>570</x>
+      <y>4980</y>
+      <w>195</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>TNonCustomer
+valign=center</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>615</x>
+      <y>5115</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>EMail</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>840</x>
+      <y>4980</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Firstname</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>810</x>
+      <y>5115</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Lastname</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>390</x>
+      <y>5115</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Gender</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>660</x>
+      <y>3975</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Gender</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>4020</y>
+      <w>120</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;80.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>5025</y>
+      <w>225</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;60.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>690</x>
+      <y>5025</y>
+      <w>45</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>690</x>
+      <y>5025</y>
+      <w>195</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>110.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>750</x>
+      <y>4995</y>
+      <w>120</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>645</x>
+      <y>4770</y>
+      <w>45</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=-
+1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>1530</x>
+      <y>4365</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>PK: AId</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1605</x>
+      <y>4410</y>
+      <w>240</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>780</x>
+      <y>4425</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>FK: Aid (TAr.)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>735</x>
+      <y>4470</y>
+      <w>150</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLUseCase</id>
+    <coordinates>
+      <x>300</x>
+      <y>4980</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>PK: CNId</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>465</x>
+      <y>4995</y>
+      <w>135</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>0</x>
+      <y>5385</y>
+      <w>1800</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>4.2 Klassenaufbau in Layer 2 und Layer 3
+
+Keine Komposition, da bereits über Datenbanken Constrains eingestellt.
+
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>0</x>
+      <y>5565</y>
+      <w>2565</w>
+      <h>2610</h>
+    </coordinates>
+    <panel_attributes>Layer 2
+
+--
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1710</x>
+      <y>6390</y>
+      <w>810</w>
+      <h>555</h>
+    </coordinates>
+    <panel_attributes>Adress
+--
++Id: int
++Customer: Customer
++Street: string
++HouseNumber: int
++PostalCode: int
++City: string
++Country: string
++AdressType: AdressType = AdressType.Invoice
+--
++Adress()
+
++Adress(id: int, street: string,
+houseNumber: int, postalCode: int, city: string, country: string)
+
++Adress(street: string, houseNumber: int,
+postalCode: int, city: string, country: string)
+--
++Insert()
+__+GetFromCustomer(id: int): T__
+__+Get(id: int): Adress__
+__+GetOrCreateIfNotExists__
+__(street: string, houseNumber: int, postalCode: int, city: string, country: string): Adress__
+layer=2
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1065</x>
+      <y>7395</y>
+      <w>690</w>
+      <h>720</h>
+    </coordinates>
+    <panel_attributes>Article
+--
++Id: int
++Name: string
++Decription: string
++Price: decimal
++Count: int
++ImageData: ShopImage
+-_name: string
+-_desc: string
+-_price: decimal
+--
++Article()
++Article(id: int,name: string, description: string, price: decimal, count: int)
++Article(name: string, description: string, price: decimal, count: int)
++getName =&gt; _name
++setName =&gt; _name = value {value.Length &lt; 31}
++setDescription =&gt; _desc
++getDescription =&gt; _desc = value {value.Length &lt; 71}
++getPrice =&gt; _price
++setPrice =&gt; _price = value {value &gt; 0 &amp;&amp; value &lt; 9999.99}
+--
++Insert()
++Change()
++Delete()
++ToString(): string
++Equals(obj: object): bool
++GetHashCode(): int
+__+Get(id: int): Article__
+__+GetAll():List&lt;Article&gt;__
+__GenerateDataBase()__
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1050</x>
+      <y>6960</y>
+      <w>1110</w>
+      <h>405</h>
+    </coordinates>
+    <panel_attributes>Customer
+--
++Password: string
+--
++Customer()
++Customer(id: int, email: string, password: string, firstname: string, lastname: string, gender: Gender, adress: Adress)
++Customer(email: string, password: string, firstname: string, lastname: string, gender: Gender, adress: Adress)
+--
++Equals()
++GetHashCode()
++Insert()
++Delete()
++Change()
++ToString()
+__Login(email: string, password: string): int__
+__+Get(id: int): NonCustomer__
+__GetHash(input: string)__
+__+GetAll(): List&lt;NonCustomer&gt;__
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1065</x>
+      <y>5715</y>
+      <w>975</w>
+      <h>555</h>
+    </coordinates>
+    <panel_attributes>NonCustomer
+--
++Id: int
++EMail: string
++Firstname: string
++Lastname: string
++Gender: Gender
++Adress: Adress
+--
++NonCustomer()
++NonCustomer(id: int, email: string, firstname: string, lastname: string, gender: Gender, adress: Adress)
++NonCustomer(email: string, firstname: string, lastname: string, gender: Gender, adress: Adress)
+--
++Equals()
++GetHashCode()
++Insert()
++Delete()
++Change()
++ToString()
+__+Get(id: int): NonCustomer__
+__+GetAll(): List&lt;NonCustomer&gt;__
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>105</x>
+      <y>6600</y>
+      <w>825</w>
+      <h>525</h>
+    </coordinates>
+    <panel_attributes>Order
+--
++Id: int
++Customer: Customer
++NonCustomer: NonCustomer
++Status: Status
++Positions: List&lt;Position&gt; = new List&lt;Position&gt;()
+--
++Order
++Order(id: int, customer: Customer, status: Status, positions: List&lt;Position&gt;)
++Order(customer: Customer, status: Status, positions: List&lt;Position&gt;)
++Order(id: int, ncustomer: NonCustomer, status: Status, positions: List&lt;Position&gt;)
++Order(ncustomer: NonCustomer, status: Status, positions: List&lt;Position&gt;)
+--
++AddPosition(menge: int, id: int)
++Insert()
++Change()
++Delete()
++MergeBaskets(CId: int): Order
++ToString()
+__+Get(id: int)__
+__+GetAllFromCustomer(cid: int): List&lt;Order&gt;__
+__+GetAllFromNonCustomer(cid: int): List&lt;NonCustomer&gt;__
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>105</x>
+      <y>7245</y>
+      <w>825</w>
+      <h>375</h>
+    </coordinates>
+    <panel_attributes>Position
+--
++Id: int
++Count: int
++Totalsum: decimal
++Article: Article
+--
++Position()
++Position(id: int, article: Article, count: int)
++Position(count: int, article: Article)
++getTotalsum =&gt; Article.Price * Count
+--
++Equals()
+__Get(id: int): Position__
+__GetAll(oid: int): List&lt;Position&gt;__
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>105</x>
+      <y>7680</y>
+      <w>825</w>
+      <h>420</h>
+    </coordinates>
+    <panel_attributes>ShopImage
+--
++Id: int
++ImageTitle: string
++ImageDataArray: byte[]
+_-ClassAttribute: Long_
+--
++ShopImage()
+--
++GetAsString(): string
++ReadFromFile()
++SaveToFile(path: string)
++Resize(factor: double)
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>30</x>
+      <y>5715</y>
+      <w>825</w>
+      <h>765</h>
+    </coordinates>
+    <panel_attributes>__TestData__
+--
+__-r: Random = new Random()__
+__-countTestCases = 1000__
+--
+__+InsertAllData()__
+__+GetTestOrder(): Order__
+__-InsertTestAdresses()__
+__-InsertTestNonCustomers()__
+__-InsertTestCustomers__
+__-InsertArticles__
+__-InsertOrders()__
+__-GetFistnames(): string__
+__-GetLastnames(): string__
+__-GetStreets(): string__
+__-GetPostalCodes(): string__
+layer=2
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1815</x>
+      <y>7905</y>
+      <w>690</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>__DBAccess__
+--
+__+OpenDB(database: string): MySqlConnection__
+__+ExecuteNonQuery(sql: string, table: string): int__
+__+ExecuteReader(sql: string, con: MySqlConnection): MySqlDataReader__
+__+CreateDefaultDataBase()__
+layer=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1815</x>
+      <y>7545</y>
+      <w>690</w>
+      <h>345</h>
+    </coordinates>
+    <panel_attributes>__DBObjects__
+--
+__-culture: CultureInfo__
+__+FillDatabaseWithDefaultData()__
+__+Insert()__
+__+ReadAll&lt;T&gt;(id: int = -1): List&lt;T&gt;__
+__+GetAllOrderFromNonCustomer(cid: int): List&lt;Order&gt;__
+__+Change&lt;T&gt;(item: object)__
+__+Delete&lt;T&gt;(item: object)__
+__+ReadCustomer(email: string, pwd: string): int__
+__+GetAdressID&lt;T&gt;(id: int)__
+__+ReadAll(): List&lt;Customer__
+__+GetDataFromCustomer(r MySqlDataReader): Customer__
+__+MergeBasket(CId: int): Order__
+layer=2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1785</x>
+      <y>7440</y>
+      <w>750</w>
+      <h>660</h>
+    </coordinates>
+    <panel_attributes>Layer3
+
+--
+bg=red
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1605</x>
+      <y>6255</y>
+      <w>60</w>
+      <h>735</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>20.0;10.0;10.0;470.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>915</x>
+      <y>5775</y>
+      <w>180</w>
+      <h>870</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes>
+    <additional_attributes>10.0;560.0;60.0;560.0;60.0;10.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>915</x>
+      <y>6690</y>
+      <w>120</w>
+      <h>645</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;410.0;10.0;410.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>915</x>
+      <y>7440</y>
+      <w>180</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2025</x>
+      <y>5805</y>
+      <w>270</w>
+      <h>615</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;160.0;10.0;160.0;390.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>915</x>
+      <y>7500</y>
+      <w>180</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes>
+    <additional_attributes>100.0;10.0;50.0;10.0;50.0;160.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>765</x>
+      <y>2685</y>
+      <w>330</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+*Desktop App*
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1185</x>
+      <y>2685</y>
+      <w>330</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+*Web App*
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>930</x>
+      <y>3015</y>
+      <w>330</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+*ShopBaseLibrary*
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>390</x>
+      <y>2685</y>
+      <w>240</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+&lt;&lt;artifact&gt;&gt;
+*DesktopApp.exe*
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1740</x>
+      <y>2685</y>
+      <w>240</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+&lt;&lt;artifact&gt;&gt;
+*WevApp.dll*
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>975</x>
+      <y>3225</y>
+      <w>240</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+&lt;&lt;artifact&gt;&gt;
+*ShopBase.dll*
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>1170</x>
+      <y>2445</y>
+      <w>135</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>Interessent</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>885</x>
+      <y>2445</y>
+      <w>135</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>Mitarbeiter</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>960</x>
+      <y>2580</y>
+      <w>45</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1440</x>
+      <y>2580</y>
+      <w>45</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>2925</y>
+      <w>45</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=[]-()
+
+</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1065</x>
+      <y>2850</y>
+      <w>75</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=)-
+
+</panel_attributes>
+    <additional_attributes>20.0;40.0;20.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>2850</y>
+      <w>465</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;290.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1320</x>
+      <y>2790</y>
+      <w>45</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=[]-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>2790</y>
+      <w>45</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=[]-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1500</x>
+      <y>2715</y>
+      <w>270</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;manifest&gt;&gt;</panel_attributes>
+    <additional_attributes>160.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>615</x>
+      <y>2715</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;manifest&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;100.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1080</x>
+      <y>3120</y>
+      <w>150</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;manifest&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>1380</x>
+      <y>2445</y>
+      <w>105</w>
+      <h>165</h>
+    </coordinates>
+    <panel_attributes>Kunde</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1245</x>
+      <y>2580</y>
+      <w>45</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>675</x>
+      <y>8880</y>
+      <w>285</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Klick Navbar Anmelden
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>810</x>
+      <y>8760</y>
+      <w>30</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>type=initial</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLObject</id>
+    <coordinates>
+      <x>630</x>
+      <y>8655</y>
+      <w>705</w>
+      <h>2025</h>
+    </coordinates>
+    <panel_attributes>Neukunde
+valign=top</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>975</x>
+      <y>9795</y>
+      <w>30</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>type=final</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>810</x>
+      <y>8760</y>
+      <w>45</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>810</x>
+      <y>8925</y>
+      <w>150</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>80.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>960</x>
+      <y>9075</y>
+      <w>660</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>420.0;30.0;10.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>975</x>
+      <y>9690</y>
+      <w>45</w>
+      <h>135</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>1740</x>
+      <y>8685</y>
+      <w>30</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>type=initial</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLObject</id>
+    <coordinates>
+      <x>1365</x>
+      <y>8655</y>
+      <w>630</w>
+      <h>2025</h>
+    </coordinates>
+    <panel_attributes>System
+valign=top</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>1590</x>
+      <y>9090</y>
+      <w>240</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Weiterleitung "/Login"
+bg=blue</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>1620</x>
+      <y>9360</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>leave for airport
+bg=green</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>1695</x>
+      <y>9450</y>
+      <w>30</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>type=final</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSyncBarHorizontal</id>
+    <coordinates>
+      <x>1650</x>
+      <y>9300</y>
+      <w>120</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lw=5
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>750</x>
+      <y>8715</y>
+      <w>135</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Alle Seiten
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1425</x>
+      <y>8790</y>
+      <w>135</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>70.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1710</x>
+      <y>8475</y>
+      <w>255</w>
+      <h>1020</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m2=[exam missed]</panel_attributes>
+    <additional_attributes>10.0;660.0;150.0;660.0;150.0;280.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1695</x>
+      <y>9135</y>
+      <w>45</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1695</x>
+      <y>9405</y>
+      <w>45</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLObject</id>
+    <coordinates>
+      <x>540</x>
+      <y>8535</y>
+      <w>1530</w>
+      <h>2190</h>
+    </coordinates>
+    <panel_attributes>Registierung
+valign=top</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>750</x>
+      <y>9255</y>
+      <w>285</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Klick Link Registrieren
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLState</id>
+    <coordinates>
+      <x>1005</x>
+      <y>8880</y>
+      <w>315</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Klick Btn Anmelden/Registrieren
+bg=red</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>1050</x>
+      <y>8715</y>
+      <w>225</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>Checkout ohne Login
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1125</x>
+      <y>8760</y>
+      <w>45</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>1125</x>
+      <y>8760</y>
+      <w>30</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>type=initial</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLSpecialState</id>
+    <coordinates>
+      <x>930</x>
+      <y>9000</y>
+      <w>90</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>bg=green
+type=decision</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1005</x>
+      <y>8925</y>
+      <w>165</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;90.0;80.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>0</x>
+      <y>8280</y>
+      <w>2565</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>5.0 Implementierte Prozesse
+
+5.1 Kundenregistrierung
+style=wordwrap</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

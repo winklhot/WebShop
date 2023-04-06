@@ -1,0 +1,51 @@
+﻿@page
+@using WebApp
+@using ShopBase
+@using System.Web
+@model WebApp.Pages.LoginModel
+@{
+    Order o = HttpContext.Session.GetObject<Order>("sessionBasket");
+}
+
+
+@if( o == null || o.Customer == null)
+{
+    <div class="center" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+    <form method="post" class="max">
+        <!--Sample Data Customer Tina Test-->
+        <label class="left"><input type="checkbox" class="check" onchange="insertSampleLogin()" id="sampleDataCheck"/> Beispieldaten einfügen</label>
+        <!-- Email input -->
+        <input asp-for="EMail" type="email" id="loginName" class="form-control" />
+        <label class="left" for="loginName">Email</label>
+
+        <!-- Password input -->
+        <input type="password" id="loginPassword" class="form-control" onchange="hashInputValueLogin()" />
+        <label class="left" for="loginPassword">Password</label>
+
+        <!--hidden element for hashed pw-->
+        <input asp-for="HashedPwd" class="displayNone" id="hPwd">
+
+        <!-- Submit button -->
+        <Button type="submit" class="btn btn-primary btn-block custom" asp-page-handler="Check">Anmelden</Button>
+
+
+        <!-- Register buttons -->
+        <p>Kein Konto? <a asp-area="" asp-page="/Register">Registrieren</a></p>
+
+        @if (Model.ErrorMessage != null)
+        {
+            <p class="false">@Model.ErrorMessage</p>
+        }
+    </form>
+    </div>
+}
+else
+{
+    <h1>@($"Willkommen {o.Customer.Firstname} {o.Customer.Lastname}")</h1>
+    <form method="Post">
+        <button asp-page-handler="Logout" id="basketbtnred" class="btn btn-primary btn-block mb-4">Abmelden</button>
+    </form>
+}
+
+
+

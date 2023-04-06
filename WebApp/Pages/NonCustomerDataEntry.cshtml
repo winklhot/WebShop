@@ -1,0 +1,104 @@
+﻿@page
+@model WebApp.Pages.NonCustomer2Model
+@using System.Threading
+@{
+}
+
+
+<div class="center">
+    <h1>Bestellung ohne Kundenkonto</h1>
+
+    <form class="max" method="post">
+
+        @if (Model.ResultText != null)
+        {
+            @if (Model.ResultText.Contains("Fehler"))
+            {
+                <p class="false">@Model.ResultText</p>
+            }
+            else if (Model.ResultText.ToLower().Contains("angenommen"))
+            {
+
+                <p class="true" id="nonCustomerCheckout">@Model.ResultText</p>
+
+            }
+        }
+
+        <h2 class="boldandleft">Daten für die Bestellung erfassen</h2>
+
+        <!--Sample Data-->
+        <input type="checkbox" id="sampleNonCustomerCheckbox" onchange="insertSampleNonCustomer()" /> Beispieldaten einfügen<br />
+
+        <!-- Firstname input -->
+        <label class="form-label">Vorname</label>
+        <input asp-for="Firstname" type="text" id="nonCustomerFirstname" class="form-control" />
+
+        <!-- Lastname input-->
+        <label class="form-label">Name</label>
+        <input asp-for="Name" type="text" id="nonCustomerName" class="form-control" />
+
+        <input asp-for=Gender type="hidden" id="GenderInput" />
+        <div style="display:flex; width:40%; justify-content:space-between">
+            <div class="form-check">
+                <input onclick="radioCheckNonCustomer();" class="form-check-input" type="radio" name="exampleRadios" id="nonCustomerRadio1" value="option1" checked />
+                <label class="form-check-label" for="exampleRadios1">
+                    Männlich
+                </label>
+            </div>
+            <div class="form-check">
+                <input onclick="radioCheckNonCustomer();" class="form-check-input" type="radio" name="exampleRadios" id="nonCustomerRadio2" value="option2" />
+                <label class="form-check-label" for="exampleRadios2">
+                    Weiblich
+                </label>
+            </div>
+            <div class="form-check">
+                <input onclick="radioCheckNonCustomer();" class="form-check-input" type="radio" name="exampleRadios" id="nonCustomerRadio3" value="option3" />
+                <label class="form-check-label" for="exampleRadios3">
+                    Divers
+                </label>
+            </div>
+        </div>
+
+        <!-- Email input -->
+        <label class="form-label">Email</label>
+        <input asp-for="EMail" type="email" id="nonCustomerEMail" class="form-control" />
+
+        <div style="display:flex; width:100%; justify-content:space-between">
+            <div style="width:70%; margin-left:0">
+                <label class="form-label" for="nonCustomerName">Straße</label>
+                <input asp-for="Street" type="text" id="nonCustomerStreet" class="form-control" />
+            </div>
+
+            <div id="3" style="width:25%; margin-right:0">
+                <label class="form-label" for="nonCustomerName">Hausnummer</label>
+                <input asp-for="HouseNumber" type="number" id="nonCustomerHouseNumber" class="form-control" />
+            </div>
+        </div>
+
+        <div style="display:flex; width:100%; justify-content:space-between">
+            <div style="width:25%; margin-left:0">
+                <label class="form-label" for="nonCustomerName">Postleitzahl</label>
+                <input asp-for="PostalCode" type="number" id="nonCustomerPostalCode" class="form-control" />
+            </div>
+
+            <div id="3" style="width:70%; margin-right:0">
+                <label class="form-label" for="nonCustomerName">Stadt</label>
+                <input asp-for="City" type="text" id="nonCustomerCity" class="form-control" />
+            </div>
+        </div>
+
+        <!-- Lastname input-->
+        <label class="form-label" for="nonCustomerName">Land</label>
+        <input asp-for="Country" type="text" id="nonCustomerCountry" class="form-control" />
+
+        <input asp-for="AGBsCheck" type="checkbox" id="nonCustomerAGBs" /> Ich bin mit den <a asp-page="/Impressum">AGBs</a> einverstanden
+
+        <button asp-page-handler="Check" type="submit" class="btn btn-primary btn-block mb-3">Speichern</button>
+
+
+
+        <!-- Submit button -->
+
+    </form>
+
+</div>
