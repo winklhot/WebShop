@@ -19,7 +19,7 @@ namespace UnitTest
             {
                 if (!File.Exists(@"../../../../ShopBaseLibary/Persistence/WebShop.db"))
                 {
-                    isPassed = DBAccess.CreateDefaultDataBase(true);
+                    isPassed = DBAccess.CreateDefaultDataBase();
                 }
             }
             catch (System.Exception)

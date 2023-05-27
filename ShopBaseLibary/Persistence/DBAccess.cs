@@ -17,11 +17,9 @@ namespace Layer3Access
     {
         private static string _liteSQLPath = @"../../../../ShopBaseLibary/Persistence/WebShop.db";
 
-        public static bool CreateDefaultDataBase(bool isDesktopApp)
+        public static bool CreateDefaultDataBase()
         {
             bool isCreated = false;
-            _liteSQLPath = isDesktopApp ? _liteSQLPath : _liteSQLPath.Remove(0, 9);
-
 
             if (!File.Exists(_liteSQLPath))
             {
@@ -33,10 +31,9 @@ namespace Layer3Access
 
             return isCreated;
         }
-        public static bool DeleteDataBase(bool isDesktopApp)
+        public static bool DeleteDataBase()
         {
             bool isDeleted = false;
-            _liteSQLPath = isDesktopApp ? _liteSQLPath : _liteSQLPath.Remove(0, 9);
 
             if (File.Exists(_liteSQLPath)) // does not work because process block the file??
             {

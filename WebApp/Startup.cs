@@ -19,7 +19,7 @@ namespace WebApp
         {
             Configuration = configuration;
 
-            TestData.CreateDatabaseWithData(false);
+            TestData.CreateDatabaseWithData();
         }
 
         public IConfiguration Configuration { get; }

@@ -15,9 +15,9 @@ namespace Layer3Objects
     public static class DBObjects
     {
         private static CultureInfo culture = new CultureInfo("en-US");
-        public static void CrateDefaultDatabase(bool isDesktopAppPath)
+        public static void CrateDefaultDatabase()
         {
-            DBAccess.CreateDefaultDataBase(isDesktopAppPath);
+            DBAccess.CreateDefaultDataBase();
 
             if (DBAccess.CreateArticleTable())
             {
@@ -56,7 +56,7 @@ namespace Layer3Objects
 
 
         }
-        public static void DeleteAllData(bool isDesktopAppPath)
+        public static void DeleteAllData()
         {
             string sql = "Drop Table TPosition;";
 

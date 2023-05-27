@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
@@ -16,20 +17,21 @@ namespace ShopBase
 
         private static int countTestCases = 80;
 
-        public static void CreateDatabaseWithData(bool isDesktopAppPath)
+        public static void CreateDatabaseWithData()
         {
             try
             {
-                DBObjects.CrateDefaultDatabase(isDesktopAppPath);
+                DBObjects.CrateDefaultDatabase();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Trace.WriteLine(e.Message);
             }
         }
 
-        public static void DeleteAllData(bool isDesktopAppPath)
+        public static void DeleteAllData()
         {
-            DBObjects.DeleteAllData(isDesktopAppPath);
+            DBObjects.DeleteAllData();
         }
 
         //$$$$$$$$$$$$$$$$$$$$$$  Generate Test Objects $$$$$$$$$$$$$$$$$$$$$$$
