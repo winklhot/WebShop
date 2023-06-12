@@ -1,0 +1,98 @@
+<html>
+
+<head>
+  <!-- vue.js einbinden, z.B. über cdn (geht natürlich auch lokal) -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<style>
+  .rot
+  {
+    color:red
+  }
+
+  .blau
+  {
+    color: blue
+  }
+
+  .gruen
+  {
+    color: green
+  }
+
+</style>
+<body>
+  <div id="app">
+    <h1>Demo eines Zugriffs auf die REST-Schnittstelle unseres WebShops mit Vue.js</h1>
+    <p>{{message}}</p>
+    <p>
+      Der WebShops Server muss lokal laufen und es muss hier der richtige Port konfiguriert sein.<br/>
+      Port: <input v-model="port">
+    </p>
+    <b>Bitte geben Sie einen Suchbegriff ein: <span v-if="suchbegriff.length < 4">(mindestens 4 Zeichen)</span></b><br/>
+    <input type="text" v-on:keyup="GetArtikel" v-model="suchbegriff">
+	
+
+    <!-- <button @click="GetArtikel" :disabled='isDisabled'>Suchen</button><br/> -->
+    <button @click="GetArtikel" :disabled='suchbegriff.length < 4'>Suchen</button><br/>
+    <button @click="GetAlleArtikel">Alle Artikel anzeigen</button>
+    
+    <h3>Ergebnisliste:</h3>
+    <table>      
+      <tr v-for="a in artikel"><td>{{a.bezeichnung}}</td><td style="text-align:right">{{a.preis}}EUR</td></tr>
+    </table>
+<h3>Debugging:</h3>
+    <p>
+      {{artikel}}
+    </p>
+
+</div>
+</body>
+
+<script>
+  // Jede Anwendung mit Vue.js hat (mindestens) eine zentrale Instanz.
+  // Je HTML-Datei sind beliebig viele Instanzen möglich. 
+  // Eine Instanz wird mit der Eigenschaft el an einen HTML-Knoten gebunden 
+  // (hier über den CSS-Selektor „#app“ definiert).
+
+var app = new Vue(
+    {
+      el: '#app',
+      data: {
+        message: "Hallo Vue.js",
+        port: 5000,       
+        artikel: [],
+        suchbegriff: [],        
+      },
+      methods:
+      {
+        GetArtikel()
+        {
+          if (this.suchbegriff.length< 3)
+          {
+            this.artikel = [];            
+            return;
+          }
+
+          axios.get("http://localhost:"+this.port+"/api/artikel/search/"+this.suchbegriff)
+               .then(response => this.artikel = response.data);
+        },
+        GetAlleArtikel()
+        { 
+          axios.get("http://localhost:"+this.port+"/api/artikel")
+               .then(response => this.artikel = response.data);
+        },        
+      },
+      computed:
+      {          
+        isDisabled()
+        {
+          return this.suchbegriff.length < 4;
+        }
+      }
+    })
+
+</script>
+
+</html>

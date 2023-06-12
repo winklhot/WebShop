@@ -44,7 +44,7 @@ namespace DesktopApp
         private static Task _resetAllData = default;
         public MainWindow()
         {
-            TestData.CreateDatabaseWithData(true);
+            TestData.CreateDatabaseWithData();
 
             InitializeComponent();
 
@@ -565,8 +565,8 @@ namespace DesktopApp
                 model = FindResource("mxmodel") as MainViewModel;
                 model.DeLoadData();
 
-                TestData.DeleteAllData(true);
-                TestData.CreateDatabaseWithData(true);
+                TestData.DeleteAllData();
+                TestData.CreateDatabaseWithData();
                 model.LoadData();
                 await Task.Delay(100);
                 SetMessageLine(false, "Daten wurden erfolgreich zurück gesetzt"); // Does not work Foreground is used by other task?
