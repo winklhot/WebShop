@@ -40,7 +40,7 @@
     
     <h3>Ergebnisliste:</h3>
     <table>      
-      <tr v-for="a in artikel"><td>{{a.bezeichnung}}</td><td style="text-align:right">{{a.preis}}EUR</td></tr>
+      <tr v-for="a in artikel"><td>{{a.description}}</td><td style="text-align:right">{{a.price}}EUR</td></tr>
     </table>
 <h3>Debugging:</h3>
     <p>
@@ -75,12 +75,12 @@ var app = new Vue(
             return;
           }
 
-          axios.get("http://localhost:"+this.port+"/api/artikel/search/"+this.suchbegriff)
+          axios.get("http://localhost:"+this.port+"/api/article/search/"+this.suchbegriff)
                .then(response => this.artikel = response.data);
         },
         GetAlleArtikel()
         { 
-          axios.get("http://localhost:"+this.port+"/api/artikel")
+          axios.get("http://localhost:"+this.port+"/api/article")
                .then(response => this.artikel = response.data);
         },        
       },
