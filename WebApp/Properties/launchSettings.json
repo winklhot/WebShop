@@ -16,7 +16,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "workingDirectory": "bin/Debug/net6.0" //This changes the filepath so that it starts from webapp.exe which is simular to desktop app logic
+      "workingDirectory": "bin/Debug/net7.0" //This changes the filepath so that it starts from webapp.exe which is simular to desktop app logic
     },
     "IIS Express": {
       "commandName": "IISExpress",
