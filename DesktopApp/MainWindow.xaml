@@ -129,7 +129,7 @@
                                 <DataGridTextColumn Width="25*" Binding="{Binding Positions, Converter={StaticResource conv}}" Header="Gesamtbetrag"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button Margin="421,0,0,41" FontWeight="Bold" HorizontalAlignment="Left" Width="98" Height="26" VerticalAlignment="Bottom" RenderTransformOrigin="0.453,0.5" Content="Speichern" Click="bStatusChange"/>
+                        <Button Margin="421,0,0,41" IsEnabled="{Binding SelOrder, Converter={StaticResource conv}}"  FontWeight="Bold" HorizontalAlignment="Left" Width="98" Height="26" VerticalAlignment="Bottom" RenderTransformOrigin="0.453,0.5" Content="Speichern" Click="bStatusChange"/>
                         <Label Margin="100,0,0,39" FontWeight="Bold" HorizontalAlignment="Left" Width="119" Content="Bestellung ändern" Height="26" VerticalAlignment="Bottom"/>
                         <ComboBox x:Name="cbStatusChange" Margin="258,0,0,39" Height="26" ItemsSource="{Binding LChangeStatus}" SelectedItem="{Binding ChangedSelStatus}" IsEnabled="{Binding SelOrder, Converter={StaticResource conv}}" IsReadOnly="{Binding LChangeStatus, Converter={StaticResource conv}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="120" FontWeight="Bold"/>
 

@@ -5,8 +5,9 @@
 }
 
 
+<div class="center"> <h1>Bestellung ohne Kundenkonto</h1></div>
+
 <div class="center">
-    <h1>Bestellung ohne Kundenkonto</h1>
 
     <form class="max" method="post">
 
@@ -24,10 +25,8 @@
             }
         }
 
-        <h2 class="boldandleft">Daten für die Bestellung erfassen</h2>
-
         <!--Sample Data-->
-        <input type="checkbox" id="sampleNonCustomerCheckbox" onchange="insertSampleNonCustomer()" /> Beispieldaten einfügen<br />
+        <p><input type="checkbox" class="check" id="sampleNonCustomerCheckbox" onchange="insertSampleNonCustomer()" /> Beispieldaten einfügen</p>
 
         <!-- Firstname input -->
         <label class="form-label">Vorname</label>
@@ -91,7 +90,10 @@
         <label class="form-label" for="nonCustomerName">Land</label>
         <input asp-for="Country" type="text" id="nonCustomerCountry" class="form-control" />
 
-        <input asp-for="AGBsCheck" type="checkbox" id="nonCustomerAGBs" /> Ich bin mit den <a asp-page="/Impressum">AGBs</a> einverstanden
+        <input asp-for="AGBsCheck" type="checkbox" class="check" id="nonCustomerAGBs" /> Ich bin mit den <a asp-page="/Impressum">AGBs</a> einverstanden
+
+        <br />
+        <br />
 
         <button asp-page-handler="Check" type="submit" class="btn btn-primary btn-block mb-3">Speichern</button>
 

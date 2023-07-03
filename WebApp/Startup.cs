@@ -45,6 +45,8 @@ namespace WebApp
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseDefaultFiles();
+
             app.UseSession();
 
             app.UseStaticFiles();
@@ -60,6 +62,7 @@ namespace WebApp
                 endpoints.MapRazorPages();
                 endpoints.MapControllers(); // Makes API-Controller free
             });
+
         }
     }
 }

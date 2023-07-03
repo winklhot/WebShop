@@ -10,314 +10,326 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WebApp</title>
-    <link rel="stylesheet" href="../../lib/bootstrap/dist/css/bootstrap.min.css" />   
-    <link rel="stylesheet" href="../../css/site.css" />
-    <style>
-        /* CSS-Code */
-        @@media (max-width: 1050px) {
-           
-
-            button.custom {
-                font-size: 1rem;
-            }
-
-            main.custom {
-                font-size: 1em;
-            }
-
-            table.basket {
-                min-width: 100%;
-            }
-
-            div.center {
-                display: flex;
-                padding-top: 5%;
-                padding-left: 20%;
-                padding-right: 20%;
-                justify-content: space-between;
-            }
-
-            #marketplacesearchbtn {
-                vertical-align: bottom;
-                background-color: green;
-                width: 8em;
-                display: initial;
-                line-height: 1.8;
-                margin-left: 0.3em;
-                padding-top: unset;
-                padding-bottom: 0.05em;
-            }
-        }
-
-        @@media (min-width: 1050px) {
-  
-
-            img.article{
-                width: 150px;
-                height: 180px;
-            }
-
-            input.check {
-                height: 1em !important;
-                width: 1em !important;
-            }
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="../../lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../../wwwroot/css/site.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    @*<style type="text/css">
+    /* CSS-Code */
+    @@media (max-width: 1050px) {
 
 
-            table.basket {
-                min-width: 100%;
-            }
+    button.custom {
+    font-size: 1rem;
+    }
 
-            main.custom {
-                font-size: 2em;
-            }
+    main.custom {
+    font-size: 1em;
+    }
 
-            button.custom {
-                font-size: 1em;
-            }
+    table.basket {
+    min-width: 100%;
+    }
 
-            div.center {
-                display: flex;
-                padding-top: 5%;
-                padding-left: 35%;
-                padding-right: 35%;
-                justify-content: space-between;
-            }
+    div.center {
+    display: flex;
+    padding-top: 5%;
+    padding-left: 20%;
+    padding-right: 20%;
+    justify-content: space-between;
+    }
 
-            div.left {
-                display: flex;
-                justify-content: space-between;
-            }
+    #marketplacesearchbtn {
+    vertical-align: bottom;
+    background-color: green;
+    width: 8em;
+    display: initial;
+    line-height: 1.8;
+    margin-left: 0.3em;
+    padding-top: unset;
+    padding-bottom: 0.05em;
+    }
+    }
 
-
-
-            #marketplacesearchbtn {
-                vertical-align: bottom;
-                background-color: green;
-                width: 8em;
-                margin-left: 0.3em;
-                display: initial;
-                line-height: 1.55;
-                padding-top: unset;
-                padding-bottom: 0.1em;
-            }
-        }
-
-         main {
-                font-size: 2em;
-            }
-
-        h1 {
-            text-transform: uppercase;
-            line-height: 2;
-            font-weight: 500;
-        }
-
-        nav {
-            text-transform: uppercase;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-
-        li {
-            margin-right: 0.5em;
-        }
-
-        button {
-            font-size: 1.5rem;
-        }
-
-        input {
-            font-size: 1.0em !important;
-            height: 1.4em;
-        }
-
-        ul {
-            display: flex;
-        }
-
-        div.container {
-            min-width: 90% !important;
-        }
-
-        label.left {
-            text-align: left;
-            margin-bottom: 10px;
-        }
-
-        form.max {
-            width: 100%;
-        }
-
-        h1.boldandleft {
-            text-transform: none;
-            font-weight: bold;
-            text-align: left;
-            margin-bottom: 3%;
-            line-height: unset;
-            font-size: 1em;
-        }
-
-        button.btn btn-primary btn-block mb-4 {
-            margin-bottom: 5%;
-        }
-
-        input.margin {
-            margin-bottom: 5%;
-        }
-
-        input.displayNone {
-            display: none;
-        }
-
-        p.false {
-            color: red;
-            font-size: 2em;
-        }
-
-        p.true {
-            color: green;
-        }
-
-        h4.green {
-            color: green;
-        }
-
-        table.marketplace {
-            background-color: aquamarine;
-            margin-top: 1em;
-            text-align: left;
-            width: 95%;
-        }
-
-        td.marketplacename {
-            Font-weight: bold;
-            width: 55%;
-            padding-left: 10px;
-        }
-
-        td.marketplaceprice {
-            text-align: right;
-            font-weight: bold;
-            padding-right: 10px;
-        }
-
-        td.marketplacecount {
-            padding-bottom: 0px;
-            padding-left: 10px;
-        }
-
-        td.marketplacedesc {
-            padding-left: 10px;
-        }
+    @@media (min-width: 1050px) {
 
 
-        td.marketplacetobasket {
-            width: 25%;
-        }
+    img.article {
+    width: 150px;
+    height: 180px;
+    }
 
-        .code {
-            margin-left: 5%;
-        }
-
-        #central {
-            font-family: 'Ink Free';
-            font-size: 1.4em;
-            min-width: 10em;
-        }
-
-        #marketplacetobasketbtn {
-            float: right;
-            max-width: 80%;
-            min-width: 8em;
-            margin-right: 10px;
-            margin-bottom: 20px;
-        }
-
-        #basketbtnCashier {
-            margin-top: 5%;
-            margin-left: 0%;
-            margin-right: 0;
-            margin-bottom: 0;
-            float: right;
-            max-width: 10em;
-            background-color: #1B6EC2;
-        }
-
-        #basketbtnOrder {
-            margin-top: 5%;
-            margin-left: 0%;
-            margin-right: 0;
-            margin-bottom: 0;
-            float: right;
-            max-width: 14em;
-            background-color: green;
-        }
-
-        button.basketbtnred {
-            margin-top: 5%;
-            margin-left: 0;
-            margin-right: 0;
-            margin-bottom: 0;
-            float: left;
-            max-width: 10em;
-            align-items: center;
-            background-color: red !important;
-        }
-
-        button.marginleft{
-            margin-left: 20px;
-        }
-
-        #nonCusBtnRegister {
-            margin-top: 5%;
-            margin-left: 0;
-            margin-right: 0;
-            margin-bottom: 0;
-            display: flex;
-            float: left;
-            max-width: 18em;
-            align-items: center;
-            background-color: #1B6EC2;
-        }
-
-        #nonCusBtnLogin {
-            margin-top: 5%;
-            margin-left: 0%;
-            margin-right: 0;
-            margin-bottom: 0;
-            display: flex;
-            float: right;
-            align-items: center;
-            max-width: 18em;
-            background-color: green;
-        }
-
-        #red-text {
-            color: #F4023F !important;
-        }
-
-        #purpel-text {
-            color: #F4780F !important;
-        }
-
-        #darkblue-text {
-            color: #26D727 !important;
-        }
-
-        #lightblue-text {
-            color: #04B0FA !important;
-        }
-
-        #lightred-text {
-            color: #F930F5 !important;
-        }
-
-width    #loginli {
-            margin-right: 5%;
-        }
+    input.check {
+    height: 1em !important;
+    width: 1em !important;
+    }
 
 
-    </style>
+    table.basket {
+    min-width: 85%;
+    }
+
+    table.decision{
+    min-width: %;
+    }
+
+    main.custom {
+    font-size: 2em;
+    }
+
+    button.custom {
+    font-size: 1em;
+    }
+
+    div.center {
+    display: flex;
+    padding-top: 0%;
+    padding-left: 26%;
+    padding-right: 26%;
+    justify-content: space-between;
+    }
+
+    div.left {
+    display: flex;
+    justify-content: space-between;
+    }
+
+
+
+    #marketplacesearchbtn {
+    vertical-align: bottom;
+    background-color: green;
+    width: 8em;
+    margin-left: 0.3em;
+    display: initial;
+    line-height: 1.55;
+    padding-top: unset;
+    padding-bottom: 0.1em;
+    }
+    }
+
+    main {
+    font-size: 2em;
+    }
+
+    h1 {
+    text-transform: uppercase;
+    line-height: 2;
+    font-weight: 500;
+    }
+
+    nav {
+    text-transform: uppercase;
+    font-size: 1.3em;
+    font-weight: bold;
+    }
+
+    li {
+    margin-right: 0.5em;
+    }
+
+    button {
+    font-size: 1.5rem;
+    }
+
+    input {
+    font-size: 1.0em !important;
+    height: 1.4em;
+    }
+
+    ul {
+    display: flex;
+    }
+
+    input.ip-check{
+    width:1em;
+    height:1em;
+    }
+
+    div.container {
+    min-width: 90% !important;
+    }
+
+    label.left {
+    text-align: left;
+    margin-bottom: 10px;
+    }
+
+    form.max {
+    width: 100%;
+    }
+
+    h1.boldandleft {
+    text-transform: none;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 3%;
+    line-height: unset;
+    font-size: 1em;
+    }
+
+    button.btn btn-primary btn-block mb-4 {
+    margin-bottom: 5%;
+    }
+
+    input.margin {
+    margin-bottom: 5%;
+    }
+
+    input.displayNone {
+    display: none;
+    }
+
+    p.false {
+    color: red;
+    font-size: 1em;
+    }
+
+    p.true {
+    color: green;
+    }
+
+    h4.green {
+    color: green;
+    }
+
+    table.marketplace {
+    background-color: aquamarine;
+    margin-top: 1em;
+    text-align: left;
+    width: 90%;
+    }
+
+    td.marketplacename {
+    Font-weight: bold;
+    width: 55%;
+    padding-left: 10px;
+    }
+
+    td.marketplaceprice {
+    text-align: right;
+    font-weight: bold;
+    padding-right: 10px;
+    }
+
+    td.marketplacecount {
+    padding-bottom: 0px;
+    padding-left: 10px;
+    }
+
+    td.marketplacedesc {
+    padding-left: 10px;
+    }
+
+
+    td.marketplacetobasket {
+    width: 25%;
+    }
+
+    .code {
+    margin-left: 5%;
+    }
+
+    #central {
+    font-family: 'Ink Free';
+    font-size: 1.4em;
+    min-width: 10em;
+    }
+
+    #marketplacetobasketbtn {
+    float: right;
+    max-width: 80%;
+    min-width: 8em;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    }
+
+    #basketbtnCashier {
+    margin-top: 5%;
+    margin-left: 0%;
+    margin-right: 0;
+    margin-bottom: 0;
+    float: right;
+    max-width: 10em;
+    background-color: #1B6EC2;
+    }
+
+    #basketbtnOrder {
+    margin-top: 5%;
+    margin-left: 0%;
+    margin-right: 0;
+    margin-bottom: 0;
+    float: right;
+    max-width: 14em;
+    background-color: green;
+    }
+
+    button.basketbtnred {
+    margin-top: 5%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    float: left;
+    max-width: 10em;
+    align-items: center;
+    background-color: red !important;
+    }
+
+    button.marginleft {
+    margin-left: 20px;
+    }
+
+    #nonCusBtnRegister {
+    margin-top: 5%;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    display: flex;
+    float: left;
+    max-width: 18em;
+    align-items: center;
+    background-color: #1B6EC2;
+    }
+
+    #nonCusBtnLogin {
+    margin-top: 5%;
+    margin-left: 0%;
+    margin-right: 0;
+    margin-bottom: 0;
+    display: flex;
+    float: right;
+    align-items: center;
+    max-width: 18em;
+    background-color: green;
+    }
+
+    #red-text {
+    color: #F4023F !important;
+    }
+
+    #purpel-text {
+    color: #F4780F !important;
+    }
+
+    #darkblue-text {
+    color: #26D727 !important;
+    }
+
+    #lightblue-text {
+    color: #04B0FA !important;
+    }
+
+    #lightred-text {
+    color: #F930F5 !important;
+    }
+
+    width #loginli {
+    margin-right: 5%;
+    }
+
+    </style>*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/sha256.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@latest/dist/jspdf.min.js"></script>
@@ -393,9 +405,6 @@ width    #loginli {
                 document.getElementById("nonCustomerAGBs").checked = false;
             }
         }
-
-
-
 
         function hashInputValueLogin() {
             //     Get the input element
@@ -533,6 +542,40 @@ width    #loginli {
             var pdfDataUri = doc.output('dataurlnewwindow');
         }
 
+        var app = new Vue(
+            {
+                el: '#app',
+                data: {
+                    message: "Hallo Vue.js",
+                    port: 5000,
+                    artikel: [],
+                    suchbegriff: [],
+                },
+                methods:
+                {
+                    GetArtikel() {
+                        if (this.suchbegriff.length < 3) {
+                            this.artikel = [];
+                            return;
+                        }
+
+                        axios.get("http://localhost:" + this.port + "/api/article/search/" + this.suchbegriff)
+                            .then(response => this.artikel = response.data);
+                    },
+                    GetAlleArtikel() {
+                        axios.get("http://localhost:" + this.port + "/api/article")
+                            .then(response => this.artikel = response.data);
+                    },
+                },
+                computed:
+                {
+                    isDisabled() {
+                        return this.suchbegriff.length < 4;
+                    }
+                }
+            })
+
+
 
 
     </script>
@@ -544,7 +587,7 @@ width    #loginli {
                 <a class="navbar-brand" id="central" asp-area="" asp-page="/Marketplace"><img width="50" height="50" src=@(logo.GetAsString()) />&nbsp;Hofer's Shop</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon" ></span>
+                    <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-xl-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
@@ -570,7 +613,6 @@ width    #loginli {
     </header>
     <div class="container">
         <main role="main" class="custom pb-3" id="globalstylemain">
-            <br />
             <br />
             @RenderBody()
         </main>

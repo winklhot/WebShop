@@ -63,8 +63,8 @@ namespace WebApp.Pages
             }
             else
             {
-                ErrorMessage = $"Die gewünschte Anzahl ist nicht auf Lager{id}";
-                Suchbegriff = id.ToString();
+                ErrorMessage = $"Die gewünschte Anzahl ist nicht auf Lager ({Article.Get(id).Name})";
+                Suchbegriff = Article.Get(id).Name;
                 OnPostSuche();
             }
 

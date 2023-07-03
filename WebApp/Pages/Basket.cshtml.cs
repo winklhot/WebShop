@@ -31,6 +31,8 @@ namespace WebApp.Pages
             sessionBasket = sessionBasket.MergeBaskets();
 
             HttpContext.Session.SetObject("sessionBasket", sessionBasket);
+
+            HttpContext.Session.SetObject("lastUrl", "Basket");
         }
 
         public void OnPostDelete(int id)

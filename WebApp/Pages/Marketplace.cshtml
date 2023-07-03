@@ -19,7 +19,10 @@
                 </td>
             </tr>
         </table>
-       
+        @if (Model.ErrorMessage != null)
+        {
+            <p class="false">@Model.ErrorMessage</p>
+        }
         @{
             int i = 0;
         }
@@ -30,7 +33,9 @@
                 <table class="marketplace">
                     <tr>
                         <td class="marketplacename">@a.Name</td>
-                        @{Picture p = Picture.Get(a.Id);}
+                        @{
+                            Picture p = Picture.Get(a.Id);
+                        }
                         <td rowspan="3"><img class="article" id="marketplaceimg" width="90" height="100" src="@(p != null ? p.GetAsString() : Picture.Get(10).GetAsString())" /></td>
                         <td class="marketplaceprice">@a.Price.ToString("#0.00") EUR</td>
                     </tr>
@@ -55,10 +60,6 @@
                         <td class="marketplacetobasket"><button type="submit" size=5 asp-page-handler="Add" asp-route-id="@a.Id" class="btn btn-primary btn-block custom" id="marketplacetobasketbtn">Warenkorb</button></td>
                     </tr>
                 </table>
-                @if (Model.ErrorMessage != null && Model.ErrorMessage.Contains(a.Id.ToString()))
-                {
-                    <p class="false">@Model.ErrorMessage.Remove(Model.ErrorMessage.Length - 1)</p>
-                }
             </form>
         }
         <br />

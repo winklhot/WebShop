@@ -44,7 +44,9 @@ namespace WebApp.Pages
 
                     sessionBasket.Insert();
 
-                    HttpContext.Session.SetObject("sessionBasket", Order.GetAllFromNonCustomer(sessionBasket.NonCustomer.Id).Find(item => item.Status == Status.Warenkorb));
+
+                    HttpContext.Session.SetObject("sessionBasket", sessionBasket);
+
 
                     Response.Redirect("/Basket");
                 }

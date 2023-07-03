@@ -252,8 +252,13 @@ namespace DesktopApp
 
                 while (la.Count > 0)
                 {
-                    (la[0] as Article).Delete();
-                    model.LArticle.Remove(la[0] as Article);
+                    Article? a = la[0] as Article;
+
+                    if (a != null)
+                    {
+                        a.Delete();
+                        model.LArticle.Remove(a);
+                    }
                 }
                 if (count > 0)
                 {

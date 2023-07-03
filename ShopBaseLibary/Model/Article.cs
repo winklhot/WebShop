@@ -64,7 +64,7 @@ namespace ShopBase
 
         public override string ToString() => $"{Id,-6} {Name,-30} {Description,-70} {Price,+8:#0.00}";
 
-        public override bool Equals(object obj) => obj is Article artikel && artikel.Id == Id;
+        public override bool Equals(object? obj) => obj is Article artikel && artikel.Id == Id;
 
         public override int GetHashCode()
         {

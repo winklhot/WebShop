@@ -474,42 +474,54 @@ namespace Layer3Objects
             // Rekursive call if Adress not exists and after inserting with local funtion, because it than has id
             return aid > 0 ? Adress.Get(aid) : GetAdressWithoutID(InsertReturn(a));
         }
-        public static Order MergeBasket(Order o)
+        public static Order? MergeBasket(Order o)
         {
             if (o == null || o.Positions == null)
             {
                 return null;
             }
 
-            Customer c = o.Customer != null && o.Customer.Id > 0 ? o.Customer : null;
-            Order mergedBasket = null;
+            Customer c = o.Customer;
+            NonCustomer n = o.NonCustomer;
+            Order? mergedBasket = null;
             List<Order> list = new List<Order>();
 
 
             foreach (Position item in o.Positions)
             {
-                mergedBasket ??= new Order(c, Status.Warenkorb, new List<Position>());
-
-                if (mergedBasket.Positions.Contains<Position>(item) == false)
+                if (item != null)
                 {
-                    item.Count = item.Count > item.Article.Count ? item.Article.Count : item.Count;
+                    if (n != null)
+                        mergedBasket ??= new(n, Status.Warenkorb, new List<Position>());
+                    else
+                        mergedBasket ??= new Order(c, Status.Warenkorb, new List<Position>());
+
+                    if (item.Article != null && mergedBasket != null &&  mergedBasket.Positions != null && mergedBasket.Positions.Contains<Position>(item) == false)
+                    {
+                        item.Count = item.Count > item.Article.Count ? item.Article.Count : item.Count;
 
 
-                    mergedBasket.Positions.Add(item);
-                }
-                else
-                {
-                    Position pO = mergedBasket.Positions.Find(x => x.Article.Id == item.Article.Id);
+                        mergedBasket.Positions.Add(item);
+                    }
+                    else
+                    {
+                        if (mergedBasket != null && mergedBasket.Positions != null && item.Article != null)
+                        {
+                            Position? pO = mergedBasket.Positions.Find(x => x.Article != null ? x.Article.Id == item.Article.Id : false);
 
-                    pO.Count = pO.Count + item.Count > pO.Article.Count ? pO.Article.Count : pO.Count + item.Count;
+                            if (pO != null)
+                                pO.Count = pO.Count + item.Count > pO.Article.Count ? pO.Article.Count : pO.Count + item.Count;
+                        }
+
+                    }
                 }
             }
 
             return mergedBasket;
         }
-        public static Picture GetFromArticle(Article a)
+        public static Picture? GetFromArticle(Article a)
         {
-            Picture p = new Picture();
+            Picture? p = new Picture();
 
             try
             {

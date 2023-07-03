@@ -48,17 +48,18 @@ namespace ShopBase
             Adress = adress;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             bool isEqaul = false;
+            Customer? c = obj as Customer;
 
-            if (this.Id != 0 && (obj as Customer).Id != 0)
+            if (this.Id != 0 && c != null && c.Id != 0)
             {
-                isEqaul = Id == (obj as Customer).Id;
+                isEqaul = Id == c.Id;
             }
-            else
+            else if(EMail != null && c != null && c.EMail != null)
             {
-                isEqaul = EMail == (obj as Customer).EMail;
+                isEqaul = EMail == c.EMail;
             }
 
             return isEqaul;
