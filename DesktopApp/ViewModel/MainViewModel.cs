@@ -18,6 +18,7 @@ using System.Threading;
 using Microsoft.Win32;
 using System.IO;
 using System.ComponentModel;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DesktopApp
 {
@@ -52,7 +53,6 @@ namespace DesktopApp
         private Status? _changedSelStatus;
 
 
-
         public ObservableCollection<Article> LArticle { get => _lAricle; set { _lAricle = value; OnPropertyChanged(nameof(LArticle)); } }
         public ObservableCollection<Customer> LCustomer { get => _lCustomer; set { _lCustomer = value; OnPropertyChanged(nameof(LCustomer)); } }
         public ObservableCollection<Order> LOrder { get => _lOrder; set { _lOrder = value; OnPropertyChanged(nameof(LOrder)); } }
@@ -68,7 +68,7 @@ namespace DesktopApp
             }
         }
         public Picture SelArticlePicture { get => _selArticlePicture; set { _selArticlePicture = value; OnPropertyChanged(nameof(SelArticlePicture)); OnPropertyChanged(nameof(SelArticle)); } }
-        public Article NewArticle
+        public Article? NewArticle
         {
             get
             {
@@ -82,19 +82,175 @@ namespace DesktopApp
             set { _newArticle = value; OnPropertyChanged(nameof(NewArticle)); }
         }
         public List<Status> LStatus { get => _lStatus; private set => _lStatus = value; }
-        public Status SelStatus { get => _selStatus; set { _selStatus = value; 
-                LChangeStatus = SelStatus == Status.Warenkorb ? new ObservableCollection<Status>() { Status.Bestellt, Status.Storniert } : SelStatus == Status.Bestellt ? new ObservableCollection<Status>() { Status.Versendet, Status.Storniert } : null; LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == SelStatus)); } }
-        public ObservableCollection<Status>? LChangeStatus { get => _lchangeStatus; set {
-                _lchangeStatus = value; ChangedSelStatus = value != null && (value as ObservableCollection<Status>).Count > 0 ? (value as ObservableCollection<Status>)[0] : null; OnPropertyChanged(nameof(ChangedSelStatus)); OnPropertyChanged(nameof(LChangeStatus)); } }
-        public Status? ChangedSelStatus { get => _changedSelStatus; set { _changedSelStatus = value;  } }
+        public Status SelStatus
+        {
+            get => _selStatus; set
+            {
+                _selStatus = value;
+                LChangeStatus = SelStatus == Status.Warenkorb ? new ObservableCollection<Status>() { Status.Bestellt, Status.Storniert } : SelStatus == Status.Bestellt ? new ObservableCollection<Status>() { Status.Versendet, Status.Storniert } : null; LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == SelStatus));
+            }
+        }
+        public ObservableCollection<Status>? LChangeStatus
+        {
+            get => _lchangeStatus; set
+            {
+                _lchangeStatus = value; ChangedSelStatus = value != null && (value as ObservableCollection<Status>).Count > 0 ? (value as ObservableCollection<Status>)[0] : null; OnPropertyChanged(nameof(ChangedSelStatus)); OnPropertyChanged(nameof(LChangeStatus));
+            }
+        }
+        public Status? ChangedSelStatus { get => _changedSelStatus; set { _changedSelStatus = value; } }
+
+
+        private double DeafultTabHeight => 30.0;
+        private double DefaultTabWith => 90.0;
+        private double DefaultListBoxFontSize => 12.0;
+        private double DefaultBtnHeight => 35.0;
+        private double DefaultBtnWidth => 140.0;
+        private double DefaultBtnMarginBottom => 33.0;
+        private double DefaultFont => 14;
+
+
+
+
+
+
+
+
+
         public MainViewModel()
         {
             LoadData();
+
+        }
+
+        public void SetWindowStyle(object sender, SizeChangedEventArgs e)
+        {
+            MainWindow? mw = sender as MainWindow;
+
+            if (mw != null)
+            {
+                if (e.PreviousSize.Width != 0.00) // To avoid infinity
+                {
+                    double factor = (e.NewSize.Width / e.PreviousSize.Width);
+
+                    // Page Article
+                    mw.lbArtList.FontSize *= factor;
+                    mw.bArticleAdd.Width *= factor;
+                    mw.bArticleChange.Width = mw.bArticleAdd.Width;
+                    mw.bArticleDelete.Width = mw.bArticleAdd.Width;
+                    mw.bSetBack.FontSize *= factor;
+
+                    mw.bArticleAdd.Margin = new(mw.bArticleAdd.Margin.Left, mw.bArticleAdd.Margin.Top, mw.bArticleAdd.Margin.Right, mw.bArticleAdd.Margin.Bottom / factor);
+                    mw.bArticleChange.Margin = new(mw.bArticleChange.Margin.Left, mw.bArticleChange.Margin.Top, mw.bArticleChange.Margin.Right, mw.bArticleChange.Margin.Bottom / factor);
+                    mw.bArticleDelete.Margin = new(mw.bArticleDelete.Margin.Left, mw.bArticleDelete.Margin.Top, mw.bArticleDelete.Margin.Right, mw.bArticleDelete.Margin.Bottom / factor);
+
+                    //Page Customer
+                    mw.lbCustomer.FontSize *= factor;
+                    mw.bCustomerChange.FontSize *= factor;
+                    mw.bCustomerDelete.FontSize *= factor;
+                    mw.bCustomerChange.Width *= factor;
+                    mw.bCustomerDelete.Width *= factor;
+
+                    mw.bCustomerChange.Margin = new(mw.bCustomerChange.Margin.Left, mw.bCustomerChange.Margin.Top, mw.bCustomerChange.Margin.Right, mw.bCustomerChange.Margin.Bottom / factor);
+                    mw.bCustomerDelete.Margin = new(mw.bCustomerDelete.Margin.Left, mw.bCustomerDelete.Margin.Top, mw.bCustomerDelete.Margin.Right, mw.bCustomerDelete.Margin.Bottom / factor);
+
+                    //Page Order
+                    mw.lbOrder.FontSize *= factor;
+                    mw.lbCustomerOrder.FontSize *= factor;
+                    mw.lOrderSelection.FontSize *= factor;
+                    mw.lOrderChange.FontSize *= factor;
+                    mw.bOrderChange.FontSize *= factor;
+                    mw.bOrderChange.Width *= factor;
+                    mw.lOrderSelection.Width *= factor;
+                    mw.cbStatus.Margin = new(mw.cbStatus.Margin.Left * factor * 0.98, mw.cbStatus.Margin.Top, mw.cbStatus.Margin.Right, mw.cbStatus.Margin.Bottom);
+                    mw.cbStatus.Width *= factor;
+                    mw.cbStatus.FontSize *= factor;
+                    mw.cbStatusChange.Margin = new(mw.cbStatusChange.Margin.Left * factor * 0.98, mw.cbStatusChange.Margin.Top, mw.cbStatusChange.Margin.Right, mw.cbStatusChange.Margin.Bottom);
+                    mw.cbStatusChange.Width *= factor;
+                    mw.cbStatusChange.FontSize *= factor;
+
+                    
+
+                }
+
+                if(e.PreviousSize.Height != 0.00)
+                {
+                    double factor = (e.NewSize.Height / e.PreviousSize.Height);
+
+                    mw.bArticleAdd.Height *= factor;
+                    mw.bArticleChange.Height = mw.bArticleAdd.Height;
+                    mw.bArticleDelete.Height = mw.bArticleAdd.Height;
+                    mw.bCustomerChange.Height = mw.bArticleAdd.Height;
+                    mw.bCustomerDelete.Height = mw.bArticleAdd.Height;
+                    mw.bSetBack.Height *= factor;
+                    mw.cbStatus.Height *= factor;
+                    mw.cbStatusChange.Height *= factor;
+                    mw.lOrderSelection.Height *= factor;
+                    mw.bOrderChange.Height *= factor;
+                }
+            }
+
+           
+
+
+
+            //if (!this.IsLoaded)
+            //    return;
+
+            //double factor = this.Width / _defaultWindowsWidt;
+
+            //lbArtList.FontSize = _defaultListBoxFontSize * Math.Pow(factor, 1.27);
+
+            //lbOrder.FontSize = _defaultListBoxFontSize * Math.Pow(factor, 1.27);
+
+            //bAdd.Height = _defaultBtnHeight * Math.Pow(factor, 1.03);
+            //bChange.Height = _defaultBtnHeight * Math.Pow(factor, 1.03);
+            //bDelete.Height = _defaultBtnHeight * Math.Pow(factor, 1.03);
+
+            //bAdd.Width = _defaultBtnWidth * Math.Pow(factor, 1.14);
+            //bChange.Width = _defaultBtnWidth * Math.Pow(factor, 1.14);
+            //bDelete.Width = _defaultBtnWidth * Math.Pow(factor, 1.14);
+
+            //Thickness margin = bAdd.Margin;
+            //margin.Bottom = _defaultBtnMarginBottom * Math.Pow(1 / factor, 1.04);
+            //bAdd.Margin = margin;
+
+            //margin = bChange.Margin;
+            //margin.Bottom = _defaultBtnMarginBottom * Math.Pow(1 / factor, 1.04);
+            //bChange.Margin = margin;
+
+            //margin = bDelete.Margin;
+            //margin.Bottom = _defaultBtnMarginBottom * Math.Pow(1 / factor, 1.04);
+            //bDelete.Margin = margin;
+
+            //bAdd.FontSize = lbArtList.FontSize * 0.70;
+            //bChange.FontSize = lbArtList.FontSize * 0.70;
+            //bDelete.FontSize = lbArtList.FontSize * 0.70;
+
+
+            //lbCustomer.FontSize = _defaultListBoxFontSize * Math.Pow(factor, 1.27);
+
+            //bChangeCustomer.Height = _defaultBtnHeight * Math.Pow(factor, 1.03);
+            //bDeleteCustomer.Height = _defaultBtnHeight * Math.Pow(factor, 1.03);
+
+            //bChangeCustomer.Width = _defaultBtnWidth * Math.Pow(factor, 1.14);
+            //bDeleteCustomer.Width = _defaultBtnWidth * Math.Pow(factor, 1.14);
+
+            //margin = bChangeCustomer.Margin;
+            //margin.Bottom = _defaultBtnMarginBottom * Math.Pow(1 / factor, 1.04);
+            //bChangeCustomer.Margin = margin;
+
+            //margin = bDeleteCustomer.Margin;
+            //margin.Bottom = _defaultBtnMarginBottom * Math.Pow(1 / factor, 1.04);
+            //bDeleteCustomer.Margin = margin;
+
+            //bChangeCustomer.FontSize = lbArtList.FontSize * 0.70;
+            //bDeleteCustomer.FontSize = lbArtList.FontSize * 0.70;
+
         }
 
         public void LoadData()
         {
-            LArticle = new ObservableCollection<Article>(Article.GetAll());
+            LArticle = new ObservableCollection<Article>(Article.GetAll().Where(item => item.Active));
             LCustomer = new ObservableCollection<Customer>(Customer.GetAll());
             SelCustomer = LCustomer[0];
             LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == Status.Warenkorb));

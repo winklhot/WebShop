@@ -10,6 +10,9 @@ namespace ShopBase
 {
     public class Article
     {
+        public int Id { get; set; }
+        public bool Active { get; set; } = false;
+
         // Name may not be emty, desc can be emty according to database setup
         public string Name { get => _name; set => _name = value.Length < 31 && value.Trim().Length > 0 ? value.Trim() : throw new Exception("Name zu lang oder keine Eingabe"); }
         public string Description { get => _desc; set => _desc = value.Length < 71 ? value : throw new Exception("Bezeichnung ist zu lang");}
@@ -29,7 +32,6 @@ namespace ShopBase
         private string _desc;
 
         private decimal _price;
-        public int Id { get; set; }
         
 
         public Article()
@@ -37,17 +39,19 @@ namespace ShopBase
 
         }
 
-        public Article(int id, string name, string description, decimal price, int count)
+        public Article(int id, bool active, string name, string description, decimal price, int count)
         {
             Id = id;
+            Active = active;
             Name = name;
             Description = description;
             Price = price;
             Count = count;
         }
 
-        public Article(string name, string description, decimal price, int count)
+        public Article(bool active, string name, string description, decimal price, int count)
         {
+            Active = active;
             Name = name;
             Description = description;
             Price = price;

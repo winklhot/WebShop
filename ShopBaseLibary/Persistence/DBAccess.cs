@@ -63,7 +63,7 @@ namespace Layer3Access
 
             return con;
         }
-        public static int ExecuteNonQuery(String sql)
+        public static int ExecuteNonQuery(String? sql)
         {
             int lastId = -1;
             if (sql != null)
@@ -132,6 +132,7 @@ namespace Layer3Access
             string sql =       "Create Table TArticle" +
                                "(" +
                                "Id integer primary key autoincrement," +
+                               "Active bool default false," +
                                "Name VARCHAR(30) not null," +
                                "Description VARCHAR(70)," +
                                "Price Decimal(6,2)," +

@@ -24,7 +24,7 @@ namespace DesktopApp
     public class Converter : IValueConverter
     {
         // Convert for UI
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             object o = null;
 
@@ -68,7 +68,7 @@ namespace DesktopApp
         }
 
         // Convert from UI
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             object o = null;
 
@@ -93,7 +93,7 @@ namespace DesktopApp
         }
 
 
-        public BitmapImage GetBitmapImage(Picture p)
+        public BitmapImage? GetBitmapImage(Picture p)
         {
 
             if (p == null || p.Data == null)

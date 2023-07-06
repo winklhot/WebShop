@@ -12,10 +12,10 @@ namespace WebApp.Pages
     [BindProperties]
     public class LoginModel : PageModel
     {
-        public string EMail { get; set; }
-        public string HashedPwd { get; set; }
-        public string ErrorMessage { get; set; }
-        public Order sessionBasket { get; set; }
+        public string? EMail { get; set; }
+        public string? HashedPwd { get; set; }
+        public string? ErrorMessage { get; set; }
+        public Order? sessionBasket { get; set; }
 
         public void OnGet()
         {
@@ -27,7 +27,7 @@ namespace WebApp.Pages
             sessionBasket = HttpContext.Session.GetObject<Order>("sessionBasket");
             //Iam not sure how long the js needs to compute hash so it should wait 10ms before requesting the value
             Thread.Sleep(10);
-            HashedPwd = Request.Form["HashedPwd"];
+            HashedPwd = Request.Form["HashedPwd"].ToString();
             int customerId = Customer.Login(EMail, HashedPwd);
 
             // Customer unique Main and hashed js pwd is found

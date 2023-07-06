@@ -11,7 +11,7 @@ namespace DesktopApp
 {
     public class Converter2 : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             object o = null;
 

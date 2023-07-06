@@ -17,6 +17,7 @@ using System.Threading;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows.Media.Media3D;
+using System.Runtime.CompilerServices;
 
 namespace DesktopApp
 {
@@ -27,17 +28,9 @@ namespace DesktopApp
 
     public partial class MainWindow : Window
     {
-        private static MainViewModel model = default;
+        private MainViewModel? model = null;
 
-        private static double _defaultWindowsWidt = default;
-
-        private static double _defaultListBoxFontSize = default;
-
-        private static double _defaultBtnHeight = default;
-
-        private static double _defaultBtnWidth = default;
-
-        private static double _defaultBtnMarginBottom = default;
+        
 
         private static Task _pictureShowing = default;
 
@@ -50,15 +43,18 @@ namespace DesktopApp
 
             model = FindResource("mxmodel") as MainViewModel;
 
-            _defaultWindowsWidt = this.Width;
+            this.SizeChanged += model.SetWindowStyle;
 
-            _defaultListBoxFontSize = lbArtList.FontSize;
+           
 
-            _defaultBtnHeight = bAdd.Height;
 
-            _defaultBtnWidth = bAdd.Width;
+            //_defaultListBoxFontSize = lbArtList.FontSize;
 
-            _defaultBtnMarginBottom = bAdd.Margin.Bottom;
+            //_defaultBtnHeight = bAdd.Height;
+
+            //_defaultBtnWidth = bAdd.Width;
+
+            //_defaultBtnMarginBottom = bAdd.Margin.Bottom;
         }
 
         // ########################  Begin Article Main Window and Add, Change, Delete and Hidden Dialog ######################## 
@@ -68,8 +64,8 @@ namespace DesktopApp
             if (!this.IsLoaded)
                 return;
 
-            bChange.IsEnabled = lbArtList.SelectedItems.Count == 1 ? true : false;
-            bDelete.IsEnabled = lbArtList.SelectedItems.Count > 0 ? true : false;
+            bArticleChange.IsEnabled = lbArtList.SelectedItems.Count == 1 ? true : false;
+            bArticleDelete.IsEnabled = lbArtList.SelectedItems.Count > 0 ? true : false;
         }
         private void bAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -287,7 +283,7 @@ namespace DesktopApp
 
 
         //************************   Begin Tab Customer and Change hidden                              ************************
-        private void bCustomerDelete(object sender, RoutedEventArgs e)
+        private void CustomerDelete(object sender, RoutedEventArgs e)
         {
             if (!this.IsLoaded)
                 return;
@@ -320,7 +316,7 @@ namespace DesktopApp
                 }
             }
         }
-        private void bCustomerChange_Click(object sender, RoutedEventArgs e)
+        private void CustomerChange(object sender, RoutedEventArgs e)
         {
             model = FindResource("mxmodel") as MainViewModel;
             Customer c = model.SelCustomer as Customer;
@@ -547,7 +543,7 @@ namespace DesktopApp
 
         //+++++++++++++++++++++++    Begin Global Functions                                            +++++++++++++++++++++++++ 
 
-        public BitmapImage GetBitmapImage(Picture p)
+        public BitmapImage? GetBitmapImage(Picture p)
         {
 
             if (p == null)
@@ -598,68 +594,18 @@ namespace DesktopApp
 
 
         //************************   Begin MainWindow Functions                                             ************************
+
+
         private void DynamicFontSizeChange(object sender, SizeChangedEventArgs e)
         {
-            if (!this.IsLoaded)
-                return;
-
-            double factor = this.Width / _defaultWindowsWidt;
-
-            lbArtList.FontSize = _defaultListBoxFontSize * Math.Pow(factor, 1.27);
-
-            lbOrder.FontSize = _defaultListBoxFontSize * Math.Pow(factor, 1.27);
-
-            bAdd.Height = _defaultBtnHeight * Math.Pow(factor, 1.03);
-            bChange.Height = _defaultBtnHeight * Math.Pow(factor, 1.03);
-            bDelete.Height = _defaultBtnHeight * Math.Pow(factor, 1.03);
-
-            bAdd.Width = _defaultBtnWidth * Math.Pow(factor, 1.14);
-            bChange.Width = _defaultBtnWidth * Math.Pow(factor, 1.14);
-            bDelete.Width = _defaultBtnWidth * Math.Pow(factor, 1.14);
-
-            Thickness margin = bAdd.Margin;
-            margin.Bottom = _defaultBtnMarginBottom * Math.Pow(1 / factor, 1.04);
-            bAdd.Margin = margin;
-
-            margin = bChange.Margin;
-            margin.Bottom = _defaultBtnMarginBottom * Math.Pow(1 / factor, 1.04);
-            bChange.Margin = margin;
-
-            margin = bDelete.Margin;
-            margin.Bottom = _defaultBtnMarginBottom * Math.Pow(1 / factor, 1.04);
-            bDelete.Margin = margin;
-
-            bAdd.FontSize = lbArtList.FontSize * 0.70;
-            bChange.FontSize = lbArtList.FontSize * 0.70;
-            bDelete.FontSize = lbArtList.FontSize * 0.70;
-
-
-            lbCustomer.FontSize = _defaultListBoxFontSize * Math.Pow(factor, 1.27);
-
-            bChangeCustomer.Height = _defaultBtnHeight * Math.Pow(factor, 1.03);
-            bDeleteCustomer.Height = _defaultBtnHeight * Math.Pow(factor, 1.03);
-
-            bChangeCustomer.Width = _defaultBtnWidth * Math.Pow(factor, 1.14);
-            bDeleteCustomer.Width = _defaultBtnWidth * Math.Pow(factor, 1.14);
-
-            margin = bChangeCustomer.Margin;
-            margin.Bottom = _defaultBtnMarginBottom * Math.Pow(1 / factor, 1.04);
-            bChangeCustomer.Margin = margin;
-
-            margin = bDeleteCustomer.Margin;
-            margin.Bottom = _defaultBtnMarginBottom * Math.Pow(1 / factor, 1.04);
-            bDeleteCustomer.Margin = margin;
-
-            bChangeCustomer.FontSize = lbArtList.FontSize * 0.70;
-            bDeleteCustomer.FontSize = lbArtList.FontSize * 0.70;
-
+            
+            
         }
         private void DynamicFontSizeChange(object sender, EventArgs e)
         {
-            if (!this.IsLoaded)
-                return;
+            
 
-            this.Width = this.WindowState == WindowState.Maximized ? SystemParameters.MaximizedPrimaryScreenWidth : _defaultWindowsWidt;
+            //this.Width = this.WindowState == WindowState.Maximized ? SystemParameters.MaximizedPrimaryScreenWidth : _defaultWindowsWidt;
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

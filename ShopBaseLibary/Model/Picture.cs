@@ -94,7 +94,7 @@ namespace ShopBase
 
         public void Insert() => DBObjects.Insert(this);
         public void Change() => DBObjects.Change<Picture>(this);
-        public static Picture Get(int id)
+        public static Picture? Get(int id)
         {
             try
             {

@@ -26,7 +26,7 @@
         @{
             int i = 0;
         }
-        @foreach (Article a in Model.lArtikel.FindAll(item => Model.lArtikel.IndexOf(item) < 50))
+        @foreach (Article a in Model.lArtikel.FindAll(item => item.Active).FindAll(item => Model.lArtikel.IndexOf(item) < 50))
         {
             i++;
             <form method="post">

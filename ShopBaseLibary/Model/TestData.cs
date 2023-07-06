@@ -105,8 +105,8 @@ namespace ShopBase
         }
         public static void InsertTestCustomers()
         {
-            List<Customer> customers = default;
-            Customer c = default;
+            List<Customer>? customers = default;
+            Customer? c = default;
 
 
             List<string> firstnamesWithGender = GetFirstnames();
@@ -148,58 +148,58 @@ namespace ShopBase
         public static void InsertArticles()
         {
 
-            new Article("Apfel, rot", "Ein roter Apfel", 2.99m, r.Next(5, 25)).Insert();
-            new Article("Apfel, gelb", "Ein gelber Apfel", 2.99m, r.Next(5, 25)).Insert();
-            new Article("Apfel, grün", "Ein grüner Apfel", 3.85m, r.Next(5, 25)).Insert();
-            new Article("Birne, grün", "Eine grüne Birne", 3.95m, r.Next(5, 25)).Insert();
-            new Article("Orange, orange", "Eine organge Orange", 3.55m, r.Next(5, 25)).Insert();
-            new Article("Kaki, braun", "Eine braune Kaki", 12.99m, r.Next(5, 25)).Insert();
-            new Article("Pomelo, weißfleischig", "Eine fruchtig weiße Pomelo", 2.49m, r.Next(5, 25)).Insert();
-            new Article("Pomelo, rotfleischig", "Eine rote sauere und bittere Pomelo", 1.99m, r.Next(5, 25)).Insert();
-            new Article("Birne, gelb", "Eine saftige Birne aus deutschen Anbau", 1.89m, r.Next(5, 25)).Insert();
-            new Article("Bapfel", "Weder Apfel noch Birne", 1.30m, r.Next(5, 25)).Insert();
-            new Article("Nashi-Birne", "Ist eine Birne, die wie ein Apfel aussieht.", 1.50m, r.Next(5, 25)).Insert();
-            new Article("Birpfel", "Wie ein Bapfel, nur umgekehrt", 1.25m, r.Next(5, 25)).Insert();
-            new Article("Holzapfel", "Hier beißt man auf Holz,eher zum Schnapsbrennen.", 4.35m, r.Next(5, 25)).Insert();
-            new Article("Quitte", "Ideal für Likör oder Marmelade", 4.40m, r.Next(5, 25)).Insert();
-            new Article("Aprikose", "Auch als Marille bekannt. Fruchtig und lecker.", 14.95m, r.Next(5, 25)).Insert();
-            new Article("Oliven, 100g", "Auch ein Obst. Ist aber eher für Salat.", 1.99m, r.Next(5, 25)).Insert();
-            new Article("Johannisbeere, rot", "Die allerfeinste Beere vom Strauch", 2.55m, r.Next(5, 25)).Insert();
-            new Article("Pflaumen, 50g", "Gesund und lecker. Vorsicht, Stein ", 2.99m, r.Next(5, 25)).Insert();
-            new Article("Zwetschgen, 100g", "Eine Unterart der Pflaume.", 1.45m, r.Next(5, 25)).Insert();
-            new Article("Pfirsich, gelb", "Ein leckerer Pfirsich mit gelben Fleisch.", 1.85m, r.Next(5, 25)).Insert();
-            new Article("Kirschen, Paar", "Ein Paar Kirschen zum Sonderpreis", 3.10m, r.Next(5, 25)).Insert();
-            new Article("Beeren, Mix, 100g", "Ein Mix aus frischen Beeren der Saison", 2.30m, r.Next(5, 25)).Insert();
-            new Article("Kultur-Heidelbeeren, 100g", "Heidelbeeren aus der heimischen Kultur.", 1.20m, r.Next(5, 25)).Insert();
-            new Article("Wildheidelbeeren, 100g", "Aus dem Wald. Bitte vor dem Verzehr Waschen.", 1.30m, r.Next(5, 25)).Insert();
-            new Article("Himbeeren, 200g", "Frische Himbeeren frisch vom frischen Frischestrauch.", 12.09m, r.Next(5, 25)).Insert();
-            new Article("Brombeere, 100g", "Leckere Risenbeeren vom Kulturstrauch. BIO-Qualität.", 2.09m, r.Next(5, 25)).Insert();
-            new Article("Ananas", "Vorsicht: Auf keinen Fall auf die Pizza klatschen!", 1.09m, r.Next(5, 25)).Insert();
-            new Article("Erdbeeren, 200g", "Frische Erdbeeren vom Feld", 1.09m, r.Next(5, 25)).Insert();
-            new Article("Johannisbeeren, schwarz", "Wie die Nacht. Kein Nachtschattengewächs", 4.09m, r.Next(5, 25)).Insert();
-            new Article("Weintrauben, weiß, 200g", "Weiße Trauben, ideal zu Käse und Wein", 2.09m, r.Next(5, 25)).Insert();
-            new Article("Holunderbeeren, 200g", "Beeren vom Holunderbaum. Für leckeren Hollunderlikör.", 5.79m, r.Next(5, 25)).Insert();
-            new Article("Erdnüsse, 200g", "Erdnüsse, Roh und nicht geröstet oder gesalzen.", 11.79m, r.Next(5, 25)).Insert();
-            new Article("Hanfnüsse, 200g", "Leckere Samen der Hanfpflanze. Zum Backen geeignet.", 1.79m, r.Next(5, 25)).Insert();
-            new Article("Kürbiskerne, 200g", "Leckere Gehirnkerne fördern die Denkleistung!", 2.79m, r.Next(5, 25)).Insert();
-            new Article("Walnüsse, 200g", "Da freut sich der Nikolaus!", 3.79m, r.Next(5, 25)).Insert();
-            new Article("Nuss-Mix, gesund, 500g", "Ein Bunter Nussmix: Nüsse Sind Gesund!", 4.79m, r.Next(5, 25)).Insert();
-            new Article("Avocado", "Mit viel Wasser zum Superfood gereift.", 5.79m, r.Next(5, 25)).Insert();
-            new Article("Bananen, 1kg", "Schmeckt allen Primaten", 4.79m, r.Next(5, 25)).Insert();
-            new Article("Grapefruit, rot", "Eine Kreuzung aus Orange und Pampelmuse.", 1.79m, r.Next(5, 25)).Insert();
-            new Article("Zitrone", "Der Sauer-Macht-Lustig-Klassiker!", 1.79m, r.Next(5, 25)).Insert();
-            new Article("Limette", "Ideal für Cocktails wie Caipi oder Mojito!", 11.79m, r.Next(5, 25)).Insert();
-            new Article("Mandarine, 8er Netz", "Gerade vor Weihnachten ein Hochgenuss!", 2.79m, r.Next(5, 25)).Insert();
-            new Article("Scheinkastanien", "Aus Asien importiert! Sind nur scheinbar Kastanien.", 13.00m, r.Next(5, 25)).Insert();
-            new Article("Vogelbeeren, 1kg", "Perfekt für Vogelbeeren-Likör. Schmeckt auch Vögeln.", 2.00m, r.Next(5, 25)).Insert();
-            new Article("Elsbeeren, 2kg", "Bitte vor dem Essen kochen, da adstringierend!", 1.30m, r.Next(5, 25)).Insert();
-            new Article("Steinweichseln, 900g", "Auch Felsenkirsche genannt.", 1.01m, r.Next(5, 25)).Insert();
-            new Article("Edel-Pflaume", "Eine Pflaume von höchster Qualität!", 3.10m, r.Next(5, 25)).Insert();
+            new Article(true, "Apfel, rot", "Ein roter Apfel", 2.99m, r.Next(5, 25)).Insert();
+            new Article(true, "Apfel, gelb", "Ein gelber Apfel", 2.99m, r.Next(5, 25)).Insert();
+            new Article(true, "Apfel, grün", "Ein grüner Apfel", 3.85m, r.Next(5, 25)).Insert();
+            new Article(true, "Birne, grün", "Eine grüne Birne", 3.95m, r.Next(5, 25)).Insert();
+            new Article(true, "Orange, orange", "Eine organge Orange", 3.55m, r.Next(5, 25)).Insert();
+            new Article(true, "Kaki, braun", "Eine braune Kaki", 12.99m, r.Next(5, 25)).Insert();
+            new Article(true, "Pomelo, weißfleischig", "Eine fruchtig weiße Pomelo", 2.49m, r.Next(5, 25)).Insert();
+            new Article(true, "Pomelo, rotfleischig", "Eine rote sauere und bittere Pomelo", 1.99m, r.Next(5, 25)).Insert();
+            new Article(true, "Birne, gelb", "Eine saftige Birne aus deutschen Anbau", 1.89m, r.Next(5, 25)).Insert();
+            new Article(true, "Bapfel", "Weder Apfel noch Birne", 1.30m, r.Next(5, 25)).Insert();
+            new Article(true, "Nashi-Birne", "Ist eine Birne, die wie ein Apfel aussieht.", 1.50m, r.Next(5, 25)).Insert();
+            new Article(true, "Birpfel", "Wie ein Bapfel, nur umgekehrt", 1.25m, r.Next(5, 25)).Insert();
+            new Article(true, "Holzapfel", "Hier beißt man auf Holz,eher zum Schnapsbrennen.", 4.35m, r.Next(5, 25)).Insert();
+            new Article(true, "Quitte", "Ideal für Likör oder Marmelade", 4.40m, r.Next(5, 25)).Insert();
+            new Article(true, "Aprikose", "Auch als Marille bekannt. Fruchtig und lecker.", 14.95m, r.Next(5, 25)).Insert();
+            new Article(true, "Oliven, 100g", "Auch ein Obst. Ist aber eher für Salat.", 1.99m, r.Next(5, 25)).Insert();
+            new Article(true, "Johannisbeere, rot", "Die allerfeinste Beere vom Strauch", 2.55m, r.Next(5, 25)).Insert();
+            new Article(true, "Pflaumen, 50g", "Gesund und lecker. Vorsicht, Stein ", 2.99m, r.Next(5, 25)).Insert();
+            new Article(true, "Zwetschgen, 100g", "Eine Unterart der Pflaume.", 1.45m, r.Next(5, 25)).Insert();
+            new Article(true, "Pfirsich, gelb", "Ein leckerer Pfirsich mit gelben Fleisch.", 1.85m, r.Next(5, 25)).Insert();
+            new Article(true, "Kirschen, Paar", "Ein Paar Kirschen zum Sonderpreis", 3.10m, r.Next(5, 25)).Insert();
+            new Article(true, "Beeren, Mix, 100g", "Ein Mix aus frischen Beeren der Saison", 2.30m, r.Next(5, 25)).Insert();
+            new Article(true, "Kultur-Heidelbeeren, 100g", "Heidelbeeren aus der heimischen Kultur.", 1.20m, r.Next(5, 25)).Insert();
+            new Article(true, "Wildheidelbeeren, 100g", "Aus dem Wald. Bitte vor dem Verzehr Waschen.", 1.30m, r.Next(5, 25)).Insert();
+            new Article(true, "Himbeeren, 200g", "Frische Himbeeren frisch vom frischen Frischestrauch.", 12.09m, r.Next(5, 25)).Insert();
+            new Article(true, "Brombeere, 100g", "Leckere Risenbeeren vom Kulturstrauch. BIO-Qualität.", 2.09m, r.Next(5, 25)).Insert();
+            new Article(true, "Ananas", "Vorsicht: Auf keinen Fall auf die Pizza klatschen!", 1.09m, r.Next(5, 25)).Insert();
+            new Article(true, "Erdbeeren, 200g", "Frische Erdbeeren vom Feld", 1.09m, r.Next(5, 25)).Insert();
+            new Article(true, "Johannisbeeren, schwarz", "Wie die Nacht. Kein Nachtschattengewächs", 4.09m, r.Next(5, 25)).Insert();
+            new Article(true, "Weintrauben, weiß, 200g", "Weiße Trauben, ideal zu Käse und Wein", 2.09m, r.Next(5, 25)).Insert();
+            new Article(true, "Holunderbeeren, 200g", "Beeren vom Holunderbaum. Für leckeren Hollunderlikör.", 5.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Erdnüsse, 200g", "Erdnüsse, Roh und nicht geröstet oder gesalzen.", 11.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Hanfnüsse, 200g", "Leckere Samen der Hanfpflanze. Zum Backen geeignet.", 1.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Kürbiskerne, 200g", "Leckere Gehirnkerne fördern die Denkleistung!", 2.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Walnüsse, 200g", "Da freut sich der Nikolaus!", 3.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Nuss-Mix, gesund, 500g", "Ein Bunter Nussmix: Nüsse Sind Gesund!", 4.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Avocado", "Mit viel Wasser zum Superfood gereift.", 5.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Bananen, 1kg", "Schmeckt allen Primaten", 4.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Grapefruit, rot", "Eine Kreuzung aus Orange und Pampelmuse.", 1.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Zitrone", "Der Sauer-Macht-Lustig-Klassiker!", 1.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Limette", "Ideal für Cocktails wie Caipi oder Mojito!", 11.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Mandarine, 8er Netz", "Gerade vor Weihnachten ein Hochgenuss!", 2.79m, r.Next(5, 25)).Insert();
+            new Article(true, "Scheinkastanien", "Aus Asien importiert! Sind nur scheinbar Kastanien.", 13.00m, r.Next(5, 25)).Insert();
+            new Article(true, "Vogelbeeren, 1kg", "Perfekt für Vogelbeeren-Likör. Schmeckt auch Vögeln.", 2.00m, r.Next(5, 25)).Insert();
+            new Article(true, "Elsbeeren, 2kg", "Bitte vor dem Essen kochen, da adstringierend!", 1.30m, r.Next(5, 25)).Insert();
+            new Article(true, "Steinweichseln, 900g", "Auch Felsenkirsche genannt.", 1.01m, r.Next(5, 25)).Insert();
+            new Article(true, "Edel-Pflaume", "Eine Pflaume von höchster Qualität!", 3.10m, r.Next(5, 25)).Insert();
 
 
             for (int i = 47; i < countTestCases; i++)
             {
-                new Article($"Testartikel{i + 1}", "Dies ist eine Testbeschreibung", Convert.ToDecimal(r.Next(100000) / 100.0), r.Next(5, 25)).Insert();
+                new Article(true, $"Testartikel{i + 1}", "Dies ist eine Testbeschreibung", Convert.ToDecimal(r.Next(100000) / 100.0), r.Next(5, 25)).Insert();
             }
         }
         public static void InsertOrders()

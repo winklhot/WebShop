@@ -4,16 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp"
-        xmlns:ShopBase="clr-namespace:ShopBase;assembly=ShopBase" x:Name="mouse" x:Class="DesktopApp.MainWindow"
+        xmlns:ShopBase="clr-namespace:ShopBase;assembly=ShopBase" x:Name="title" x:Class="DesktopApp.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="480" Width="1100" SizeChanged="DynamicFontSizeChange" StateChanged="DynamicFontSizeChange" Closing="Window_Closing" PreviewMouseLeftButtonDown="mouse_PreviewMouseLeftButtonDown">
-    <Grid DataContext="{StaticResource mxmodel}">
+        DataContext="{StaticResource mxmodel}"
+        Title="WebShop Verwaltung" Height="700" Icon="Pictures/icon.jpg" Width="1300" Background="white" Opacity="0.9"  Closing="Window_Closing" PreviewMouseLeftButtonDown="mouse_PreviewMouseLeftButtonDown">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Pictures/Desktop.jpg" Opacity="0.8"></ImageBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="92*"/>
+            <RowDefinition x:Name="rdLine" Height="8*"/>
         </Grid.RowDefinitions>
 
-        <TabControl x:Name="Main" SelectionChanged="Main_SelectionChanged" Grid.Row="0">
+        <TabControl x:Name="Main" SelectionChanged="Main_SelectionChanged" Grid.Row="0" Background="Transparent">
+            <TabControl.Resources>
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="Background" Value="#CC23F7CB"/>
+                </Style>
+            </TabControl.Resources>
             <TabItem x:Name="tiArticleAdd" Header="Artikel hinzufügen" Visibility="Collapsed" >
                 <Grid>
                     <Label Content="Id" Margin="436,111,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.341,2.029" HorizontalAlignment="Left"/>
@@ -67,12 +76,19 @@
                     <CheckBox x:Name="cbCustomerChangePassword" Content="Passwort neu setzen" HorizontalAlignment="Left" Margin="475,253,0,0" VerticalAlignment="Top" Width="149"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tiArticle" IsSelected="true" Header="Artikel" Width="50">
-                <Grid>
-                    <Button x:Name="bAdd" Content="Artikel anlegen" FontSize="12"  HorizontalAlignment="Left" Margin="100,0,0,33" Click="bAdd_Click" Width="160" FontWeight="Bold" Height="40" VerticalAlignment="Bottom" Grid.Column="1"/>
-                    <Button x:Name="bChange" Content="Artikel ändern" FontSize="12" IsEnabled="{Binding SelArticle, Converter={StaticResource conv}}"    Margin="80,0,80,33" Click="bChange_Click" Height="40" Width="160" VerticalAlignment="Bottom" FontWeight="Bold" Grid.Column="1"/>
-                    <Button x:Name="bDelete" Content="Artikel löschen" FontSize="12" IsEnabled="{Binding SelArticle,Converter={StaticResource conv}}" Margin="0,0,100,33" Height="40" Click="bDelete_Click" Width="160" VerticalAlignment="Bottom" HorizontalAlignment="Right" FontWeight="Bold" Grid.Column="1"/>
-                    <DataGrid x:Name="lbArtList" IsReadOnly="True" ItemsSource="{Binding LArticle}"  SelectedItem="{Binding SelArticle}" Margin="100,33,92,100" GridLinesVisibility="None" FontSize="18" FontFamily="Consolas" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False" Background="{Binding Mode=OneWay}" Grid.Column="1" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False">
+            <TabItem x:Name="tiArticle" IsSelected="true" Header="Artikel" Width="100" Height="30">
+                <Grid Background="Transparent">
+                    <Button x:Name="bArticleAdd" Content="Artikel anlegen" Background="white" Opacity="0.7" FontSize="13"  HorizontalAlignment="Left" Margin="100,0,0,33" Click="bAdd_Click" Width="160" FontWeight="Bold" Height="40" VerticalAlignment="Bottom" Grid.Column="1" FontFamily="Bahnschrift"/>
+                    <Button x:Name="bArticleChange" Content="Artikel ändern" Background="white" Opacity="0.7" FontSize="13" IsEnabled="{Binding SelArticle, Converter={StaticResource conv}}"    Margin="80,0,80,33" Click="bChange_Click" Height="40" Width="160" VerticalAlignment="Bottom" FontFamily="Bahnschrift" FontWeight="Bold" Grid.Column="1"/>
+                    <Button x:Name="bArticleDelete" Content="Artikel löschen" FontSize="13" Background="White" Opacity="0.7" IsEnabled="{Binding SelArticle,Converter={StaticResource conv}}" Margin="0,0,100,33" Height="40" Click="bDelete_Click" Width="160" VerticalAlignment="Bottom" FontFamily="Bahnhschrift" HorizontalAlignment="Right" FontWeight="Bold" Grid.Column="1"/>
+                    <DataGrid x:Name="lbArtList" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="100,33,100,100" Foreground="Black" RowBackground="white" IsReadOnly="True" ItemsSource="{Binding LArticle}"  SelectedItem="{Binding SelArticle}" GridLinesVisibility="None" FontSize="17" FontFamily="Bahnschrift" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False" Grid.Column="1" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" HeadersVisibility="Column" Background="white" Opacity="0.7" RenderTransformOrigin="0.49,0.556" FontWeight="Black">
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="#3E23F7CB"></Setter>
+                                <Setter Property="Foreground" Value="Black"></Setter>
+                                <Setter Property="Opacity" Value="1"></Setter>
+                            </Style>
+                        </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="5*" Binding="{Binding Id}" Header="Id"/>
                             <DataGridTextColumn Width="30*" Binding="{Binding Name}" Header="Name"/>
@@ -81,6 +97,7 @@
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="TextAlignment" Value="Right"/>
+                                        <Setter Property="Background" Value="Transparent"></Setter>
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
@@ -88,11 +105,18 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tiCustomer" Header="Kunden" Width="50">
+            <TabItem x:Name="tiCustomer" Header="Kunden" Width="100" Height="30">
                 <Grid>
-                    <Button x:Name="bDeleteCustomer" Content="Löschen" FontWeight="Bold" IsEnabled="{Binding SelCustomer,Converter={StaticResource conv}}"  HorizontalAlignment="Left" Margin="100,0,0,33" Click="bCustomerDelete" Width="160" Height="40" VerticalAlignment="Bottom"/>
-                    <Button x:Name="bChangeCustomer" Content="Bearbeiten" FontWeight="Bold" Margin="0,0,100,33" Height="40" IsEnabled="{Binding SelCustomer,Converter={StaticResource conv}}" Click="bCustomerChange_Click" Width="160" VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
-                    <DataGrid x:Name="lbCustomer" IsReadOnly="True" ItemsSource="{Binding LCustomer}" SelectedItem="{Binding SelCustomer}"  Margin="100,33,100,105" GridLinesVisibility="None" FontSize="18" FontFamily="Consolas" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False" Background="{Binding Mode=OneWay}" Grid.Column="1">
+                    <Button x:Name="bCustomerChange" Content="Bearbeiten" Background="White" Opacity="0.7" FontWeight="Bold"  Height="40" IsEnabled="{Binding SelCustomer,Converter={StaticResource conv}}" Click="CustomerChange" Width="160" Margin="100,0,0,33" VerticalAlignment="Bottom" HorizontalAlignment="left"/>
+                    <Button x:Name="bCustomerDelete" Content="Löschen" Background="White" Opacity="0.7" FontWeight="Bold" Margin="0,0,100,33" IsEnabled="{Binding SelCustomer,Converter={StaticResource conv}}"  HorizontalAlignment="Right"  Click="CustomerDelete" Width="160" Height="40" VerticalAlignment="Bottom"/>
+                    <DataGrid FontFamily="Bahnschrift" ScrollViewer.VerticalScrollBarVisibility="Disabled" x:Name="lbCustomer" Background="White"  IsReadOnly="True" ItemsSource="{Binding LCustomer}" SelectedItem="{Binding SelCustomer}" HeadersVisibility="Column" RowBackground="white" Margin="100,33,100,100" GridLinesVisibility="None" FontSize="17" FontWeight="Black" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False" Opacity="0.7" Foreground="Black"  Grid.Column="1">
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="#3E23F7CB"></Setter>
+                                <Setter Property="Foreground" Value="Black"></Setter>
+                                <Setter Property="Opacity" Value="1"></Setter>
+                            </Style>
+                        </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridTextColumn Width="5*"  Binding="{Binding Id}" Header="Id"/>
                             <DataGridTextColumn Width="35*" Binding="{Binding Firstname}" Header="Vorname"/>
@@ -102,14 +126,21 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tiOrder" Header="Bestellungen" Width="80" Height="20" VerticalAlignment="Top">
+            <TabItem x:Name="tiOrder" Header="Bestellungen" Width="100" Height="30" VerticalAlignment="Top">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50*"/>
                         <RowDefinition Height="50*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <DataGrid x:Name="lbCustomerOrder" IsReadOnly="True" ItemsSource="{Binding LCustomer}" SelectionMode="Single" SelectedItem="{Binding SelCustomer}"  Margin="100,33,100,74" GridLinesVisibility="None" FontSize="18" FontFamily="Consolas" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False" Background="{Binding Mode=OneWay}">
+                        <DataGrid x:Name="lbCustomerOrder" Background="White" RowBackground="white" Opacity="0.7" ScrollViewer.VerticalScrollBarVisibility="Disabled" IsReadOnly="True" ItemsSource="{Binding LCustomer}" SelectionMode="Single" SelectedItem="{Binding SelCustomer}"  Margin="100,33,100,74" GridLinesVisibility="None" FontSize="17" FontFamily="Bahnschrift" FontWeight="bold" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False">
+                            <DataGrid.Resources>
+                                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="Background" Value="#3E23F7CB"></Setter>
+                                    <Setter Property="Foreground" Value="Black"></Setter>
+                                    <Setter Property="Opacity" Value="1"></Setter>
+                                </Style>
+                            </DataGrid.Resources>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="5*"  Binding="{Binding Id}" Header="Id"/>
                                 <DataGridTextColumn Width="35*" Binding="{Binding Firstname}" Header="Vorname"/>
@@ -117,11 +148,18 @@
                                 <DataGridTextColumn Width="25*" Binding="{Binding EMail}" Header="Email"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Label Margin="100,0,0,20" HorizontalAlignment="Left" FontWeight="Bold" Width="130" Content="Bestellung anzeigen" Height="26" VerticalAlignment="Bottom"/>
-                        <ComboBox x:Name="cbStatus" ItemsSource="{Binding LStatus}" SelectedItem="{Binding SelStatus}" Margin="258,0,0,20" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="120" FontWeight="Bold"/>
+                        <Label x:Name="lOrderSelection" Margin="100,0,0,18" FontSize="17" FontFamily="Bahnschrift" HorizontalAlignment="Left" Width="182" Content="Bestellung anzeigen" Height="31" VerticalAlignment="Bottom"/>
+                        <ComboBox x:Name="cbStatus" ItemsSource="{Binding LStatus}" SelectedItem="{Binding SelStatus}" Width="140" Margin="302,0,852,21" Height="26" VerticalAlignment="Bottom" FontFamily="Bahnschrift" FontSize="17"/>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <DataGrid x:Name="lbOrder" IsReadOnly="True" ItemsSource="{Binding LOrder}" SelectionMode="Single" SelectedItem="{Binding SelOrder}"  Margin="100,10,100,90" GridLinesVisibility="None" FontSize="18" FontFamily="Consolas" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False" Background="{Binding Mode=OneWay}">
+                        <DataGrid x:Name="lbOrder" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" ItemsSource="{Binding LOrder}" SelectionMode="Single" SelectedItem="{Binding SelOrder}"  Margin="100,10,100,100" GridLinesVisibility="None" FontSize="17" FontFamily="Bahnschrift" FontWeight="bold" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False" Background="White" RowBackground="white" Opacity="0.7">
+                            <DataGrid.Resources>
+                                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="Background" Value="#3E23F7CB"></Setter>
+                                    <Setter Property="Foreground" Value="Black"></Setter>
+                                    <Setter Property="Opacity" Value="1"></Setter>
+                                </Style>
+                            </DataGrid.Resources>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="5*"  Binding="{Binding Id}" Header="Id"/>
                                 <DataGridTextColumn Width="35*" Binding="{Binding Status}" Header="Vorname"/>
@@ -129,15 +167,15 @@
                                 <DataGridTextColumn Width="25*" Binding="{Binding Positions, Converter={StaticResource conv}}" Header="Gesamtbetrag"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button Margin="421,0,0,41" IsEnabled="{Binding SelOrder, Converter={StaticResource conv}}"  FontWeight="Bold" HorizontalAlignment="Left" Width="98" Height="26" VerticalAlignment="Bottom" RenderTransformOrigin="0.453,0.5" Content="Speichern" Click="bStatusChange"/>
-                        <Label Margin="100,0,0,39" FontWeight="Bold" HorizontalAlignment="Left" Width="119" Content="Bestellung ändern" Height="26" VerticalAlignment="Bottom"/>
-                        <ComboBox x:Name="cbStatusChange" Margin="258,0,0,39" Height="26" ItemsSource="{Binding LChangeStatus}" SelectedItem="{Binding ChangedSelStatus}" IsEnabled="{Binding SelOrder, Converter={StaticResource conv}}" IsReadOnly="{Binding LChangeStatus, Converter={StaticResource conv}}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="120" FontWeight="Bold"/>
+                        <Button Margin="0,0,632,37" x:Name="bOrderChange" Background="White" Opacity="0.7" IsEnabled="{Binding SelOrder, Converter={StaticResource conv}}"  FontWeight="Bold" HorizontalAlignment="Right" Width="140" Height="26" VerticalAlignment="Bottom" RenderTransformOrigin="0.453,0.5" Content="Speichern" Click="bStatusChange"/>
+                        <Label x:Name="lOrderChange" Margin="100,0,0,34" FontFamily="Bahnschrift" FontSize="17" HorizontalAlignment="Left" Width="160" Content="Bestellung ändern" Height="31" VerticalAlignment="Bottom"/>
+                        <ComboBox x:Name="cbStatusChange" Width="140" Margin="300,0,854,37" Height="26" ItemsSource="{Binding LChangeStatus}" SelectedItem="{Binding ChangedSelStatus}" IsEnabled="{Binding SelOrder, Converter={StaticResource conv}}" IsReadOnly="{Binding LChangeStatus, Converter={StaticResource conv}}" VerticalAlignment="Bottom" FontFamily="Bahnschrift" FontSize="17"/>
 
-                        <Label x:Name="lOrderHidden" FontWeight="Bold" Visibility="Hidden" Foreground="Red" Margin="547,369,0,0" HorizontalAlignment="Left" Width="417" Content="" Height="26" VerticalAlignment="Top"/>
+                        <Label x:Name="lOrderHidden" FontWeight="Bold" FontSize="17" FontFamily="Bahnschrift" Visibility="Hidden" Foreground="Red" Margin="547,369,0,0" HorizontalAlignment="Left" Width="417" Content="" Height="26" VerticalAlignment="Top"/>
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tiSystem" Header="Bilder" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Width="57" >
+            <TabItem x:Name="tiSystem" Header="Bilder" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100" >
                 <Grid>
                     <Button x:Name="bimageToByteCode" Background="LightGray" Height="180" Margin="257,65,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Click="bimageToByteCode_Click">
                         <Image x:Name="imageToByteCode" />
@@ -152,8 +190,8 @@
             </TabItem>
         </TabControl>
         <Grid Grid.Row="1">
-            <Button Content="Alle Daten zurücksetzen" x:Name="bSetBack" Foreground="DarkRed" HorizontalAlignment="Right" FontSize="14" FontWeight="Bold" Width="250" Margin="0,0,0,0" Background="#59FF0000" Click="SetBackButton_Click" MouseEnter="bSetBack_MouseEnter" MouseLeave="bSetBack_MouseLeave"/>
-            <TextBlock Margin="0,0,250,0" TextWrapping="Wrap" x:Name="MessageLine"  TextAlignment="Left" FontSize="18"  Text="" VerticalAlignment="Center"/>
+            <Button Content="Alle Daten zurücksetzen" x:Name="bSetBack" Foreground="white" HorizontalAlignment="Right" FontSize="13" FontWeight="Black" Width="265" Margin="0,0,0,0" Background="#CDF91C1C"  Click="SetBackButton_Click" MouseEnter="bSetBack_MouseEnter" MouseLeave="bSetBack_MouseLeave" FontFamily="Bahnschrift"/>
+            <TextBlock Margin="0,0,283,0" TextWrapping="Wrap" x:Name="MessageLine" FontFamily="Bahnschrift" TextAlignment="Left" FontSize="18"  Text="" VerticalAlignment="Center"/>
         </Grid>
     </Grid>
 </Window>

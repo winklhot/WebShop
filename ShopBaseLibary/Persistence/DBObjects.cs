@@ -144,7 +144,7 @@ namespace Layer3Objects
                     DBAccess.ExecuteNonQuery(sql);
                     break;
                 case Article:
-                    sql = $"Insert into TArticle (Name, Description, Price, Count) values ('{((Article)item).Name}','{((Article)item).Description}',{(((Article)item).Price).ToString("#0.00", culture)}, {(item as Article).Count});";
+                    sql = $"Insert into TArticle (Active, Name, Description, Price, Count) values ({((Article)item).Active}, '{((Article)item).Name}','{((Article)item).Description}',{(((Article)item).Price).ToString("#0.00", culture)}, {((Article)item).Count});";
                     lastIndex = DBAccess.ExecuteNonQuery(sql);
                     break;
                 case Picture:
@@ -232,7 +232,7 @@ namespace Layer3Objects
                                 list.Add(new NonCustomer(r.GetInt32(0), r.GetString(1), r.GetString(2), r.GetString(3), (Gender)Enum.Parse(typeof(Gender), r.GetString(4)), Adress.GetFromCustomer<NonCustomer>(r.GetInt32(0))));
                                 break;
                             case Article:
-                                list.Add(new Article(r.GetInt32(0), r.GetString(1), r.GetString(2), r.GetDecimal(3), r.GetInt32(4)));
+                                list.Add(new Article(r.GetInt32(0),r.GetBoolean(1), r.GetString(2), r.GetString(3), r.GetDecimal(4), r.GetInt32(5)));
                                 break;
                             case Position:
                                 list.Add(new Position(r.GetInt32(0), Article.Get(r.GetInt32(2)), r.GetInt32(3)));
@@ -309,7 +309,7 @@ namespace Layer3Objects
         }
         public static void Change<T>(object item)
         {
-            string sql = $"Update T{typeof(T).Name} " +
+            string? sql = $"Update T{typeof(T).Name} " +
                          $"Set ";
 
 
@@ -372,14 +372,9 @@ namespace Layer3Objects
                         }
                         break;
                     case Article:
-                        Article a = (Article)item;
+                        Article a = (Article)item; // Because No Article can be deleted because it could be related to Order
+                        sql = "Update TArticle Set Active = false ";
                         sql += $"Where Id = {a.Id}";
-
-                        if (Position.GetAll().Find(p => p.Article.Id == a.Id) != null)
-                        {
-                            throw new InvalidOperationException();
-                        }
-
                         break;
                     case Order:
                         Order o = (Order)item;
