@@ -7,7 +7,7 @@
         xmlns:ShopBase="clr-namespace:ShopBase;assembly=ShopBase" x:Name="title" x:Class="DesktopApp.MainWindow"
         mc:Ignorable="d"
         DataContext="{StaticResource mxmodel}"
-        Title="WebShop Verwaltung" Height="700" Icon="Pictures/icon.jpg" Width="1300" Background="white" Opacity="0.9"  Closing="Window_Closing" PreviewMouseLeftButtonDown="mouse_PreviewMouseLeftButtonDown">
+        Title="WebShop Verwaltung" Height="700" Icon="Pictures/icon.jpg" Width="1300" Background="white" Opacity="0.9"  Closing="Window_Closing" PreviewMouseLeftButtonDown="mouse_PreviewMouseLeftButtonDown" MouseMove="title_MouseMove">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="Pictures/Desktop.jpg" Opacity="0.8"></ImageBrush>
@@ -24,63 +24,249 @@
                 </Style>
             </TabControl.Resources>
             <TabItem x:Name="tiArticleAdd" Header="Artikel hinzufügen" Visibility="Collapsed" >
-                <Grid>
-                    <Label Content="Id" Margin="436,111,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.341,2.029" HorizontalAlignment="Left"/>
-                    <Label Content="Bezeichnung" Margin="379,142,0,0" RenderTransformOrigin="0.576,-0.273" HorizontalAlignment="Left" Width="78" Height="26" VerticalAlignment="Top"/>
-                    <Label Content="Beschreibung" Margin="377,176,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Label Content="Preis" Margin="421,209,0,0" RenderTransformOrigin="0.505,-2.619" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top"/>
-                    <TextBox x:Name="tbAddinputId" IsEnabled="False" Text="Systemvergabe" HorizontalAlignment="Left" Margin="475,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
-                    <TextBox x:Name="tbAddName" Text="{Binding NewArticle.Name}" HorizontalAlignment="Left" Margin="475,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149" MaxLength="30"/>
-                    <TextBox x:Name="tbAddDesc" Text="{Binding NewArticle.Description}" MaxLength="70" HorizontalAlignment="Left" Margin="475,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
-                    <TextBox HorizontalAlignment="Left" Text="{Binding NewArticle.Price,Converter={StaticResource conv}}" Margin="475,217,0,0" TextWrapping="Wrap" x:Name="tbAddPrice" VerticalAlignment="Top" Width="149" MaxLength="7"/>
-                    <Button x:Name="bAddCreate" Content="Anlegen" HorizontalAlignment="Left" Margin="397,262,0,0" VerticalAlignment="Top" Width="60" Click="bAddAdd" RenderTransformOrigin="-0.15,0.653"/>
-                    <Button Content="Abbrechen" HorizontalAlignment="Left" Margin="562,262,0,0" VerticalAlignment="Top" Click="bAddCancel" RenderTransformOrigin="0.162,0.603"/>
+                <Grid Height="400" Width="800" HorizontalAlignment="center" VerticalAlignment="Center">
+                    <Label Content="Id" FontSize="20" FontFamily="Bahnschrift" Margin="180,104,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.341,2.029" HorizontalAlignment="Left" Height="32" Width="37"/>
+                    <Label Content="Bezeichnung" FontFamily="Bahnschrift" FontSize="20" Margin="84,142,0,0" RenderTransformOrigin="0.576,-0.273" HorizontalAlignment="Left" Width="126" Height="32" VerticalAlignment="Top"/>
+                    <Label Content="Beschreibung" FontFamily="Bahnschrift" FontSize="20" Margin="77,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <Label Content="Preis" Margin="152,225,0,0" FontFamily="Bahnschrift" FontSize="20" RenderTransformOrigin="0.505,-2.619" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="58"/>
+                    <TextBox x:Name="tbAddinputId" IsEnabled="False" FontFamily="Bahnschrift" FontSize="20" Text="Systemvergabe" HorizontalAlignment="Left" Margin="232,107,0,267" TextWrapping="Wrap" Width="242"/>
+                    <TextBox x:Name="tbAddName" Text="{Binding NewArticle.Name}" HorizontalAlignment="Left" Margin="232,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" MaxLength="30" Height="26"/>
+                    <TextBox x:Name="tbAddDesc" Text="{Binding NewArticle.Description}" MaxLength="70" FontFamily="Bahnschrift" FontSize="20" HorizontalAlignment="Left" Margin="232,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="242" Height="26"/>
+                    <TextBox x:Name="tbAddPrice"  Text="{Binding NewArticle.Price,Converter={StaticResource conv}}" HorizontalAlignment="Left" FontFamily="Bahnschrift" FontSize="20" Margin="232,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" MaxLength="7" Height="26"/>
+                    <Button x:Name="bAddCreate" FontFamily="Bahnschrift" FontSize="14" FontWeight="Bold" Content="Anlegen" HorizontalAlignment="Left" Margin="232,280,0,0" VerticalAlignment="Top" Width="84" Click="bAddAdd" RenderTransformOrigin="-0.15,0.653" Height="30">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Content="Abbrechen" FontFamily="Bahnschrift" FontSize="14" FontWeight="Bold"  HorizontalAlignment="Left" Margin="390,280,0,0" VerticalAlignment="Top" Click="bAddCancel" RenderTransformOrigin="0.162,0.603" Height="29" Width="84">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
 
-                    <Button x:Name="articleAddPicture" Background="LightGray" HorizontalAlignment="Left" Height="125" Width="93" Margin="700,116,0,0" Click="articleAddPicture_Click" VerticalAlignment="Top">
+                    <Button x:Name="articleAddPicture" Background="LightGray"  HorizontalAlignment="Left" Height="148" Width="110" Margin="514,107,0,0" Click="articleAddPicture_Click" VerticalAlignment="Top">
                         <Image x:Name="imageAdd" Source="{Binding SelArticlePicture, Converter={StaticResource conv}}" />
                     </Button>
 
-                    <Label Content="Optional" HorizontalAlignment="Left" Margin="718,259,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.162,0.603" Width="57"/>
+                    <Label Content="Optional" HorizontalAlignment="Left" FontFamily="Bahnschrift" FontSize="20" FontStyle="Italic" Margin="525,282,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.162,0.603" Width="88"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tiArticleChange" Header="Artikel ändern" Visibility="Collapsed" >
-                <Grid>
-                    <Label Content="Id"  Margin="436,111,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.341,2.029" HorizontalAlignment="Left"/>
-                    <Label Content="Bezeichnung" Margin="379,142,0,0" RenderTransformOrigin="0.576,-0.273" HorizontalAlignment="Left" Width="78" Height="26" VerticalAlignment="Top"/>
-                    <Label Content="Beschreibung" Margin="377,176,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Label Content="Preis" Margin="421,209,0,0" RenderTransformOrigin="0.505,-2.619" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top"/>
-                    <TextBox x:Name="tbChangeId"  IsEnabled="False" HorizontalAlignment="Left" Margin="475,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
-                    <TextBox x:Name="tbChangeName" MaxLength="30"  HorizontalAlignment="Left" Margin="475,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
-                    <TextBox x:Name="tbChangeDesc" MaxLength="70"  HorizontalAlignment="Left" Margin="475,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
-                    <TextBox HorizontalAlignment="Left" MaxLength="7" Margin="475,217,0,0" TextWrapping="Wrap" x:Name="tbChangePrice" VerticalAlignment="Top" Width="149"/>
-                    <Button x:Name="bChangeCreate" Content="Ändern" HorizontalAlignment="Left" Margin="397,262,0,0" VerticalAlignment="Top" Width="60" Click="bChangeChange" RenderTransformOrigin="-0.15,0.653"/>
-                    <Button Content="Abbrechen" HorizontalAlignment="Left" Margin="562,262,0,0" VerticalAlignment="Top" Click="bChangeCancel" RenderTransformOrigin="0.162,0.603"/>
+                <Grid Height="400" Width="800" HorizontalAlignment="center" VerticalAlignment="Center">
+                    <Label Content="Id" FontSize="20" FontFamily="Bahnschrift" Margin="180,104,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.341,2.029" HorizontalAlignment="Left" Height="32" Width="37"/>
+                    <Label Content="Bezeichnung" FontFamily="Bahnschrift" FontSize="20" Margin="84,142,0,0" RenderTransformOrigin="0.576,-0.273" HorizontalAlignment="Left" Width="126" Height="32" VerticalAlignment="Top"/>
+                    <Label Content="Beschreibung" FontFamily="Bahnschrift" FontSize="20" Margin="77,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                    <Label Content="Preis" Margin="152,225,0,0" FontFamily="Bahnschrift" FontSize="20" RenderTransformOrigin="0.505,-2.619" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="58"/>
 
-                    <Button x:Name="imageChangebutton" Background="LightGray" HorizontalAlignment="Left" Height="125" Width="93" Margin="700,114,0,0" Click="articleAddPicture_Click" VerticalAlignment="Top">
+                    <TextBox x:Name="tbChangeId"  IsEnabled="False" FontFamily="Bahnschrift" FontSize="20" Text="" HorizontalAlignment="Left" Margin="232,107,0,267" TextWrapping="Wrap" Width="242"/>
+                    <TextBox x:Name="tbChangeName" FontFamily="Bahnschrift" FontSize="20"  HorizontalAlignment="Left" Margin="232,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" MaxLength="30" Height="26"/>
+                    <TextBox x:Name="tbChangeDesc" MaxLength="70" FontFamily="Bahnschrift" FontSize="20" HorizontalAlignment="Left" Margin="232,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="242" Height="26"/>
+                    <TextBox x:Name="tbChangePrice" HorizontalAlignment="Left" FontFamily="Bahnschrift" FontSize="20" Margin="232,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" MaxLength="7" Height="26"/>
+
+                    <Button x:Name="bChangeCreate" FontFamily="Bahnschrift" FontSize="14" FontWeight="Bold" Content="Anlegen" HorizontalAlignment="Left" Margin="232,280,0,0" VerticalAlignment="Top" Width="84" Click="bAddAdd" RenderTransformOrigin="-0.15,0.653" Height="30">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Content="Abbrechen" FontFamily="Bahnschrift" FontSize="14" FontWeight="Bold"  HorizontalAlignment="Left" Margin="390,280,0,0" VerticalAlignment="Top" Click="bAddCancel" RenderTransformOrigin="0.162,0.603" Height="29" Width="84">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
+                    <Button x:Name="imageChangebutton" Background="LightGray"  HorizontalAlignment="Left" Height="148" Width="110" Margin="514,107,0,0" Click="articleAddPicture_Click" VerticalAlignment="Top">
                         <Image x:Name="imageChange"  Source="{Binding SelArticlePicture, Converter={StaticResource conv}}" />
                     </Button>
+
+                    <Label Content="Optional" HorizontalAlignment="Left" FontFamily="Bahnschrift" FontSize="20" FontStyle="Italic" Margin="525,282,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.162,0.603" Width="88"/>
+
                 </Grid>
             </TabItem>
             <TabItem x:Name="tiCustomerChange" Header="Kunde bearbeiten" Visibility="Collapsed" >
-                <Grid>
-                    <Label Content="Id"  Margin="435,112,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.341,2.029" HorizontalAlignment="Left"/>
-                    <Label Content="Vorname"  Margin="397,146,0,0" RenderTransformOrigin="0.576,-0.273" HorizontalAlignment="Left" Width="60" Height="26" VerticalAlignment="Top"/>
-                    <Label Content="Nachname" Margin="389,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Label Content="E-Mail" Margin="413,209,0,0" RenderTransformOrigin="0.505,-2.619" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top"/>
-                    <TextBox x:Name="tbCustomerId"  IsEnabled="False" HorizontalAlignment="Left" Margin="475,116,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
-                    <TextBox x:Name="tbCustomerFirstname"  HorizontalAlignment="Left" Margin="475,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
-                    <TextBox x:Name="tbCustomerLastname"  HorizontalAlignment="Left" Margin="475,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149"/>
-                    <TextBox x:Name="tbCustomerEMail" IsEnabled="false" HorizontalAlignment="Left" Margin="475,217,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="149"/>
-                    <Button x:Name="bCustomerChangeChange"  Content="Ändern" HorizontalAlignment="Left" Margin="395,286,0,0" VerticalAlignment="Top" Width="60" Click="bCustomerChangeChange_Click" RenderTransformOrigin="-0.15,0.653"/>
-                    <Button Content="Abbrechen" HorizontalAlignment="Left" Margin="562,286,0,0" VerticalAlignment="Top" Click="bCustomerChangeCancel" RenderTransformOrigin="0.162,0.603"/>
-                    <CheckBox x:Name="cbCustomerChangePassword" Content="Passwort neu setzen" HorizontalAlignment="Left" Margin="475,253,0,0" VerticalAlignment="Top" Width="149"/>
+                <Grid  Height="400" Width="800" HorizontalAlignment="center" VerticalAlignment="Center">
+                    <Label Content="Id" FontFamily="Bahnschrift" FontSize="20" Margin="262,93,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.341,2.029" HorizontalAlignment="Left" Height="32" Width="39"/>
+                    <Label Content="Vorname" FontFamily="Bahnschrift" FontSize="20"  Margin="197,142,0,0" RenderTransformOrigin="0.576,-0.273" HorizontalAlignment="Left" Width="98" Height="33" VerticalAlignment="Top"/>
+                    <Label Content="Nachname" FontFamily="Bahnschrift" FontSize="20" Margin="182,186,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Label Content="E-Mail" FontFamily="Bahnschrift" FontSize="20" Margin="213,235,0,0" RenderTransformOrigin="0.505,-2.619" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top"/>
+
+                    <TextBox x:Name="tbCustomerId" FontFamily="Bahnschrift" FontSize="20"  IsEnabled="False" HorizontalAlignment="Left" Margin="337,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="202"/>
+                    <TextBox x:Name="tbCustomerFirstname" FontFamily="Bahnschrift" FontSize="20" HorizontalAlignment="Left" Margin="337,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="202"/>
+                    <TextBox x:Name="tbCustomerLastname" FontFamily="Bahnschrift" FontSize="20" HorizontalAlignment="Left" Margin="337,190,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="202"/>
+                    <TextBox x:Name="tbCustomerEMail" FontFamily="Bahnschrift" FontSize="20" IsEnabled="false" HorizontalAlignment="Left" Margin="337,242,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="202"/>
+                    <Button x:Name="bCustomerChangeChange" Height="30" FontFamily="Bahnschrift" FontSize="14"  Content="Ändern" HorizontalAlignment="Left" Margin="222,332,0,0" VerticalAlignment="Top" Width="73" Click="bCustomerChangeChange_Click" RenderTransformOrigin="-0.15,0.653">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Content="Abbrechen" Height="30" HorizontalAlignment="Left" FontFamily="Bahnschrift" FontSize="14" Margin="462,332,0,0" VerticalAlignment="Top" Click="bCustomerChangeCancel" RenderTransformOrigin="0.162,0.603" Width="73">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <CheckBox x:Name="cbCustomerChangePassword" FontFamily="Bahnschrift" FontSize="16" Content="Passwort neu setzen" HorizontalAlignment="Left" Margin="337,289,0,0" VerticalAlignment="Top" Width="193" Height="20"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tiArticle" IsSelected="true" Header="Artikel" Width="100" Height="30">
                 <Grid Background="Transparent">
-                    <Button x:Name="bArticleAdd" Content="Artikel anlegen" Background="white" Opacity="0.7" FontSize="13"  HorizontalAlignment="Left" Margin="100,0,0,33" Click="bAdd_Click" Width="160" FontWeight="Bold" Height="40" VerticalAlignment="Bottom" Grid.Column="1" FontFamily="Bahnschrift"/>
-                    <Button x:Name="bArticleChange" Content="Artikel ändern" Background="white" Opacity="0.7" FontSize="13" IsEnabled="{Binding SelArticle, Converter={StaticResource conv}}"    Margin="80,0,80,33" Click="bChange_Click" Height="40" Width="160" VerticalAlignment="Bottom" FontFamily="Bahnschrift" FontWeight="Bold" Grid.Column="1"/>
-                    <Button x:Name="bArticleDelete" Content="Artikel löschen" FontSize="13" Background="White" Opacity="0.7" IsEnabled="{Binding SelArticle,Converter={StaticResource conv}}" Margin="0,0,100,33" Height="40" Click="bDelete_Click" Width="160" VerticalAlignment="Bottom" FontFamily="Bahnhschrift" HorizontalAlignment="Right" FontWeight="Bold" Grid.Column="1"/>
+                    <Button x:Name="bArticleAdd" Content="Artikel anlegen" Opacity="0.7" FontSize="13"  HorizontalAlignment="Left" Margin="100,0,0,33" Click="bAdd_Click" Width="160" FontWeight="Bold" Height="40" VerticalAlignment="Bottom" Grid.Column="1" FontFamily="Bahnschrift" MouseEnter="bArticleAdd_MouseEnter" MouseLeave="bArticleAdd_MouseLeave" GotFocus="bArticleAdd_GotFocus">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="bArticleChange" Content="Artikel ändern" Background="white" Opacity="0.7" FontSize="13" IsEnabled="{Binding SelArticle, Converter={StaticResource conv}}"    Margin="80,0,80,33" Click="bChange_Click" Height="40" Width="160" VerticalAlignment="Bottom" FontFamily="Bahnschrift" FontWeight="Bold" Grid.Column="1">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="bArticleDelete" Content="Artikel löschen" FontSize="13" Background="White" Opacity="0.7" IsEnabled="{Binding SelArticle,Converter={StaticResource conv}}" Margin="0,0,100,33" Height="40" Click="bDelete_Click" Width="160" VerticalAlignment="Bottom" FontFamily="Bahnhschrift" HorizontalAlignment="Right" FontWeight="Bold" Grid.Column="1">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                     <DataGrid x:Name="lbArtList" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="100,33,100,100" Foreground="Black" RowBackground="white" IsReadOnly="True" ItemsSource="{Binding LArticle}"  SelectedItem="{Binding SelArticle}" GridLinesVisibility="None" FontSize="17" FontFamily="Bahnschrift" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False" Grid.Column="1" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" HeadersVisibility="Column" Background="white" Opacity="0.7" RenderTransformOrigin="0.49,0.556" FontWeight="Black">
                         <DataGrid.Resources>
                             <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
@@ -107,8 +293,48 @@
             </TabItem>
             <TabItem x:Name="tiCustomer" Header="Kunden" Width="100" Height="30">
                 <Grid>
-                    <Button x:Name="bCustomerChange" Content="Bearbeiten" Background="White" Opacity="0.7" FontWeight="Bold"  Height="40" IsEnabled="{Binding SelCustomer,Converter={StaticResource conv}}" Click="CustomerChange" Width="160" Margin="100,0,0,33" VerticalAlignment="Bottom" HorizontalAlignment="left"/>
-                    <Button x:Name="bCustomerDelete" Content="Löschen" Background="White" Opacity="0.7" FontWeight="Bold" Margin="0,0,100,33" IsEnabled="{Binding SelCustomer,Converter={StaticResource conv}}"  HorizontalAlignment="Right"  Click="CustomerDelete" Width="160" Height="40" VerticalAlignment="Bottom"/>
+                    <Button x:Name="bCustomerChange" Content="Bearbeiten" Background="White" Opacity="0.7" FontWeight="Bold"  Height="40" IsEnabled="{Binding SelCustomer,Converter={StaticResource conv}}" Click="CustomerChange" Width="160" Margin="100,0,0,33" VerticalAlignment="Bottom" HorizontalAlignment="left">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button x:Name="bCustomerDelete" Content="Löschen" Background="White" Opacity="0.7" FontWeight="Bold" Margin="0,0,100,33" IsEnabled="{Binding SelCustomer,Converter={StaticResource conv}}"  HorizontalAlignment="Right"  Click="CustomerDelete" Width="160" Height="40" VerticalAlignment="Bottom">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Background" Value="white" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                     <DataGrid FontFamily="Bahnschrift" ScrollViewer.VerticalScrollBarVisibility="Disabled" x:Name="lbCustomer" Background="White"  IsReadOnly="True" ItemsSource="{Binding LCustomer}" SelectedItem="{Binding SelCustomer}" HeadersVisibility="Column" RowBackground="white" Margin="100,33,100,100" GridLinesVisibility="None" FontSize="17" FontWeight="Black" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False" Opacity="0.7" Foreground="Black"  Grid.Column="1">
                         <DataGrid.Resources>
                             <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
@@ -148,11 +374,11 @@
                                 <DataGridTextColumn Width="25*" Binding="{Binding EMail}" Header="Email"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Label x:Name="lOrderSelection" Margin="100,0,0,18" FontSize="17" FontFamily="Bahnschrift" HorizontalAlignment="Left" Width="182" Content="Bestellung anzeigen" Height="31" VerticalAlignment="Bottom"/>
-                        <ComboBox x:Name="cbStatus" ItemsSource="{Binding LStatus}" SelectedItem="{Binding SelStatus}" Width="140" Margin="302,0,852,21" Height="26" VerticalAlignment="Bottom" FontFamily="Bahnschrift" FontSize="17"/>
+                        <Label x:Name="lOrderSelection" Margin="100,0,0,18" FontSize="17" FontFamily="Bahnschrift" HorizontalAlignment="Left" Width="180" Content="Bestellung anzeigen" Height="30" VerticalAlignment="Bottom"/>
+                        <ComboBox x:Name="cbStatus" ItemsSource="{Binding LStatus}" SelectedItem="{Binding SelStatus}" Margin="300,0,854,21" Height="28" VerticalAlignment="Bottom" FontFamily="Bahnschrift" Width="125" FontSize="17"/>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <DataGrid x:Name="lbOrder" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" ItemsSource="{Binding LOrder}" SelectionMode="Single" SelectedItem="{Binding SelOrder}"  Margin="100,10,100,100" GridLinesVisibility="None" FontSize="17" FontFamily="Bahnschrift" FontWeight="bold" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False" Background="White" RowBackground="white" Opacity="0.7">
+                        <DataGrid x:Name="lbOrder" ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" ItemsSource="{Binding LOrder}" SelectionMode="Single" SelectedItem="{Binding SelOrder}"  Margin="100,33,100,74" GridLinesVisibility="None" FontSize="17" FontFamily="Bahnschrift" FontWeight="bold" SelectionChanged="lbArtList_SelectionChanged" AutoGenerateColumns="False" Background="White" RowBackground="white" Opacity="0.7">
                             <DataGrid.Resources>
                                 <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
                                     <Setter Property="Background" Value="#3E23F7CB"></Setter>
@@ -167,30 +393,70 @@
                                 <DataGridTextColumn Width="25*" Binding="{Binding Positions, Converter={StaticResource conv}}" Header="Gesamtbetrag"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button Margin="0,0,632,37" x:Name="bOrderChange" Background="White" Opacity="0.7" IsEnabled="{Binding SelOrder, Converter={StaticResource conv}}"  FontWeight="Bold" HorizontalAlignment="Right" Width="140" Height="26" VerticalAlignment="Bottom" RenderTransformOrigin="0.453,0.5" Content="Speichern" Click="bStatusChange"/>
-                        <Label x:Name="lOrderChange" Margin="100,0,0,34" FontFamily="Bahnschrift" FontSize="17" HorizontalAlignment="Left" Width="160" Content="Bestellung ändern" Height="31" VerticalAlignment="Bottom"/>
-                        <ComboBox x:Name="cbStatusChange" Width="140" Margin="300,0,854,37" Height="26" ItemsSource="{Binding LChangeStatus}" SelectedItem="{Binding ChangedSelStatus}" IsEnabled="{Binding SelOrder, Converter={StaticResource conv}}" IsReadOnly="{Binding LChangeStatus, Converter={StaticResource conv}}" VerticalAlignment="Bottom" FontFamily="Bahnschrift" FontSize="17"/>
+                        <Button  Margin="0,0,632,21" FontSize="17" x:Name="bOrderChange" Background="White" Opacity="0.7" IsEnabled="{Binding SelOrder, Converter={StaticResource conv}}"  FontWeight="Bold" HorizontalAlignment="Right" Width="140" Height="30" FontFamily="Bahnschrift" VerticalAlignment="Bottom" RenderTransformOrigin="0.453,0.5" Content="Speichern" Click="bStatusChange">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="Background" Value="white" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Label x:Name="lOrderChange" Margin="100,0,0,21" FontFamily="Bahnschrift" FontSize="17" HorizontalAlignment="Left" Width="180" Content="Bestellung ändern" Height="30" VerticalAlignment="Bottom"/>
+                        <ComboBox x:Name="cbStatusChange" Width="125" Margin="300,0,854,21" Height="28" ItemsSource="{Binding LChangeStatus}" SelectedItem="{Binding ChangedSelStatus}" IsEnabled="{Binding SelOrder, Converter={StaticResource conv}}" IsReadOnly="{Binding LChangeStatus, Converter={StaticResource conv}}" VerticalAlignment="Bottom" FontFamily="Bahnschrift" FontSize="17"/>
 
                         <Label x:Name="lOrderHidden" FontWeight="Bold" FontSize="17" FontFamily="Bahnschrift" Visibility="Hidden" Foreground="Red" Margin="547,369,0,0" HorizontalAlignment="Left" Width="417" Content="" Height="26" VerticalAlignment="Top"/>
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tiSystem" Header="Bilder" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100" >
-                <Grid>
-                    <Button x:Name="bimageToByteCode" Background="LightGray" Height="180" Margin="257,65,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120" Click="bimageToByteCode_Click">
+            <TabItem x:Name="tiPicture" Header="Bilder" Height="30" VerticalAlignment="Top" HorizontalAlignment="Right" Width="100" >
+                <Grid Height="400" Width="800" HorizontalAlignment="center" VerticalAlignment="Center">
+                    <Button x:Name="bimageToByteCode" Background="LightGray" Height="180" Margin="160,0,0,110" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="120" Click="bimageToByteCode_Click">
                         <Image x:Name="imageToByteCode" />
                     </Button>
-                    <Button Background="LightGray" Margin="715,65,0,0" Click="articleAddPicture_Click" Height="180" Width="120" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <Button Background="LightGray" Margin="648,0,0,110" Click="articleAddPicture_Click" Height="180" Width="120" VerticalAlignment="Bottom" HorizontalAlignment="Left">
                         <Image x:Name="imagesDisplay" />
                     </Button>
-                    <Label Content="Bilder aus Datenbank" HorizontalAlignment="Left" Margin="587,65,0,0" VerticalAlignment="Top" Width="123"/>
-                    <Label x:Name="tiPicturePictureName" Content="" HorizontalAlignment="Left" Margin="587,96,0,0" VerticalAlignment="Top" Width="123"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="146,65,0,0" TextWrapping="Wrap" Text="Bilder in Bytecode umwandeln und in Zwischenablage kopieren" VerticalAlignment="Top" Height="180" Width="106"/>
+                    <Label Content="Bilder aus Datenbank" FontFamily="Bahnschrift" FontSize="14" HorizontalAlignment="Left" Margin="476,0,0,263" VerticalAlignment="Bottom" Width="144"/>
+                    <Label x:Name="tiPicturePictureName" FontFamily="Bahnschrift" FontSize="14" Content="" HorizontalAlignment="Left" Margin="646,295,0,0" VerticalAlignment="Top" Width="144"/>
+                    <TextBlock HorizontalAlignment="Left" FontFamily="Bahnschrift" FontSize="14" Margin="10,0,0,0" TextWrapping="Wrap" Text="Bilder in Bytecode umwandeln und in Zwischenablage kopieren" VerticalAlignment="Center" Height="180" Width="126"/>
                 </Grid>
             </TabItem>
         </TabControl>
         <Grid Grid.Row="1">
-            <Button Content="Alle Daten zurücksetzen" x:Name="bSetBack" Foreground="white" HorizontalAlignment="Right" FontSize="13" FontWeight="Black" Width="265" Margin="0,0,0,0" Background="#CDF91C1C"  Click="SetBackButton_Click" MouseEnter="bSetBack_MouseEnter" MouseLeave="bSetBack_MouseLeave" FontFamily="Bahnschrift"/>
+            <Button Content="Alle Daten zurücksetzen" x:Name="bSetBack" Foreground="white" HorizontalAlignment="Right" FontSize="13" FontWeight="Black" Width="265" Margin="0,0,0,0" Background="#CDF91C1C"  Click="SetBackButton_Click" MouseEnter="bSetBack_MouseEnter" MouseLeave="bSetBack_MouseLeave" FontFamily="Bahnschrift">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#CDF91C1C" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="Border" Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="LightGreen" TargetName="Border" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
             <TextBlock Margin="0,0,283,0" TextWrapping="Wrap" x:Name="MessageLine" FontFamily="Bahnschrift" TextAlignment="Left" FontSize="18"  Text="" VerticalAlignment="Center"/>
         </Grid>
     </Grid>

@@ -40,9 +40,9 @@ namespace DesktopApp
 
         private Article _selArticle;
 
-        private Article _newArticle = new Article();
+        private Article? _newArticle = new Article();
 
-        private Picture _selArticlePicture;
+        private Picture? _selArticlePicture;
 
         private List<Status> _lStatus;
 
@@ -67,7 +67,7 @@ namespace DesktopApp
                 OnPropertyChanged(nameof(LArticle));
             }
         }
-        public Picture SelArticlePicture { get => _selArticlePicture; set { _selArticlePicture = value; OnPropertyChanged(nameof(SelArticlePicture)); OnPropertyChanged(nameof(SelArticle)); } }
+        public Picture? SelArticlePicture { get => _selArticlePicture; set { _selArticlePicture = value; OnPropertyChanged(nameof(SelArticlePicture)); OnPropertyChanged(nameof(SelArticle)); } }
         public Article? NewArticle
         {
             get
@@ -158,6 +158,7 @@ namespace DesktopApp
                     mw.lbCustomerOrder.FontSize *= factor;
                     mw.lOrderSelection.FontSize *= factor;
                     mw.lOrderChange.FontSize *= factor;
+                    mw.lOrderChange.Width *= factor;
                     mw.bOrderChange.FontSize *= factor;
                     mw.bOrderChange.Width *= factor;
                     mw.lOrderSelection.Width *= factor;
@@ -167,9 +168,7 @@ namespace DesktopApp
                     mw.cbStatusChange.Margin = new(mw.cbStatusChange.Margin.Left * factor * 0.98, mw.cbStatusChange.Margin.Top, mw.cbStatusChange.Margin.Right, mw.cbStatusChange.Margin.Bottom);
                     mw.cbStatusChange.Width *= factor;
                     mw.cbStatusChange.FontSize *= factor;
-
-                    
-
+                    mw.bOrderChange.Width *= factor;
                 }
 
                 if(e.PreviousSize.Height != 0.00)
@@ -186,6 +185,7 @@ namespace DesktopApp
                     mw.cbStatusChange.Height *= factor;
                     mw.lOrderSelection.Height *= factor;
                     mw.bOrderChange.Height *= factor;
+                    mw.lOrderChange.Height *= factor;
                 }
             }
 
@@ -247,6 +247,18 @@ namespace DesktopApp
             //bDeleteCustomer.FontSize = lbArtList.FontSize * 0.70;
 
         }
+
+        public void SetHoverStyle(object sender, MouseEventArgs e)
+        {
+            Button? b = sender as Button;
+
+            if(b != null)
+            {
+                b.Background = b.Background == Brushes.White ? Brushes.LightGreen : Brushes.White;
+            }
+        }
+
+        
 
         public void LoadData()
         {

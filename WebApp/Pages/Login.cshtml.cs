@@ -28,7 +28,12 @@ namespace WebApp.Pages
             //Iam not sure how long the js needs to compute hash so it should wait 10ms before requesting the value
             Thread.Sleep(10);
             HashedPwd = Request.Form["HashedPwd"].ToString();
-            int customerId = Customer.Login(EMail, HashedPwd);
+            int customerId = -1;
+
+            if (EMail != null && HashedPwd != null)
+            {
+                customerId = Customer.Login(EMail, HashedPwd);
+            }
 
             // Customer unique Main and hashed js pwd is found
             if (customerId != -1)

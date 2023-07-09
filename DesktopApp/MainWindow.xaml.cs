@@ -30,7 +30,7 @@ namespace DesktopApp
     {
         private MainViewModel? model = null;
 
-        
+
 
         private static Task _pictureShowing = default;
 
@@ -45,7 +45,11 @@ namespace DesktopApp
 
             this.SizeChanged += model.SetWindowStyle;
 
-           
+            this.MouseMove += model.SetHoverStyle;
+
+
+
+
 
 
             //_defaultListBoxFontSize = lbArtList.FontSize;
@@ -79,6 +83,8 @@ namespace DesktopApp
             tiArticle.IsEnabled = false;
             tiCustomer.IsEnabled = false;
             tiOrder.IsEnabled = false;
+            tiPicture.IsEnabled = false;
+
 
             model.SelArticle = null;
             model.SelArticlePicture = null;
@@ -143,6 +149,7 @@ namespace DesktopApp
                 tiArticle.IsSelected = true;
                 tiCustomer.IsEnabled = true;
                 tiOrder.IsEnabled = true;
+                tiPicture.IsEnabled = true;
 
                 model.NewArticle = null;
             }
@@ -159,6 +166,7 @@ namespace DesktopApp
             tiArticle.IsSelected = true;
             tiCustomer.IsEnabled = true;
             tiOrder.IsEnabled = true;
+            tiPicture.IsEnabled = true;
 
             model.NewArticle = null;
             model.SelArticlePicture = null;
@@ -177,6 +185,7 @@ namespace DesktopApp
             tiArticle.IsEnabled = false;
             tiCustomer.IsEnabled = false;
             tiOrder.IsEnabled = false;
+            tiPicture.IsEnabled = false;
 
             // Values before user interaction
 
@@ -217,6 +226,7 @@ namespace DesktopApp
             tiArticle.IsSelected = true;
             tiCustomer.IsEnabled = true;
             tiOrder.IsEnabled = true;
+            tiPicture.IsEnabled = true;
             model.SelArticle = null;
         }
         private void bChangeCancel(object sender, RoutedEventArgs e)
@@ -296,8 +306,16 @@ namespace DesktopApp
 
                 while (la.Count > 0)
                 {
-                    (la[0] as Customer).Delete();
-                    model.LCustomer.Remove(la[0] as Customer);
+                    Customer? c = la[0] as Customer;
+
+                    if (c != null)
+                    {
+                        c.Delete();
+                        if (model != null && model.LCustomer != null)
+                        {
+                            model.LCustomer.Remove(c);
+                        }
+                    }
                 }
                 if (count > 0)
                 {
@@ -474,7 +492,7 @@ namespace DesktopApp
 
         private void Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.IsLoaded && tiSystem.IsSelected == true)
+            if (this.IsLoaded && tiPicture.IsSelected == true)
             {
 
                 Func<Task<bool>> displayList = async () =>
@@ -598,12 +616,12 @@ namespace DesktopApp
 
         private void DynamicFontSizeChange(object sender, SizeChangedEventArgs e)
         {
-            
-            
+
+
         }
         private void DynamicFontSizeChange(object sender, EventArgs e)
         {
-            
+
 
             //this.Width = this.WindowState == WindowState.Maximized ? SystemParameters.MaximizedPrimaryScreenWidth : _defaultWindowsWidt;
         }
@@ -634,6 +652,25 @@ namespace DesktopApp
 
         }
 
+        private void bArticleAdd_MouseEnter(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void bArticleAdd_MouseLeave(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void bArticleAdd_GotFocus(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void title_MouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
     }
 
 }

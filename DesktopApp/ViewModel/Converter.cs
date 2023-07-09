@@ -26,7 +26,7 @@ namespace DesktopApp
         // Convert for UI
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            object o = null;
+            object? o = null;
 
 
             if (value != null)
@@ -40,14 +40,16 @@ namespace DesktopApp
                         o = true;
                         break;
                     case Picture:
-                        o = GetBitmapImage(value as Picture);
+                        Picture? p = value as Picture;
+                        if (p != null)
+                            o = GetBitmapImage(p);
                         break;
                     case Customer:
                         o = true;
                         break;
                     case List<Position>:
-                        List<Position> list = value as List<Position>;
-                        o = list.Sum(x => x.Totalsum);
+                        List<Position>? list = value as List<Position>;
+                        o = (list != null ? list.Sum(x => x.Totalsum) : 0.00);
                         break;
                     case Order:
                         o = value != null;

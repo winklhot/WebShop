@@ -106,6 +106,6 @@ namespace ShopBase
             }
         }
         public static List<Picture> GetAll() => DBObjects.ReadAll<Picture>();
-        public static Picture GetFromArticle(Article a) => DBObjects.GetFromArticle(a);
+        public static Picture? GetFromArticle(Article a) => DBObjects.GetFromArticle(a);
     }
 }

@@ -18,11 +18,11 @@ namespace WebApp.Pages
     [BindProperties]
     public class sessionBasketModel : PageModel
     {
-        public Order sessionBasket { get; set; }
+        public Order? sessionBasket { get; set; }
         public bool OrderSubmitted { get; set; } = false;
-        public string ResultMessage { get; set; }
-        public string OrderNumber { get; set; }
-        public NonCustomer Customer { get; set; }
+        public string? ResultMessage { get; set; }
+        public string? OrderNumber { get; set; }
+        public NonCustomer? Customer { get; set; }
 
         public void OnGet()
         {
@@ -30,7 +30,11 @@ namespace WebApp.Pages
 
             sessionBasket = sessionBasket.MergeBaskets();
 
-            HttpContext.Session.SetObject("sessionBasket", sessionBasket);
+            if (sessionBasket != null)
+            {
+                HttpContext.Session.SetObject("sessionBasket", sessionBasket);
+            }
+
 
             HttpContext.Session.SetObject("lastUrl", "Basket");
         }
@@ -38,15 +42,19 @@ namespace WebApp.Pages
         public void OnPostDelete(int id)
         {
             sessionBasket = HttpContext.Session.GetObject<Order>("sessionBasket");
-            sessionBasket.Positions.RemoveAt(id);
-            HttpContext.Session.SetObject("sessionBasket", sessionBasket);
+
+            if (sessionBasket != null && sessionBasket.Positions != null && sessionBasket.Positions.Count != 0)
+            {
+                sessionBasket.Positions.RemoveAt(id);
+                HttpContext.Session.SetObject("sessionBasket", sessionBasket);
+            }
         }
 
         public void OnPostOrder()
         {
             sessionBasket = HttpContext.Session.GetObject<Order>("sessionBasket");
 
-            if (sessionBasket != null && sessionBasket.Positions.Count > 0 && (sessionBasket.Customer != null || sessionBasket.NonCustomer != null))
+            if (sessionBasket != null && sessionBasket.Positions != null && sessionBasket.Positions.Count > 0 && (sessionBasket.Customer != null || sessionBasket.NonCustomer != null))
             {
 
                 sessionBasket.Status = ShopBase.Status.Bestellt;
