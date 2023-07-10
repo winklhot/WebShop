@@ -15,11 +15,11 @@ namespace ShopBase
     public class Picture
     {
         public int Id { get; set; }
-        public string Filename { get; set; }
+        public string? Filename { get; set; }
 
         [JsonIgnore] // For not display in Json
-        public byte[] Data { get; set; }
-        public Article Article { get; set; }
+        public byte[]? Data { get; set; }
+        public Article? Article { get; set; }
 
         /// Returns img as String for HTML
 
@@ -45,7 +45,7 @@ namespace ShopBase
             Data = ba;
         }
 
-        public Picture(string filename, byte[] ba, Article a = null)
+        public Picture(string filename, byte[] ba, Article? a = null)
         {
             Filename = filename;
             Data = ba;
@@ -63,13 +63,14 @@ namespace ShopBase
         }
         public void SaveToFile(string path)
         {
-            File.WriteAllBytes(path, Data);
+            if (Data != null)
+                File.WriteAllBytes(path, Data);
         }
         public void Resize()
         {
             // Tests mit ImageSharp (SixLabor) zum Skalieren des Bildes
 
-            if (Data.Length > 11000) //Rest is for Overhead
+            if (Data != null && Data.Length > 11000) //Rest is for Overhead
             {
                 double factor = 1.0 / (Data.Length / 11000.0);
 

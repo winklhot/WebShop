@@ -7,7 +7,7 @@
         xmlns:ShopBase="clr-namespace:ShopBase;assembly=ShopBase" x:Name="title" x:Class="DesktopApp.MainWindow"
         mc:Ignorable="d"
         DataContext="{StaticResource mxmodel}"
-        Title="WebShop Verwaltung" Height="700" Icon="Pictures/icon.jpg" Width="1300" Background="white" Opacity="0.9"  Closing="Window_Closing" PreviewMouseLeftButtonDown="mouse_PreviewMouseLeftButtonDown" MouseMove="title_MouseMove">
+        Title="WebShop Verwaltung" Height="700" Icon="Pictures/icon.jpg" Width="1300" Background="white" Opacity="0.9"  Closing="Window_Closing" PreviewMouseLeftButtonDown="mouse_PreviewMouseLeftButtonDown">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="Pictures/Desktop.jpg" Opacity="0.8"></ImageBrush>
@@ -204,7 +204,7 @@
             </TabItem>
             <TabItem x:Name="tiArticle" IsSelected="true" Header="Artikel" Width="100" Height="30">
                 <Grid Background="Transparent">
-                    <Button x:Name="bArticleAdd" Content="Artikel anlegen" Opacity="0.7" FontSize="13"  HorizontalAlignment="Left" Margin="100,0,0,33" Click="bAdd_Click" Width="160" FontWeight="Bold" Height="40" VerticalAlignment="Bottom" Grid.Column="1" FontFamily="Bahnschrift" MouseEnter="bArticleAdd_MouseEnter" MouseLeave="bArticleAdd_MouseLeave" GotFocus="bArticleAdd_GotFocus">
+                    <Button x:Name="bArticleAdd" Content="Artikel anlegen" Opacity="0.7" FontSize="13"  HorizontalAlignment="Left" Margin="100,0,0,33" Click="bAdd_Click" Width="160" FontWeight="Bold" Height="40" VerticalAlignment="Bottom" Grid.Column="1" FontFamily="Bahnschrift">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="white" />
@@ -436,7 +436,7 @@
             </TabItem>
         </TabControl>
         <Grid Grid.Row="1">
-            <Button Content="Alle Daten zurücksetzen" x:Name="bSetBack" Foreground="white" HorizontalAlignment="Right" FontSize="13" FontWeight="Black" Width="265" Margin="0,0,0,0" Background="#CDF91C1C"  Click="SetBackButton_Click" MouseEnter="bSetBack_MouseEnter" MouseLeave="bSetBack_MouseLeave" FontFamily="Bahnschrift">
+            <Button Content="Alle Daten zurücksetzen" x:Name="bSetBack" Foreground="white" HorizontalAlignment="Right" FontSize="13" FontWeight="Black" Width="265" Margin="0,0,0,0" Background="#CDF91C1C"  Click="SetBackButton_Click" FontFamily="Bahnschrift">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="#CDF91C1C" />

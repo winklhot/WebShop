@@ -101,17 +101,21 @@ namespace Layer3Objects
                 case Customer:
                     using (SqliteConnection con = DBAccess.OpenDB())
                     {
-                        Customer c = item as Customer;
-                        using (SqliteTransaction t = con.BeginTransaction())
+                        Customer? c = item as Customer;
+
+                        if (c != null && c.Adress != null)
                         {
-                            sql = $"Insert into TCustomer (EMail, Password, Firstname, Lastname, Gender) values ('{c.EMail}', '{c.Password}', '{c.Firstname}', '{c.Lastname}', '{c.Gender}');";
-                            lastIndex = DBAccess.ExecuteNonQuery(sql, con, t);
+                            using (SqliteTransaction t = con.BeginTransaction())
+                            {
+                                sql = $"Insert into TCustomer (EMail, Password, Firstname, Lastname, Gender) values ('{c.EMail}', '{c.Password}', '{c.Firstname}', '{c.Lastname}', '{c.Gender}');";
+                                lastIndex = DBAccess.ExecuteNonQuery(sql, con, t);
 
-                            //Insert in Node Customer/Adresse m to n relation
-                            sql = $"Insert into TNodeAdress values (null, {lastIndex}, null, {c.Adress.Id}, '{c.Adress.AdressType}');";
-                            DBAccess.ExecuteNonQuery(sql, con, t);
+                                //Insert in Node Customer/Adresse m to n relation
+                                sql = $"Insert into TNodeAdress values (null, {lastIndex}, null, {c.Adress.Id}, '{c.Adress.AdressType}');";
+                                DBAccess.ExecuteNonQuery(sql, con, t);
 
-                            t.Commit();
+                                t.Commit();
+                            }
                         }
 
                         sql = null;
@@ -123,15 +127,23 @@ namespace Layer3Objects
                         using (SqliteTransaction t = con.BeginTransaction())
                         {
                             NonCustomer n = (NonCustomer)item;
-                            sql = $"Insert into TNonCustomer values (null, '{n.EMail}', '{n.Firstname}', '{n.Lastname}', '{n.Gender}');";
-                            lastIndex = DBAccess.ExecuteNonQuery(sql, con, t);
-                            int idCN = lastIndex;
-                            n.Id = idCN;
+                            if (n.Adress != null)
+                            {
+                                sql = $"Insert into TNonCustomer values (null, '{n.EMail}', '{n.Firstname}', '{n.Lastname}', '{n.Gender}');";
+                                lastIndex = DBAccess.ExecuteNonQuery(sql, con, t);
+                                int idCN = lastIndex;
+                                n.Id = idCN;
 
-                            sql = $"Insert into TNodeAdress values (null, null, {idCN}, {n.Adress.Id}, '{n.Adress.AdressType}');";
-                            DBAccess.ExecuteNonQuery(sql, con, t);
 
-                            t.Commit();
+                                sql = $"Insert into TNodeAdress values (null, null, {idCN}, {n.Adress.Id}, '{n.Adress.AdressType}');";
+                                DBAccess.ExecuteNonQuery(sql, con, t);
+
+                                t.Commit();
+                            }
+                            else
+                            {
+                                throw new ArgumentNullException();
+                            }
                         }
 
                         sql = null;
@@ -150,29 +162,41 @@ namespace Layer3Objects
                 case Picture:
                     using (SqliteConnection con = DBAccess.OpenDB())
                     {
-                        Picture p = item as Picture;
-                        sql = $"Insert into TPicture values (null,{(p.Article != null ? p.Article.Id : "null")},'{p.Filename}', @data, @Length);";
+                        Picture? p = item as Picture;
+                        if (p != null && p.Data != null)
+                        {
+                            sql = $"Insert into TPicture values (null,{(p.Article != null ? p.Article.Id : "null")},'{p.Filename}', @data, @Length);";
 
-                        SqliteCommand ms = new(sql, con);
-                        ms.Parameters.AddWithValue("@data", p.Data);
-                        ms.Parameters.AddWithValue("@Length", p.Data.Length);
+                            SqliteCommand ms = new(sql, con);
+                            ms.Parameters.AddWithValue("@data", p.Data);
+                            ms.Parameters.AddWithValue("@Length", p.Data.Length);
 
-                        ms.ExecuteNonQuery();
+                            ms.ExecuteNonQuery();
+                        }
+
                         sql = null;
                     }
                     break;
                 case Order:
-                    Order o = item as Order;
+                    Order o = (Order)item;
                     sql = $"Insert into TOrder values (null, {(o.Customer != null ? o.Customer.Id : "null")}, {(o.NonCustomer != null ? o.NonCustomer.Id : "null")}, '{((Order)item).Status}');";
                     //Whe need the Created Order Id to Insert the Positions to Database of the same connection!
                     int oId = DBAccess.ExecuteNonQuery(sql);
                     o.Id = oId;
                     sql = null;
 
-                    foreach (Position item2 in ((Order)item).Positions)
+                    if (o.Positions != null)
                     {
-                        sql = $"Insert into TPosition values (null,{oId},{((Position)item2).Article.Id},{((Position)item2).Count})";
-                        DBAccess.ExecuteNonQuery(sql);
+                        foreach (Position item2 in (o.Positions))
+                        {
+                            if (item2.Article != null)
+                            {
+                                sql = $"Insert into TPosition values (null,{oId},{item2.Article.Id},{((Position)item2).Count})";
+
+                                DBAccess.ExecuteNonQuery(sql);
+                            }
+                        }
+
                     }
                     sql = null;
                     break;
@@ -185,35 +209,42 @@ namespace Layer3Objects
         {
             //List with diffrent Referenztypes possible and one or more
             List<object> list = new List<object>();
-            object ob = Activator.CreateInstance<T>();
-            string sql = $"Select * from T{ob.GetType().Name} ";
+            object? ob = Activator.CreateInstance<T>();
+            string sql = "";
 
-            if (id > 0)
+            if (ob != null)
             {
-                switch (ob)
+
+                sql = $"Select * from T{ob.GetType().Name} ";
+
+                if (id > 0)
                 {
-                    case Customer:
-                        sql += $"where Id = {id}";
-                        break;
-                    case NonCustomer:
-                        sql += $"where Id = {id}";
-                        break;
-                    case Article:
-                        sql += $"where Id = {id}";
-                        break;
-                    case Position:
-                        sql += $"where OId = {id}";
-                        break;
-                    case Adress:
-                        sql += $"where Id = {id}";
-                        break;
-                    case Picture:
-                        sql += $"where AId = {id}";
-                        break;
-                    default:
-                        throw new NotImplementedException();
+                    switch (ob)
+                    {
+                        case Customer:
+                            sql += $"where Id = {id}";
+                            break;
+                        case NonCustomer:
+                            sql += $"where Id = {id}";
+                            break;
+                        case Article:
+                            sql += $"where Id = {id}";
+                            break;
+                        case Position:
+                            sql += $"where OId = {id}";
+                            break;
+                        case Adress:
+                            sql += $"where Id = {id}";
+                            break;
+                        case Picture:
+                            sql += $"where AId = {id}";
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
                 }
             }
+
 
             sql += ";";
 
@@ -232,7 +263,7 @@ namespace Layer3Objects
                                 list.Add(new NonCustomer(r.GetInt32(0), r.GetString(1), r.GetString(2), r.GetString(3), (Gender)Enum.Parse(typeof(Gender), r.GetString(4)), Adress.GetFromCustomer<NonCustomer>(r.GetInt32(0))));
                                 break;
                             case Article:
-                                list.Add(new Article(r.GetInt32(0),r.GetBoolean(1), r.GetString(2), r.GetString(3), r.GetDecimal(4), r.GetInt32(5)));
+                                list.Add(new Article(r.GetInt32(0), r.GetBoolean(1), r.GetString(2), r.GetString(3), r.GetDecimal(4), r.GetInt32(5)));
                                 break;
                             case Position:
                                 list.Add(new Position(r.GetInt32(0), Article.Get(r.GetInt32(2)), r.GetInt32(3)));
@@ -241,7 +272,7 @@ namespace Layer3Objects
                                 list.Add(new Adress(r.GetInt32(0), r.GetString(2), r.GetInt32(3), r.GetInt32(4), r.GetString(5), r.GetString(6)));
                                 break;
                             case Picture:
-                                Article a = null;
+                                Article? a = null;
                                 try
                                 {
                                     if (id > 0)
@@ -329,28 +360,68 @@ namespace Layer3Objects
                         break;
                     case Article:
                         Article a = (Article)item;
-                        sql += $"Name = '{a.Name}', Description = '{a.Description}', Price = {a.Price.ToString("#0.00", culture)} Where Id = {a.Id}";
+
+                        sql += $"Name = '{a.Name}', Description = '{a.Description}', Price = {a.Price.ToString("#0.00", culture)}, Count = {a.Count} Where Id = {a.Id}";
+
                         break;
                     case Order: // Only the Status chan be Changed 
-                        sql += $"Status = '{((Order)item).Status}' where Id = {((Order)item).Id}";
+                        Order o = (Order)item;
+                        if (o.Status == Status.Bestellt)
+                        {
+                            using (SqliteTransaction t = con.BeginTransaction())
+                            {
+                                sql += $"Status = '{o.Status}' where Id = {o.Id};";
+
+                                DBAccess.ExecuteNonQuery(sql, con, t);
+
+                                if (o.Positions != null)
+                                {
+                                    o.Positions.ForEach(p =>
+                                    {
+                                        if (p.Article != null)
+                                        {
+                                            p.Article.Count -= p.Count;
+                                            sql = $"Update TArticle Set Count = {p.Article.Count} where Id = {p.Article.Id}";
+                                            DBAccess.ExecuteNonQuery(sql, con, t);
+                                        }
+
+                                    });
+
+                                }
+
+                                t.Commit();
+
+                            }
+
+
+                        }
+                        else
+                        {
+                            sql += $"Status = '{((Order)item).Status}' where Id = {((Order)item).Id}";
+                        }
                         break;
                     case Picture:
                         Picture p = (Picture)item;
+                        if (p.Article != null && p.Data != null)
+                        {
+                            sql += $"Filename = '{p.Filename}',Data = @Data,Length = @Length ";
+                            sql += $"Where AId = {p.Article.Id};";
 
-                        sql += $"Filename = '{p.Filename}',Data = @Data,Length = @Length ";
-                        sql += $"Where AId = {p.Article.Id};";
+                            SqliteCommand ms = new(sql, con);
+                            ms.Parameters.AddWithValue("@Data", p.Data);
+                            ms.Parameters.AddWithValue("@Length", p.Data.Length);
+                            ms.ExecuteNonQuery();
+                        }
 
-                        SqliteCommand ms = new(sql, con);
-                        ms.Parameters.AddWithValue("@Data", p.Data);
-                        ms.Parameters.AddWithValue("@Length", p.Data.Length);
-                        ms.ExecuteNonQuery();
                         sql = null;
                         break;
                     default:
                         break;
+
+
                 }
 
-                DBAccess.ExecuteNonQuery(sql);
+                DBAccess.ExecuteNonQuery(sql, con);
             }
 
         }
@@ -442,11 +513,16 @@ namespace Layer3Objects
         }
         public static Adress GetAdressWithoutID(Adress a)
         {
+            string sql = "";
             int aid = -1;
-            string sql = "Select Id " +
-                         "From TAdress " +
-                         $"Where Street = '{a.Street.Trim()}' and HouseNumber = {a.HouseNumber} and PostalCode = {a.PostalCode} and City = '{a.City.Trim()}' and Country = '{a.Country}';";
 
+            if (a.Street != null && a.HouseNumber > 0 && a.PostalCode > 0 && a.City != null && a.Country != null)
+            {
+
+                sql = "Select Id " +
+                      "From TAdress " +
+                      $"Where Street = '{(a.Street != null ? a.Street.Trim() : "")}' and HouseNumber = {a.HouseNumber} and PostalCode = {a.PostalCode} and City = '{a.City.Trim()}' and Country = '{a.Country}';";
+            }
             using (SqliteConnection con = DBAccess.OpenDB())
             {
                 using (SqliteDataReader r = DBAccess.ExecuteReader(sql, con))
@@ -476,8 +552,8 @@ namespace Layer3Objects
                 return null;
             }
 
-            Customer c = o.Customer;
-            NonCustomer n = o.NonCustomer;
+            Customer? c = o.Customer;
+            NonCustomer? n = o.NonCustomer;
             Order? mergedBasket = null;
             List<Order> list = new List<Order>();
 
@@ -491,7 +567,8 @@ namespace Layer3Objects
                     else
                         mergedBasket ??= new Order(c, Status.Warenkorb, new List<Position>());
 
-                    if (item.Article != null && mergedBasket != null &&  mergedBasket.Positions != null && mergedBasket.Positions.Contains<Position>(item) == false)
+
+                    if (item.Article != null && mergedBasket != null && mergedBasket.Positions != null && mergedBasket.Positions.Contains<Position>(item) == false)
                     {
                         item.Count = item.Count > item.Article.Count ? item.Article.Count : item.Count;
 
@@ -504,13 +581,18 @@ namespace Layer3Objects
                         {
                             Position? pO = mergedBasket.Positions.Find(x => x.Article != null ? x.Article.Id == item.Article.Id : false);
 
-                            if (pO != null)
+                            if (pO != null && pO.Article != null)
                                 pO.Count = pO.Count + item.Count > pO.Article.Count ? pO.Article.Count : pO.Count + item.Count;
                         }
 
                     }
                 }
             }
+
+            //Delete Zero Positions
+
+            if (mergedBasket != null && mergedBasket.Positions != null)
+                mergedBasket.Positions = mergedBasket.Positions.FindAll(p => p.Count > 0);
 
             return mergedBasket;
         }

@@ -1,6 +1,7 @@
 ﻿using Layer3Objects;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +17,11 @@ namespace ShopBase
     public class NonCustomer
     {
         public int Id { get; set; }
-        public string EMail { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
+        public string? EMail { get; set; }
+        public string? Firstname { get; set; }
+        public string? Lastname { get; set; }
         public Gender Gender { get; set; }
-        public Adress Adress { get; set; }
+        public Adress? Adress { get; set; }
 
 
         public NonCustomer()
@@ -71,9 +72,13 @@ namespace ShopBase
             {
                 return Id.GetHashCode();
             }
-            else
+            else if(EMail != null)
             {
                 return EMail.GetHashCode();
+            }
+            else
+            {
+                throw new NoNullAllowedException();
             }
         }
 

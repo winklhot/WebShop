@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Layer3Objects;
-
+using Microsoft.Data.Sqlite;
 
 namespace ShopBase
 {
@@ -14,8 +14,8 @@ namespace ShopBase
         public bool Active { get; set; } = false;
 
         // Name may not be emty, desc can be emty according to database setup
-        public string Name { get => _name; set => _name = value.Length < 31 && value.Trim().Length > 0 ? value.Trim() : throw new Exception("Name zu lang oder keine Eingabe"); }
-        public string Description { get => _desc; set => _desc = value.Length < 71 ? value : throw new Exception("Bezeichnung ist zu lang");}
+        public string? Name { get => _name; set => _name = value != null && value.Length < 31 && value.Trim().Length > 0 ? value.Trim() : throw new Exception("Name zu lang oder keine Eingabe"); }
+        public string? Description { get => _desc; set => _desc = value != null && value.Length < 71 ? value : throw new Exception("Bezeichnung ist zu lang oder keine Eingabe");}
         // Price range limited by database setup
         public decimal Price 
         { 
@@ -27,9 +27,9 @@ namespace ShopBase
         }
         public int Count { get; set; }
 
-        private string _name;
+        private string? _name;
 
-        private string _desc;
+        private string? _desc;
 
         private decimal _price;
         

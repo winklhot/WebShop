@@ -79,7 +79,7 @@ namespace ShopBase
         }
         public static void InsertTestNonCustomers()
         {
-            NonCustomer c = default;
+            NonCustomer c = new();
 
 
             List<string> firstnamesWithGender = GetFirstnames();
@@ -274,7 +274,8 @@ namespace ShopBase
                 }
                 else
                 {
-                    (new Picture($"{al[i].Name.Replace(' ', '_').Replace(',', '_')}.jpg", data[i], Article.Get(i))).Insert();
+                    string? name = al != null && al[i] != null && al[i].Name != null ? al[i].Name : "";
+                    (new Picture($"{(name != null ? name.Replace(' ', '_').Replace(',', '_') : "noname")}.jpg", data[i], Article.Get(i))).Insert();
                 }
 
             }

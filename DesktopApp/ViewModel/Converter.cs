@@ -34,7 +34,12 @@ namespace DesktopApp
                 switch (value)
                 {
                     case decimal:
-                        o = (decimal)value < 9999.98m ? value.ToString().Replace(".", ",") : "";
+                        if (value != null && value.ToString() != null)
+                        {
+                            // Writing comlplex because of null warning
+                            string? s = value != null && value.ToString() != null ? value.ToString() : "";
+                            o = value != null && (decimal)value < 9999.98m && value.ToString() != null && s != null ? s.Replace(".", ",") : "";
+                        }
                         break;
                     case Article:
                         o = true;
@@ -72,7 +77,7 @@ namespace DesktopApp
         // Convert from UI
         public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            object o = null;
+            object? o = null;
 
             switch (value)
             {

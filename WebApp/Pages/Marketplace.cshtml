@@ -34,7 +34,7 @@
                     <tr>
                         <td class="marketplacename">@a.Name</td>
                         @{
-                            Picture p = Picture.Get(a.Id);
+                            Picture? p = Picture.Get(a.Id);
                         }
                         <td rowspan="3"><img class="article" id="marketplaceimg" width="90" height="100" src="@(p != null ? p.GetAsString() : Picture.Get(10).GetAsString())" /></td>
                         <td class="marketplaceprice">@a.Price.ToString("#0.00") EUR</td>

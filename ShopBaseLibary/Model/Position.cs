@@ -12,8 +12,8 @@ namespace ShopBase
     {
         public int Id { get; set; }
         public int Count { get; set; }
-        public decimal Totalsum { get => Article.Price * Count; }
-        public Article Article { get; set; }
+        public decimal Totalsum { get => Article != null ? Article.Price * Count : 0; }
+        public Article? Article { get; set; }
 
         public Position()
         {
@@ -34,17 +34,18 @@ namespace ShopBase
 
         public override bool Equals(object? obj)
         {
-            if (obj == null || GetType() != obj.GetType())
+            Position? other = obj as Position;
+
+            if (obj == null || GetType() != obj.GetType() || this.Article == null || other == null || other.Article == null)
                 return false;
 
-            Position other = (Position)obj;
 
             return this.Article.Id == other.Article.Id;   
         }
 
         public override int GetHashCode()
         {
-            return this.Article.Id;
+            return this.Article != null ? this.Article.Id : -1;
         }
         public static List<Position> GetAll(int oid) => DBObjects.ReadAll<Position>(oid);
         public static List<Position> GetAll() => DBObjects.ReadAll<Position>();

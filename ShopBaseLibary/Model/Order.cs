@@ -38,7 +38,7 @@ namespace ShopBase
             Positions = positions;
         }
 
-        public Order(Customer customer, Status status, List<Position> positions)
+        public Order(Customer? customer, Status status, List<Position> positions)
         {
             Customer = customer;
             Status = status;

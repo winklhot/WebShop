@@ -26,25 +26,24 @@ namespace DesktopApp
     public class MainViewModel : BaseModel
     {
         [System.ComponentModel.Bindable(true)]
-        public System.Collections.IEnumerable ItemsSource { get; set; }
 
-        private ObservableCollection<Article> _lAricle;
+        private ObservableCollection<Article> _lAricle = new();
 
-        private ObservableCollection<Customer> _lCustomer;
+        private ObservableCollection<Customer> _lCustomer = new();
 
-        private ObservableCollection<Order> _lOrder;
+        private ObservableCollection<Order> _lOrder = new();
 
-        private Customer _selCustomer;
+        private Customer? _selCustomer;
 
-        private Order _selOrder;
+        private Order? _selOrder;
 
-        private Article _selArticle;
+        private Article? _selArticle;
 
         private Article? _newArticle = new Article();
 
         private Picture? _selArticlePicture;
 
-        private List<Status> _lStatus;
+        private List<Status> _lStatus = new();
 
         private Status _selStatus;
 
@@ -56,9 +55,9 @@ namespace DesktopApp
         public ObservableCollection<Article> LArticle { get => _lAricle; set { _lAricle = value; OnPropertyChanged(nameof(LArticle)); } }
         public ObservableCollection<Customer> LCustomer { get => _lCustomer; set { _lCustomer = value; OnPropertyChanged(nameof(LCustomer)); } }
         public ObservableCollection<Order> LOrder { get => _lOrder; set { _lOrder = value; OnPropertyChanged(nameof(LOrder)); } }
-        public Customer SelCustomer { get => _selCustomer; set { _selCustomer = value; OnPropertyChanged(nameof(SelCustomer)); if (SelCustomer != null) LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == SelStatus)); OnPropertyChanged(nameof(LCustomer)); } }
-        public Order SelOrder { get => _selOrder; set { _selOrder = value; OnPropertyChanged(nameof(SelOrder)); OnPropertyChanged(nameof(LOrder)); } }
-        public Article SelArticle
+        public Customer? SelCustomer { get => _selCustomer; set { _selCustomer = value; OnPropertyChanged(nameof(SelCustomer)); if (SelCustomer != null) LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == SelStatus)); OnPropertyChanged(nameof(LCustomer)); } }
+        public Order? SelOrder { get => _selOrder; set { _selOrder = value; OnPropertyChanged(nameof(SelOrder)); OnPropertyChanged(nameof(LOrder)); } }
+        public Article? SelArticle
         {
             get => _selArticle;
             set
@@ -87,7 +86,10 @@ namespace DesktopApp
             get => _selStatus; set
             {
                 _selStatus = value;
-                LChangeStatus = SelStatus == Status.Warenkorb ? new ObservableCollection<Status>() { Status.Bestellt, Status.Storniert } : SelStatus == Status.Bestellt ? new ObservableCollection<Status>() { Status.Versendet, Status.Storniert } : null; LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == SelStatus));
+                if (SelCustomer != null)
+                {
+                    LChangeStatus = SelStatus == Status.Warenkorb ? new ObservableCollection<Status>() { Status.Bestellt, Status.Storniert } : SelStatus == Status.Bestellt ? new ObservableCollection<Status>() { Status.Versendet, Status.Storniert } : null; LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == SelStatus));
+                }
             }
         }
         public ObservableCollection<Status>? LChangeStatus
@@ -118,6 +120,7 @@ namespace DesktopApp
 
         public MainViewModel()
         {
+
             LoadData();
 
         }
@@ -171,7 +174,7 @@ namespace DesktopApp
                     mw.bOrderChange.Width *= factor;
                 }
 
-                if(e.PreviousSize.Height != 0.00)
+                if (e.PreviousSize.Height != 0.00)
                 {
                     double factor = (e.NewSize.Height / e.PreviousSize.Height);
 
@@ -189,7 +192,7 @@ namespace DesktopApp
                 }
             }
 
-           
+
 
 
 
@@ -252,13 +255,13 @@ namespace DesktopApp
         {
             Button? b = sender as Button;
 
-            if(b != null)
+            if (b != null)
             {
                 b.Background = b.Background == Brushes.White ? Brushes.LightGreen : Brushes.White;
             }
         }
 
-        
+
 
         public void LoadData()
         {
@@ -271,11 +274,11 @@ namespace DesktopApp
         }
         public void DeLoadData()
         {
-            LArticle = null;
-            LCustomer = null;
-            SelCustomer = null;
-            LOrder = null;
-            LStatus = null;
+            LArticle = new();
+            LCustomer = new();
+            SelCustomer = new();
+            LOrder = new();
+            LStatus = new();
         }
 
     }

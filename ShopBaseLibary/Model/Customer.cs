@@ -6,13 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using Layer3Objects;
+using System.Data;
 
 namespace ShopBase
 {
 
     public class Customer : NonCustomer
     {
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         public Customer() : base()
         {
@@ -35,23 +36,23 @@ namespace ShopBase
 
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             bool isEqaul = false;
 
-            // Important because this line give diconectet item (this.Id != 0 && (obj as Customer).Id != 0)
-            Customer c = obj as Customer; // Set c = null if disconnected
+            // Important because this line give disconnected item (this.Id != 0 && (obj as Customer).Id != 0)
+            Customer? c = obj as Customer; // Set c = null if disconnected
 
             if (c != null)
             {
 
                 if (this.Id != 0 && c.Id != 0)
                 {
-                    isEqaul = Id == (obj as Customer).Id;
+                    isEqaul = Id == c.Id;
                 }
                 else
                 {
-                    isEqaul = EMail == (obj as Customer).EMail;
+                    isEqaul = EMail == c.EMail;
                 }
             }
             return isEqaul;
@@ -63,9 +64,13 @@ namespace ShopBase
             {
                 return Id.GetHashCode();
             }
-            else
+            else if(EMail != null)
             {
                 return EMail.GetHashCode();
+            }
+            else
+            {
+                throw new NoNullAllowedException();
             }
         }
 
@@ -85,7 +90,7 @@ namespace ShopBase
 
         public static string GetHash(string input)
         {
-            byte[] data = null;
+            byte[]? data = null;
             var sBuilder = new StringBuilder();
 
             using (SHA256 pwdEncryptor = SHA256.Create())

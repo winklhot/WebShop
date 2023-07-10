@@ -46,6 +46,7 @@ namespace WebApp.Pages
             if (sessionBasket != null && sessionBasket.Positions != null && sessionBasket.Positions.Count != 0)
             {
                 sessionBasket.Positions.RemoveAt(id);
+                sessionBasket.Change();
                 HttpContext.Session.SetObject("sessionBasket", sessionBasket);
             }
         }

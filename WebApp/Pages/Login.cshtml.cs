@@ -65,7 +65,7 @@ namespace WebApp.Pages
 
         public void OnPostLogout()
         {
-            sessionBasket = HttpContext.Session.GetObject<Order>("sessionBasket");
+            sessionBasket = new();
             sessionBasket.Customer = null;
             HttpContext.Session.SetObject("sessionBasket", sessionBasket);
         }

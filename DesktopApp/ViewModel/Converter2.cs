@@ -13,12 +13,13 @@ namespace DesktopApp
     {
         public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            object o = null;
+            object? o = null;
 
             switch (value)
             {
                 case List<Position>:
-                    o = (value as List<Position>).Count;
+                    List<Position>? lp = value as List<Position>;
+                    o = lp != null ? lp.Count : null;
                     break;
                 default:
                     break;

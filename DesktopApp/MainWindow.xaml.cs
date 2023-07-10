@@ -32,9 +32,9 @@ namespace DesktopApp
 
 
 
-        private static Task _pictureShowing = default;
+        private static Task? _pictureShowing = null;
 
-        private static Task _resetAllData = default;
+        private static Task? _resetAllData = null;
         public MainWindow()
         {
             TestData.CreateDatabaseWithData();
@@ -43,9 +43,14 @@ namespace DesktopApp
 
             model = FindResource("mxmodel") as MainViewModel;
 
-            this.SizeChanged += model.SetWindowStyle;
+            if (model != null)
+            {
+                this.SizeChanged += model.SetWindowStyle;
 
-            this.MouseMove += model.SetHoverStyle;
+                this.MouseMove += model.SetHoverStyle;
+            }
+
+
 
 
 
@@ -73,7 +78,7 @@ namespace DesktopApp
         }
         private void bAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (!this.IsLoaded)
+            if (!this.IsLoaded || model == null)
                 return;
 
             // Display the hidden ArticleAdd Window and disable all others till new article is added or process cancelled
@@ -100,43 +105,51 @@ namespace DesktopApp
             int aId = -1;
             bool isExe = false;
 
-
-            try
+            if (model != null)
             {
-                if (model.NewArticle.Price == 9999.98m) // Is used because of converter and 0 not possible
+                try
                 {
-                    throw new ArgumentException();
-                }
-
-                aId = model.NewArticle.Insert();
-                model.NewArticle.Id = aId;
-                model.LArticle.Add(model.NewArticle);
-
-
-                if (model != null && model.SelArticlePicture != null)
-                {
-                    if (model.SelArticlePicture.Data != null)
+                    if (model.NewArticle != null && model.NewArticle.Price == 9999.98m) // Is used because of converter and 0 not possible
                     {
-                        model.SelArticlePicture.Article = Article.Get(aId);
-                        model.SelArticlePicture.Insert();
+                        throw new ArgumentException();
                     }
+
+
+                    if (model.NewArticle != null)
+                    {
+                        aId = model.NewArticle.Insert();
+                        model.NewArticle.Id = aId;
+                        model.LArticle.Add(model.NewArticle);
+                    }
+
+
+                    if (model != null && model.SelArticlePicture != null)
+                    {
+                        if (model.SelArticlePicture.Data != null)
+                        {
+                            model.SelArticlePicture.Article = Article.Get(aId);
+                            model.SelArticlePicture.Insert();
+                        }
+                    }
+
+                    SetMessageLine(false, "Artikel erfolgreich gespeichert");
+                    isExe = true;
+                }
+                catch (Exception ex)
+                {
+                    if (ex is ArgumentException)
+                    {
+                        SetMessageLine(true, "Preis ist nur zwischen 0,01 und 9999,97 gültig");
+                    }
+                    else
+                    {
+                        SetMessageLine(true, "Ein unerwarteter Fehler ist aufgetreten");
+                    }
+
                 }
 
-                SetMessageLine(false, "Artikel erfolgreich gespeichert");
-                isExe = true;
             }
-            catch (Exception ex)
-            {
-                if (ex is ArgumentException)
-                {
-                    SetMessageLine(true, "Preis ist nur zwischen 0,01 und 9999,97 gültig");
-                }
-                else
-                {
-                    SetMessageLine(true, "Ein unerwarteter Fehler ist aufgetreten");
-                }
 
-            }
 
 
             if (isExe)
@@ -151,12 +164,13 @@ namespace DesktopApp
                 tiOrder.IsEnabled = true;
                 tiPicture.IsEnabled = true;
 
-                model.NewArticle = null;
+                if (model != null)
+                    model.NewArticle = null;
             }
         }
         private void bAddCancel(object sender, RoutedEventArgs e)
         {
-            if (!this.IsLoaded)
+            if (!this.IsLoaded || model == null)
                 return;
 
             //Opposite to func b_Add_click
@@ -176,7 +190,7 @@ namespace DesktopApp
             if (!this.IsLoaded)
                 return;
 
-            Article a = null;
+            Article? a = null;
 
             // Display the hidden ArticleChange Window and disable all others till new article is added or process cancelled
             tiArticleChange.Visibility = Visibility.Visible;
@@ -189,65 +203,77 @@ namespace DesktopApp
 
             // Values before user interaction
 
-            a = model.SelArticle;
+            if (model != null)
+                a = model.SelArticle;
 
-            tbChangeId.Text = a.Id.ToString();
-            tbChangeName.Text = a.Name;
-            tbChangeDesc.Text = a.Description;
-            tbChangePrice.Text = a.Price.ToString();
+            if (a != null)
+            {
+                tbChangeId.Text = a.Id.ToString();
+                tbChangeName.Text = a.Name;
+                tbChangeDesc.Text = a.Description;
+                tbChangePrice.Text = a.Price.ToString();
+            }
         }
         private void bChangeChange(object sender, RoutedEventArgs e)
         {
             if (!this.IsLoaded)
                 return;
 
-            // set new values changed by user
-
-            model.SelArticle.Id = Convert.ToInt32(tbChangeId.Text);
-            model.SelArticle.Name = tbChangeName.Text;
-            model.SelArticle.Description = tbChangeDesc.Text;
-            model.SelArticle.Price = Convert.ToDecimal(tbChangePrice.Text);
-            model.SelArticle.Change();
-            model.LArticle = new System.Collections.ObjectModel.ObservableCollection<Article>(Article.GetAll());
-
-
-            if (model.SelArticlePicture != null)
+            if (model != null && model.SelArticle != null)
             {
-                model.SelArticlePicture.Article = model.SelArticle;
-                model.SelArticlePicture.Change();
+                // set new values changed by user
+
+                model.SelArticle.Id = Convert.ToInt32(tbChangeId.Text);
+                model.SelArticle.Name = tbChangeName.Text;
+                model.SelArticle.Description = tbChangeDesc.Text;
+                model.SelArticle.Price = Convert.ToDecimal(tbChangePrice.Text);
+                model.SelArticle.Change();
+                model.LArticle = new System.Collections.ObjectModel.ObservableCollection<Article>(Article.GetAll());
+
+
+                if (model.SelArticlePicture != null)
+                {
+                    model.SelArticlePicture.Article = model.SelArticle;
+                    model.SelArticlePicture.Change();
+                }
+
+                SetMessageLine(false, "Artikel erfolgreich geändert");
+
+                //Opposite to func b_Add_click
+                tiArticleChange.Visibility = Visibility.Collapsed;
+
+                tiArticle.IsEnabled = true;
+                tiArticle.IsSelected = true;
+                tiCustomer.IsEnabled = true;
+                tiOrder.IsEnabled = true;
+                tiPicture.IsEnabled = true;
+                model.SelArticle = null;
+
             }
 
-            SetMessageLine(false, "Artikel erfolgreich geändert");
-
-            //Opposite to func b_Add_click
-            tiArticleChange.Visibility = Visibility.Collapsed;
-
-            tiArticle.IsEnabled = true;
-            tiArticle.IsSelected = true;
-            tiCustomer.IsEnabled = true;
-            tiOrder.IsEnabled = true;
-            tiPicture.IsEnabled = true;
-            model.SelArticle = null;
         }
         private void bChangeCancel(object sender, RoutedEventArgs e)
         {
             if (!this.IsLoaded)
                 return;
 
-            model.SelArticle = null;
-            model.SelArticlePicture = null;
+            if (model != null)
+            {
+                model.SelArticle = null;
+                model.SelArticlePicture = null;
 
-            //Opposite to func bChange_click
-            tiArticleChange.Visibility = Visibility.Collapsed;
+                //Opposite to func bChange_click
+                tiArticleChange.Visibility = Visibility.Collapsed;
 
-            tiArticle.IsEnabled = true;
-            tiArticle.IsSelected = true;
-            tiCustomer.IsEnabled = true;
-            tiOrder.IsEnabled = true;
+                tiArticle.IsEnabled = true;
+                tiArticle.IsSelected = true;
+                tiCustomer.IsEnabled = true;
+                tiOrder.IsEnabled = true;
+            }
         }
         private void bDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (!this.IsLoaded)
+            if (!this.IsLoaded || model == null)
                 return;
 
             var la = lbArtList.SelectedItems;
@@ -287,7 +313,8 @@ namespace DesktopApp
             {
                 Picture p = new Picture(dlg.FileName);
 
-                model.SelArticlePicture = p;
+                if (model != null)
+                    model.SelArticlePicture = p;
             }
         }
 
@@ -336,32 +363,42 @@ namespace DesktopApp
         }
         private void CustomerChange(object sender, RoutedEventArgs e)
         {
-            model = FindResource("mxmodel") as MainViewModel;
-            Customer c = model.SelCustomer as Customer;
+            if (model != null)
+            {
+                Customer? c = model.SelCustomer;
 
-            tiCustomerChange.Visibility = Visibility.Visible;
-            tiCustomerChange.IsSelected = true;
-            tiArticle.IsEnabled = false;
-            tiCustomer.IsEnabled = false;
-            tiOrder.IsEnabled = false;
+                if (c != null)
+                {
+                    tiCustomerChange.Visibility = Visibility.Visible;
+                    tiCustomerChange.IsSelected = true;
+                    tiArticle.IsEnabled = false;
+                    tiCustomer.IsEnabled = false;
+                    tiOrder.IsEnabled = false;
 
-            tbCustomerId.Text = c.Id.ToString();
-            tbCustomerFirstname.Text = c.Firstname.ToString();
-            tbCustomerLastname.Text = c.Lastname.ToString();
-            tbCustomerEMail.Text = c.EMail.ToString();
+                    tbCustomerId.Text = c.Id.ToString();
+                    tbCustomerFirstname.Text = c.Firstname;
+                    tbCustomerLastname.Text = c.Lastname;
+                    tbCustomerEMail.Text = c.EMail;
+                }
+
+            }
+
         }
         private void bCustomerChangeChange_Click(object sender, RoutedEventArgs e)
         {
-            Customer c = null;
+            if (!IsLoaded || model == null)
+                return;
+
+            Customer? c = null;
             Random r = new Random();
-            string s = default;
+            string? s = default;
             List<char> avChar4Pw = new List<char>() { '!', '#', '$', '%', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'G' };
 
             try
             {
-                if (cbCustomerChangePassword.IsChecked == false)
+                if (cbCustomerChangePassword.IsChecked == false && model.SelCustomer != null)
                 {
-                    c = new Customer(Convert.ToInt32(tbCustomerId.Text), tbCustomerEMail.Text, tbCustomerFirstname.Text, tbCustomerLastname.Text, model.SelCustomer.Gender, model.SelCustomer.Adress);
+                    c = new Customer(Convert.ToInt32(tbCustomerId.Text), tbCustomerEMail.Text, tbCustomerFirstname.Text, tbCustomerLastname.Text, model.SelCustomer.Gender, model.SelCustomer.Adress != null ? model.SelCustomer.Adress : new());
                 }
                 else
                 {
@@ -400,7 +437,8 @@ namespace DesktopApp
 
                     }
 
-                    c = new Customer(Convert.ToInt32(tbCustomerId.Text), tbCustomerEMail.Text, Customer.GetHash(s + tbCustomerEMail), tbCustomerFirstname.Text, tbCustomerLastname.Text, model.SelCustomer.Gender, model.SelCustomer.Adress);
+                    Adress a = model != null && model.SelCustomer != null && model.SelCustomer.Adress != null ? model.SelCustomer.Adress : new Adress();
+                    c = new Customer(Convert.ToInt32(tbCustomerId.Text), tbCustomerEMail.Text, Customer.GetHash(s + tbCustomerEMail), tbCustomerFirstname.Text, tbCustomerLastname.Text, model != null && model.SelCustomer != null ? model.SelCustomer.Gender : Gender.male, a);
                     MessageBoxResult mr = MessageBox.Show(this, $"Passwort {s} wurde generiert in die Zwischenablage kopieren?", "Neues Passwort gesetzt", MessageBoxButton.YesNo);
 
                     if (mr == MessageBoxResult.Yes)
@@ -413,9 +451,11 @@ namespace DesktopApp
                 c.Password = Customer.GetHash(s + c.EMail);
 
                 c.Change();
-                model.LCustomer = new System.Collections.ObjectModel.ObservableCollection<Customer>(Customer.GetAll());
 
-                bCustomerChangeCancel(null, null);
+                if (model != null)
+                    model.LCustomer = new System.Collections.ObjectModel.ObservableCollection<Customer>(Customer.GetAll());
+
+                bCustomerChangeCancel(new object(), new RoutedEventArgs());
 
                 tiCustomer.IsSelected = true;
             }
@@ -440,7 +480,9 @@ namespace DesktopApp
             tiCustomer.IsEnabled = true;
             tiOrder.IsEnabled = true;
             tiCustomer.Focus();
-            model.SelCustomer = null;
+
+            if (model != null)
+                model.SelCustomer = null;
         }
 
 
@@ -449,7 +491,10 @@ namespace DesktopApp
 
         private void bStatusChange(object sender, RoutedEventArgs e)
         {
-            Order o = default;
+            if (!IsLoaded || model == null)
+                return;
+
+            Order? o = default;
             Status c = default;
             bool statusChangeIsOk = false;
 
@@ -474,7 +519,6 @@ namespace DesktopApp
             {
                 o.Status = c;
                 o.Change();
-                model = FindResource("mxmodel") as MainViewModel;
                 model.LOrder.RemoveAt(model.LOrder.ToList().FindIndex(item => item.Id == o.Id));
             }
             else
@@ -570,6 +614,7 @@ namespace DesktopApp
             MemoryStream ms = new MemoryStream();
 
             BitmapImage bitmap = new BitmapImage();
+            if(p.Data != null)
             ms.Write(p.Data, 0, p.Data.Length);
             ms.Seek(0, SeekOrigin.Begin);
             bitmap.BeginInit();
@@ -579,9 +624,11 @@ namespace DesktopApp
         }
         private void SetBackButton_Click(object sender, RoutedEventArgs e)
         {
+            if (!IsLoaded || model == null)
+                return;
+
             Func<Task<bool>> f = async () =>
             {
-                model = FindResource("mxmodel") as MainViewModel;
                 model.DeLoadData();
 
                 TestData.DeleteAllData();
@@ -613,18 +660,6 @@ namespace DesktopApp
 
         //************************   Begin MainWindow Functions                                             ************************
 
-
-        private void DynamicFontSizeChange(object sender, SizeChangedEventArgs e)
-        {
-
-
-        }
-        private void DynamicFontSizeChange(object sender, EventArgs e)
-        {
-
-
-            //this.Width = this.WindowState == WindowState.Maximized ? SystemParameters.MaximizedPrimaryScreenWidth : _defaultWindowsWidt;
-        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (MessageBoxResult.Yes == MessageBox.Show("Beenden bestätigen?", "Beenden?", MessageBoxButton.YesNo, MessageBoxImage.Question))
@@ -641,36 +676,7 @@ namespace DesktopApp
         {
             MessageLine.Text = null;
         }
-        private void bSetBack_MouseEnter(object sender, MouseEventArgs e)
-        {
-            // Does not work
-            //bSetBack.Background = Brushes.Red;
-        }
-        private void bSetBack_MouseLeave(object sender, MouseEventArgs e)
-        {
-            //bSetBack.Background = (Brush)new BrushConverter().ConvertFrom("#59FF0000");
-
-        }
-
-        private void bArticleAdd_MouseEnter(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void bArticleAdd_MouseLeave(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void bArticleAdd_GotFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void title_MouseMove(object sender, MouseEventArgs e)
-        {
-
-        }
+ 
     }
 
 }
