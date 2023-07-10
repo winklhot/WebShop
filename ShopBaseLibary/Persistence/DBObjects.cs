@@ -390,6 +390,7 @@ namespace Layer3Objects
                                 }
 
                                 t.Commit();
+                                sql = null;
 
                             }
 
@@ -397,7 +398,28 @@ namespace Layer3Objects
                         }
                         else
                         {
-                            sql += $"Status = '{((Order)item).Status}' where Id = {((Order)item).Id}";
+                            using (SqliteTransaction t = con.BeginTransaction())
+                            {
+                                sql += $"Status = '{o.Status}' where Id = {((Order)item).Id};";
+                                sql = "";
+
+                                DBAccess.ExecuteNonQuery(sql, con, t);
+
+                                if (o.Status == Status.Warenkorb && o.Positions != null)
+                                {
+                                    o.Positions.ForEach(p =>
+                                    {
+                                        sql += $"Update TPosition Set Count = {p.Count} where Id = {p.Id};";
+                                        DBAccess.ExecuteNonQuery(sql, con, t);
+                                        sql = "";
+                                    });
+
+                                }
+
+                                t.Commit();
+                                sql = null;
+
+                            }
                         }
                         break;
                     case Picture:
@@ -417,7 +439,6 @@ namespace Layer3Objects
                         break;
                     default:
                         break;
-
 
                 }
 
@@ -450,6 +471,10 @@ namespace Layer3Objects
                     case Order:
                         Order o = (Order)item;
                         sql += o.Status == Status.Warenkorb ? $"Where Id = {o.Id}" : throw new Exception($"Delete of Order Id {o.Id} not possible because Status is not basket");
+                        break;
+                    case Position:
+                        Position p = (Position)item;
+                        sql += $"where Id = {p.Id};";
                         break;
                     default:
                         break;
@@ -565,7 +590,7 @@ namespace Layer3Objects
                     if (n != null)
                         mergedBasket ??= new(n, Status.Warenkorb, new List<Position>());
                     else
-                        mergedBasket ??= new Order(c, Status.Warenkorb, new List<Position>());
+                        mergedBasket ??= new Order(o.Id, c, Status.Warenkorb, new List<Position>());
 
 
                     if (item.Article != null && mergedBasket != null && mergedBasket.Positions != null && mergedBasket.Positions.Contains<Position>(item) == false)
@@ -593,6 +618,37 @@ namespace Layer3Objects
 
             if (mergedBasket != null && mergedBasket.Positions != null)
                 mergedBasket.Positions = mergedBasket.Positions.FindAll(p => p.Count > 0);
+
+            // Update Basket
+            if (mergedBasket != null && mergedBasket.Customer != null)
+            {
+                mergedBasket.Change();
+
+                List<Position>? pl = null;
+                List<Order>? ol = Order.GetAllFromCustomer(mergedBasket.Customer.Id);
+
+                if(ol != null)
+                {
+                    Order? o2 = ol.Find(x => x.Status == Status.Warenkorb);
+
+                    if (o2 != null && o2.Positions != null)
+                        pl = o2.Positions;
+
+                }
+
+
+                if (mergedBasket != null && mergedBasket.Positions != null)
+                {
+                    mergedBasket.Positions.ForEach(x => pl.Remove(x));
+                }
+
+                pl.ForEach(x => mergedBasket.DeletePosition(x));
+
+
+
+            }
+
+
 
             return mergedBasket;
         }

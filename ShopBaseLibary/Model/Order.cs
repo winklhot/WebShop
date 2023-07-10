@@ -72,6 +72,7 @@ namespace ShopBase
         public void Change() => DBObjects.Change<Order>(this);
 
         public void Delete() => DBObjects.Delete<Order>(this);
+        public void DeletePosition(Position p) => DBObjects.Delete<Position>(p);
         public Order? MergeBaskets() => DBObjects.MergeBasket(this);
         public override string ToString() => $"{Id,-8} {(Positions != null ? Positions.Count : 0),-8} Positionen           {(Positions != null ? Positions.Sum(item => item.Totalsum) : 0),-20} EUR {Status}";
         public static Order Get(int id) => DBObjects.ReadAll<Order>(id)[0];

@@ -43,11 +43,30 @@ namespace WebApp.Pages
         {
             sessionBasket = HttpContext.Session.GetObject<Order>("sessionBasket");
 
+
+
             if (sessionBasket != null && sessionBasket.Positions != null && sessionBasket.Positions.Count != 0)
             {
-                sessionBasket.Positions.RemoveAt(id);
-                sessionBasket.Change();
-                HttpContext.Session.SetObject("sessionBasket", sessionBasket);
+                Position? p = null;
+                if (sessionBasket != null)
+                {
+                    p = sessionBasket.Positions[id];
+
+                    if (sessionBasket.Customer != null)
+                    {
+                        sessionBasket.DeletePosition(p);
+                        sessionBasket = Order.GetAllFromCustomer(sessionBasket.Customer.Id).Find(x => x.Status == Status.Warenkorb);
+                    }
+                    else
+                    {
+                        if (sessionBasket != null && sessionBasket.Positions != null && p != null)
+                            sessionBasket.Positions.Remove(p);
+                    }
+
+                    if (sessionBasket != null)
+                        HttpContext.Session.SetObject("sessionBasket", sessionBasket);
+                }
+
             }
         }
 

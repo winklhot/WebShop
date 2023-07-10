@@ -43,7 +43,7 @@
                     <td>Gesamtpreis</td>
                 </tr>
             </thead>
-            @foreach (Position item in Model.sessionBasket.Positions)
+            @foreach (Position item in Model.sessionBasket.Positions.OrderBy(x => x.Totalsum).Reverse())
             {
                 <form method="post">
                 <tr>

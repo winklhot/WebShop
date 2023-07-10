@@ -44,8 +44,7 @@ namespace WebApp.Pages
 
                 if (sessionBasket.Positions == null && sessionBasket.Customer.Id == 1)
                 {
-                    sessionBasket = TestData.GetTestOrder(sessionBasket.Customer.Id);
-                    sessionBasket.Insert();
+                    sessionBasket = Order.GetAllFromCustomer(sessionBasket.Customer.Id).Find(x => x.Status == Status.Warenkorb);
                 }
 
                 // New sample data for Tina test

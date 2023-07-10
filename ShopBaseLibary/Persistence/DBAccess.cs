@@ -84,10 +84,10 @@ namespace Layer3Access
             }
             return lastId;
         }
-        public static int ExecuteNonQuery(String sql, SqliteConnection con)
+        public static int ExecuteNonQuery(String? sql, SqliteConnection con)
         {
             int lastId = -1;
-            if (sql != null)
+            if (sql != null && sql != "")
             {
                 SqliteCommand cmd = new(sql, con);
                 cmd.ExecuteNonQuery();

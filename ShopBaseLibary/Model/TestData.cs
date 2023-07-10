@@ -206,22 +206,7 @@ namespace ShopBase
         {
             List<Position> pos = new List<Position>();
             List<Order> o = new List<Order>();
-            Customer tinaTest = Customer.Get(1); // Customer 1 is always Tina Test
             List<Status> stati = Enum.GetValues<Status>().ToList();
-
-            // Get Random Position and then Order for Customer1 
-
-            for (int i = 0; i < r.Next(15, 25); i++)
-            {
-                pos = new List<Position>();
-
-                for (int t = 0; t < r.Next(5, 21); t++)
-                {
-                    pos.Add(new Position(r.Next(1, 31), Article.Get(r.Next(1, 11)))); // Article 1 - 10 so because if taken all delete Article cant be show because Database constraint
-                }
-
-                new Order(tinaTest, stati[r.Next(stati.Count)], pos).Insert();
-            }
 
             // Get Random Positions for all other Customer
 
@@ -231,12 +216,22 @@ namespace ShopBase
                 {
                     pos = new List<Position>();
 
-                    for (int t = 0; t < r.Next(1, 3); t++)
+                    for (int t = 0; t < r.Next(1, 4); t++)
                     {
                         pos.Add(new Position(r.Next(1, 31), Article.Get(r.Next(1, 11)))); // Article 1 - 10 so because if taken all delete Article cant be show because Database constraint
+
+                        if (item.Id == 1) // More Positions for Tina Test
+                        {
+                            pos.Add(new Position(r.Next(1, 31), Article.Get(r.Next(1, 11)))); // Article 1 - 10 so because if taken all delete Article cant be show because Database constraint
+                            pos.Add(new Position(r.Next(1, 31), Article.Get(r.Next(1, 11)))); // Article 1 - 10 so because if taken all delete Article cant be show because Database constraint
+                            pos.Add(new Position(r.Next(1, 31), Article.Get(r.Next(1, 11)))); // Article 1 - 10 so because if taken all delete Article cant be show because Database constraint
+                            pos.Add(new Position(r.Next(1, 31), Article.Get(r.Next(1, 11)))); // Article 1 - 10 so because if taken all delete Article cant be show because Database constraint
+                        }
                     }
 
-                    new Order(item, stati[r.Next(1, stati.Count)], pos).Insert();
+                    if (i == 0)
+                        new Order(item, Status.Warenkorb, pos).Insert();
+                    new Order(item, stati[r.Next(2, stati.Count)], pos).Insert();
                     GC.Collect();
                 }
             }
@@ -254,7 +249,7 @@ namespace ShopBase
                         pos.Add(new Position(r.Next(1, 31), Article.Get(r.Next(1, 11)))); // Article 1 - 10 so because if taken all delete Article cant be show because Database constraint
                     }
 
-                    new Order(item, stati[r.Next(stati.Count)], pos).Insert();
+                    new Order(item, stati[r.Next(2, stati.Count)], pos).Insert();
                     GC.Collect();
                 }
             }

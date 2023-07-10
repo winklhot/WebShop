@@ -59,6 +59,8 @@ namespace WebApp.Pages
                 Order sessionBasket = HttpContext.Session.GetObject<Order>("sessionBasket");
                 sessionBasket.AddPosition(menge, id);
                 HttpContext.Session.SetObject("sessionBasket", sessionBasket);
+                
+
                 Response.Redirect("/Basket");
             }
             else
