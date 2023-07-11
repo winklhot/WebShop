@@ -44,7 +44,12 @@ namespace WebApp.Pages
 
                 if (sessionBasket.Positions == null && sessionBasket.Customer.Id == 1)
                 {
-                    sessionBasket = Order.GetAllFromCustomer(sessionBasket.Customer.Id).Find(x => x.Status == Status.Warenkorb);
+                    Order? o = Order.GetAllFromCustomer(sessionBasket.Customer.Id).Find(x => x.Status == Status.Warenkorb);
+
+                    if (o != null && o.Customer != null)
+                    {
+                        sessionBasket = o;
+                    }
                 }
 
                 // New sample data for Tina test

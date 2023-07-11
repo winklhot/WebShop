@@ -21,17 +21,15 @@ namespace WebApp.Pages
         public Order? sessionBasket { get; set; }
         public bool OrderSubmitted { get; set; } = false;
         public string? ResultMessage { get; set; }
-        public string? OrderNumber { get; set; }
-        public NonCustomer? Customer { get; set; }
 
         public void OnGet()
         {
-            sessionBasket = HttpContext.Session.GetObject<Order>("sessionBasket");
+            sessionBasket = HttpContext.Session.GetObject<Order>("sessionBasket") ?? new Order();
 
-            sessionBasket = sessionBasket.MergeBaskets();
 
             if (sessionBasket != null)
             {
+                sessionBasket = sessionBasket.MergeBaskets();
                 HttpContext.Session.SetObject("sessionBasket", sessionBasket);
             }
 
@@ -68,6 +66,8 @@ namespace WebApp.Pages
                 }
 
             }
+
+            sessionBasket = HttpContext.Session.GetObject<Order>("sessionBasket");
         }
 
         public void OnPostOrder()
@@ -78,10 +78,16 @@ namespace WebApp.Pages
             {
 
                 sessionBasket.Status = ShopBase.Status.Bestellt;
-                sessionBasket.Change();
-                Customer = sessionBasket.Customer ?? sessionBasket.NonCustomer;
-                OrderNumber = sessionBasket.Id.ToString();
-                sessionBasket.Positions = sessionBasket.Positions;
+                if (sessionBasket.Customer != null)
+                {
+                    sessionBasket.Change();
+                    sessionBasket.Positions = sessionBasket.Positions;
+
+                }
+                else
+                {
+                    sessionBasket.Insert();
+                }
 
                 OrderSubmitted = true;
 

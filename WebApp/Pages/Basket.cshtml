@@ -18,11 +18,21 @@
 
         pDataString = pDataString.Remove(pDataString.Length - 1);
 
-        <h4 class="green">Ihre Bestellung wurde angenommen. <a href="/Basket" onclick="getPDF('@Model.OrderNumber.ToString()', '@(Model.Customer.Firstname + " " + Model.Customer.Lastname)', '@Model.Customer.Adress.Street', '@Model.Customer.Adress.HouseNumber.ToString()', '@Model.Customer.Adress.PostalCode.ToString()', '@Model.Customer.Adress.City', '@Model.Customer.Adress.Country', '@pDataString')">Zur Rechnung (Popup erlauben)</a></h4>
+        string oid = Model.sessionBasket.Id + "";
+        string name = Model.sessionBasket.Customer != null ? Model.sessionBasket.Customer.Firstname + " " + Model.sessionBasket.Customer.Lastname : Model.sessionBasket.NonCustomer.Firstname + " " + Model.sessionBasket.NonCustomer.Lastname;
+        string street = Model.sessionBasket.Customer != null ? Model.sessionBasket.Customer.Adress.Street : Model.sessionBasket.NonCustomer.Adress.Street;
+        string house = Model.sessionBasket.Customer != null ? Model.sessionBasket.Customer.Adress.HouseNumber + "" : Model.sessionBasket.NonCustomer.Adress.HouseNumber + "";
+        string postal = Model.sessionBasket.Customer != null ? Model.sessionBasket.Customer.Adress.PostalCode + "" : Model.sessionBasket.NonCustomer.Adress.PostalCode + "";
+        string city = Model.sessionBasket.Customer != null ? Model.sessionBasket.Customer.Adress.City : Model.sessionBasket.NonCustomer.Adress.City;
+        string country = Model.sessionBasket.Customer != null ? Model.sessionBasket.Customer.Adress.Country : Model.sessionBasket.NonCustomer.Adress.Country;
 
+        <h4 class="green">Ihre Bestellung wurde angenommen. <a href="/Basket" onclick="getPDF('@oid', '@name', '@street', '@house', '@postal', '@city', '@country', '@pDataString')">Zur Rechnung (Popup erlauben)</a></h4>
+
+        Customer c = Model.sessionBasket.Customer;
         Model.sessionBasket = new Order();
         HttpContext.Session.Clear();
         Model.sessionBasket.Status = Status.Warenkorb;
+        Model.sessionBasket.Customer = c;
         HttpContext.Session.SetObject("sessionBasket", @Model.sessionBasket);
     }
 

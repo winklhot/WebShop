@@ -66,6 +66,8 @@ namespace ShopBase
 
 
             Positions.Add(new Position(menge, Article.Get(id)));
+
+            this.Insert();
         }
         public void Insert() => DBObjects.Insert(this);
 

@@ -179,11 +179,20 @@ namespace Layer3Objects
                     break;
                 case Order:
                     Order o = (Order)item;
-                    sql = $"Insert into TOrder values (null, {(o.Customer != null ? o.Customer.Id : "null")}, {(o.NonCustomer != null ? o.NonCustomer.Id : "null")}, '{((Order)item).Status}');";
-                    //Whe need the Created Order Id to Insert the Positions to Database of the same connection!
-                    int oId = DBAccess.ExecuteNonQuery(sql);
-                    o.Id = oId;
-                    sql = null;
+                    int oId = -1;
+
+                    if (o.Id < 1)
+                    {
+                        sql = $"Insert into TOrder values (null, {(o.Customer != null ? o.Customer.Id : "null")}, {(o.NonCustomer != null ? o.NonCustomer.Id : "null")}, '{((Order)item).Status}');";
+                        //Whe need the Created Order Id to Insert the Positions to Database of the same connection!
+                        oId = DBAccess.ExecuteNonQuery(sql);
+                        o.Id = oId;
+                        sql = null;
+                    }
+                    else
+                    {
+                        oId = o.Id;
+                    }
 
                     if (o.Positions != null)
                     {
@@ -191,9 +200,14 @@ namespace Layer3Objects
                         {
                             if (item2.Article != null)
                             {
-                                sql = $"Insert into TPosition values (null,{oId},{item2.Article.Id},{((Position)item2).Count})";
+                                if (item2.Id < 1)
+                                {
+                                    sql = $"Insert into TPosition values (null,{oId},{item2.Article.Id},{((Position)item2).Count})";
 
-                                DBAccess.ExecuteNonQuery(sql);
+                                    int pid = DBAccess.ExecuteNonQuery(sql);
+                                    item2.Id = pid;
+
+                                }
                             }
                         }
 
@@ -574,7 +588,7 @@ namespace Layer3Objects
         {
             if (o == null || o.Positions == null)
             {
-                return null;
+                return o;
             }
 
             Customer? c = o.Customer;
@@ -627,7 +641,7 @@ namespace Layer3Objects
                 List<Position>? pl = null;
                 List<Order>? ol = Order.GetAllFromCustomer(mergedBasket.Customer.Id);
 
-                if(ol != null)
+                if (ol != null)
                 {
                     Order? o2 = ol.Find(x => x.Status == Status.Warenkorb);
 
@@ -636,13 +650,17 @@ namespace Layer3Objects
 
                 }
 
-
-                if (mergedBasket != null && mergedBasket.Positions != null)
+                if (pl != null)
                 {
-                    mergedBasket.Positions.ForEach(x => pl.Remove(x));
+
+                    if (mergedBasket != null && mergedBasket.Positions != null)
+                    {
+                        mergedBasket.Positions.ForEach(x => pl.Remove(x));
+                    }
+
+                    pl.ForEach(x => mergedBasket.DeletePosition(x));
                 }
 
-                pl.ForEach(x => mergedBasket.DeletePosition(x));
 
 
 
