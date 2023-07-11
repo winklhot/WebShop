@@ -117,6 +117,7 @@ namespace DesktopApp
 
                     if (model.NewArticle != null)
                     {
+                        model.NewArticle.Active = true;
                         aId = model.NewArticle.Insert();
                         model.NewArticle.Id = aId;
                         model.LArticle.Add(model.NewArticle);
@@ -212,6 +213,7 @@ namespace DesktopApp
                 tbChangeName.Text = a.Name;
                 tbChangeDesc.Text = a.Description;
                 tbChangePrice.Text = a.Price.ToString();
+
             }
         }
         private void bChangeChange(object sender, RoutedEventArgs e)
@@ -374,6 +376,7 @@ namespace DesktopApp
                     tiArticle.IsEnabled = false;
                     tiCustomer.IsEnabled = false;
                     tiOrder.IsEnabled = false;
+                    tiPicture.IsEnabled = false;
 
                     tbCustomerId.Text = c.Id.ToString();
                     tbCustomerFirstname.Text = c.Firstname;
@@ -479,6 +482,7 @@ namespace DesktopApp
             tiArticle.IsSelected = true;
             tiCustomer.IsEnabled = true;
             tiOrder.IsEnabled = true;
+            tiPicture.IsEnabled = true;
             tiCustomer.Focus();
 
             if (model != null)

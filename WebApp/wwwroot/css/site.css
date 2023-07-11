@@ -1,21 +1,4 @@
-/*html {
-    font-size: 14px;
-}*/
 
-/*@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}*/
-
-/*html {
-    position: relative;
-    min-height: 100%;
-}
-
-body {
-    margin-bottom: 60px;
-}*/
 
 main {
     font-size: 2em;
@@ -215,8 +198,12 @@ button.marginleft {
     color: #F4780F !important;
 }
 
-#darkblue-text {
+#darkgreen-text {
     color: #26D727 !important;
+}
+
+#darkyellow-text{
+    color: gold !important;
 }
 
 #lightblue-text {

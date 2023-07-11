@@ -685,9 +685,8 @@ namespace Layer3Objects
                     using (SqliteDataReader r = DBAccess.ExecuteReader(sql, con))
                     {
                         r.Read();
-                        int id = r.GetInt32(0);
 
-                        p = ReadAll<Picture>(id)[0];
+                        p = ReadAll<Picture>(a.Id)[0];
 
                         p.Article = a;
                     }

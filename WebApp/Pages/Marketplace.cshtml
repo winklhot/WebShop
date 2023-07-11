@@ -26,7 +26,7 @@
         @{
             int i = 0;
         }
-        @foreach (Article a in Model.lArtikel.FindAll(item => item.Active).FindAll(item => Model.lArtikel.IndexOf(item) < 50))
+        @foreach (Article a in Model.lArtikel.FindAll(item => item.Active))
         {
             i++;
             <form method="post">
@@ -65,7 +65,7 @@
         <br />
         @if (Model.lArtikel.Count > 50)
         {
-            <p>Angezeigt 50 von @Model.lArtikel.Count</p>
+            <p>Angezeigt @i von @Model.lArtikel.FindAll(x => x.Active).Count</p>
         }
     </form>
 </div>

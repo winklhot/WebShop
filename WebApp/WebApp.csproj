@@ -9,7 +9,6 @@
   <ItemGroup>
     <None Include="Pages\Error.cshtml" />
     <None Include="Pages\Shared\_Layout.cshtml" />
-    <None Include="Pages\Shared\_ValidationScriptsPartial.cshtml" />
     <None Include="Pages\_ViewImports.cshtml" />
     <None Include="Pages\_ViewStart.cshtml" />
   </ItemGroup>

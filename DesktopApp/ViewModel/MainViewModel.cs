@@ -102,13 +102,6 @@ namespace DesktopApp
         public Status? ChangedSelStatus { get => _changedSelStatus; set { _changedSelStatus = value; } }
 
 
-        private double DeafultTabHeight => 30.0;
-        private double DefaultTabWith => 90.0;
-        private double DefaultListBoxFontSize => 12.0;
-        private double DefaultBtnHeight => 35.0;
-        private double DefaultBtnWidth => 140.0;
-        private double DefaultBtnMarginBottom => 33.0;
-        private double DefaultFont => 14;
 
 
 

@@ -30,7 +30,7 @@
                     <Label Content="Beschreibung" FontFamily="Bahnschrift" FontSize="20" Margin="77,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     <Label Content="Preis" Margin="152,225,0,0" FontFamily="Bahnschrift" FontSize="20" RenderTransformOrigin="0.505,-2.619" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="58"/>
                     <TextBox x:Name="tbAddinputId" IsEnabled="False" FontFamily="Bahnschrift" FontSize="20" Text="Systemvergabe" HorizontalAlignment="Left" Margin="232,107,0,267" TextWrapping="Wrap" Width="242"/>
-                    <TextBox x:Name="tbAddName" Text="{Binding NewArticle.Name}" HorizontalAlignment="Left" Margin="232,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" MaxLength="30" Height="26"/>
+                    <TextBox x:Name="tbAddName" Text="{Binding NewArticle.Name}" FontFamily="Bahnschrift" FontSize="20" HorizontalAlignment="Left" Margin="232,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" MaxLength="30" Height="26"/>
                     <TextBox x:Name="tbAddDesc" Text="{Binding NewArticle.Description}" MaxLength="70" FontFamily="Bahnschrift" FontSize="20" HorizontalAlignment="Left" Margin="232,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="242" Height="26"/>
                     <TextBox x:Name="tbAddPrice"  Text="{Binding NewArticle.Price,Converter={StaticResource conv}}" HorizontalAlignment="Left" FontFamily="Bahnschrift" FontSize="20" Margin="232,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" MaxLength="7" Height="26"/>
                     <Button x:Name="bAddCreate" FontFamily="Bahnschrift" FontSize="14" FontWeight="Bold" Content="Anlegen" HorizontalAlignment="Left" Margin="232,280,0,0" VerticalAlignment="Top" Width="84" Click="bAddAdd" RenderTransformOrigin="-0.15,0.653" Height="30">
@@ -95,7 +95,7 @@
                     <TextBox x:Name="tbChangeDesc" MaxLength="70" FontFamily="Bahnschrift" FontSize="20" HorizontalAlignment="Left" Margin="232,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="242" Height="26"/>
                     <TextBox x:Name="tbChangePrice" HorizontalAlignment="Left" FontFamily="Bahnschrift" FontSize="20" Margin="232,227,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" MaxLength="7" Height="26"/>
 
-                    <Button x:Name="bChangeCreate" FontFamily="Bahnschrift" FontSize="14" FontWeight="Bold" Content="Anlegen" HorizontalAlignment="Left" Margin="232,280,0,0" VerticalAlignment="Top" Width="84" Click="bAddAdd" RenderTransformOrigin="-0.15,0.653" Height="30">
+                    <Button x:Name="bChangeCreate" FontFamily="Bahnschrift" FontSize="14" FontWeight="Bold" Content="Ändern" HorizontalAlignment="Left" Margin="232,280,0,0" VerticalAlignment="Top" Width="84" Click="bChangeChange" RenderTransformOrigin="-0.15,0.653" Height="30">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="white" />
@@ -116,7 +116,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button Content="Abbrechen" FontFamily="Bahnschrift" FontSize="14" FontWeight="Bold"  HorizontalAlignment="Left" Margin="390,280,0,0" VerticalAlignment="Top" Click="bAddCancel" RenderTransformOrigin="0.162,0.603" Height="29" Width="84">
+                    <Button Content="Abbrechen" FontFamily="Bahnschrift" FontSize="14" FontWeight="Bold"  HorizontalAlignment="Left" Margin="390,280,0,0" VerticalAlignment="Top" Click="bChangeCancel" RenderTransformOrigin="0.162,0.603" Height="29" Width="84">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Background" Value="white" />

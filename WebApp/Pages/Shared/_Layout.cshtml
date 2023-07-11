@@ -52,14 +52,20 @@
                             <a class="nav-link text-dark" id="purpel-text" asp-area="" asp-page="/Basket">Warenkorb</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" id="darkblue-text" asp-area="" asp-page="/Impressum">Impressum</a>
+                            <a class="nav-link text-dark" id="darkyellow-text" asp-area="" asp-page="/Impressum">Impressum</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Code">Dokumentation</a>
                         </li>
                         <li class="nav-item ml-auto" id="loginli">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Login">@(wk.Customer == null ? "Anmelden" : $"{wk.Customer.Firstname} {wk.Customer.Lastname}")</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Login" id="@(wk.Customer != null ? "darkgreen-text" : "")">@(wk.Customer == null ? "Anmelden" : $"{wk.Customer.Firstname} {wk.Customer.Lastname}")</a>
                         </li>
+                        @if (wk.Customer != null)
+                        {
+                            <li class="nav-item ml-auto" id="loginli">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Login" asp-page-handler="Logout">Abmelden</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -71,10 +77,12 @@
             @RenderBody()
         </main>
     </div>
+    <br />
+    <br />
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Hofer's Shop - <a asp-area="" asp-page="/Impressum">Impressum</a>
+        <div class="container" style="font-size:2em">
+            &copy; 2023 - Hofer's Shop - <a asp-area="" asp-page="/Impressum">Impressum</a>
         </div>
     </footer>
 

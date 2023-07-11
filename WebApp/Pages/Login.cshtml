@@ -44,10 +44,15 @@
 }
 else
 {
+    <div class="center">
     <h1>@($"Willkommen {o.Customer.Firstname} {o.Customer.Lastname}")</h1>
+    </div>
+    <br/>
+    <div class="center">
     <form method="Post">
         <button asp-page-handler="Logout" id="basketbtnred" class="btn btn-primary btn-block mb-4">Abmelden</button>
     </form>
+    </div>
 }
 
 
