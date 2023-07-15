@@ -32,7 +32,7 @@ namespace DesktopApp
 
 
 
-        private static Task? _pictureShowing = null;
+        private static Task? _tiTask = null;
 
         private static Task? _resetAllData = null;
         public MainWindow()
@@ -109,15 +109,24 @@ namespace DesktopApp
             {
                 try
                 {
-                    if (model.NewArticle != null && model.NewArticle.Price == 9999.98m) // Is used because of converter and 0 not possible
+                    if (model.NewArticle != null) // Is used because of converter and 0 not possible
                     {
-                        throw new ArgumentException();
+                        try
+                        {
+                            model.NewArticle.Price = Convert.ToDecimal(tbAddPrice.Text.Trim().Replace('.', ','));
+                        }
+                        catch (Exception)
+                        {
+                            throw new ArgumentException();
+                        }
                     }
 
 
                     if (model.NewArticle != null)
                     {
                         model.NewArticle.Active = true;
+                        model.NewArticle.Name = tbAddName.Text;
+                        model.NewArticle.Description = tbAddDesc.Text;
                         aId = model.NewArticle.Insert();
                         model.NewArticle.Id = aId;
                         model.LArticle.Add(model.NewArticle);
@@ -133,6 +142,10 @@ namespace DesktopApp
                         }
                     }
 
+                    tbAddName.Text = null;
+                    tbAddDesc.Text = null;
+                    tbAddPrice.Text = null;
+
                     SetMessageLine(false, "Artikel erfolgreich gespeichert");
                     isExe = true;
                 }
@@ -140,7 +153,11 @@ namespace DesktopApp
                 {
                     if (ex is ArgumentException)
                     {
-                        SetMessageLine(true, "Preis ist nur zwischen 0,01 und 9999,97 gültig");
+                        // Because of culture
+                        decimal min = 0.01m;
+                        decimal max = 999999.99m;
+
+                        SetMessageLine(true, $"Preis ist nur zwischen {min} und {max} gültig");
                     }
                     else
                     {
@@ -173,6 +190,10 @@ namespace DesktopApp
         {
             if (!this.IsLoaded || model == null)
                 return;
+
+            tbAddName.Text = null;
+            tbAddDesc.Text = null;
+            tbAddPrice.Text = null;
 
             //Opposite to func b_Add_click
             tiArticleAdd.Visibility = Visibility.Collapsed;
@@ -225,31 +246,39 @@ namespace DesktopApp
             {
                 // set new values changed by user
 
-                model.SelArticle.Id = Convert.ToInt32(tbChangeId.Text);
-                model.SelArticle.Name = tbChangeName.Text;
-                model.SelArticle.Description = tbChangeDesc.Text;
-                model.SelArticle.Price = Convert.ToDecimal(tbChangePrice.Text);
-                model.SelArticle.Change();
-                model.LArticle = new System.Collections.ObjectModel.ObservableCollection<Article>(Article.GetAll());
-
-
-                if (model.SelArticlePicture != null)
+                try
                 {
-                    model.SelArticlePicture.Article = model.SelArticle;
-                    model.SelArticlePicture.Change();
+                    model.SelArticle.Id = Convert.ToInt32(tbChangeId.Text);
+                    model.SelArticle.Name = tbChangeName.Text;
+                    model.SelArticle.Description = tbChangeDesc.Text;
+                    model.SelArticle.Price = Convert.ToDecimal(tbChangePrice.Text.Trim().Replace('.', ','));
+                    model.SelArticle.Change();
+                    model.LArticle = new System.Collections.ObjectModel.ObservableCollection<Article>(Article.GetAll());
+
+                    if (model.SelArticlePicture != null)
+                    {
+                        model.SelArticlePicture.Article = model.SelArticle;
+                        model.SelArticlePicture.Change();
+                    }
+
+                    SetMessageLine(false, "Artikel erfolgreich geändert");
+
+                    //Opposite to func b_Add_click
+                    tiArticleChange.Visibility = Visibility.Collapsed;
+
+                    tiArticle.IsEnabled = true;
+                    tiArticle.IsSelected = true;
+                    tiCustomer.IsEnabled = true;
+                    tiOrder.IsEnabled = true;
+                    tiPicture.IsEnabled = true;
+                    model.SelArticle = null;
+                }
+                catch (Exception)
+                {
+                    SetMessageLine(true, "Eingaben fehlerhaft");
                 }
 
-                SetMessageLine(false, "Artikel erfolgreich geändert");
 
-                //Opposite to func b_Add_click
-                tiArticleChange.Visibility = Visibility.Collapsed;
-
-                tiArticle.IsEnabled = true;
-                tiArticle.IsSelected = true;
-                tiCustomer.IsEnabled = true;
-                tiOrder.IsEnabled = true;
-                tiPicture.IsEnabled = true;
-                model.SelArticle = null;
 
             }
 
@@ -540,47 +569,109 @@ namespace DesktopApp
 
         private void Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.IsLoaded && tiPicture.IsSelected == true)
+            if (this.IsLoaded)
             {
-
-                Func<Task<bool>> displayList = async () =>
+                if (Main != null && Main.SelectedItem != null && model != null)
                 {
-                    while (true)
+                    TabItem? t = Main.SelectedItem as TabItem;
+                    string? s = null;
+                    Func<Task<bool>>? tiTask = null;
+
+                    if (t != null)
+                        s = t.Name;
+
+                    switch (s)
                     {
-                        try
-                        {
-                            List<Picture> pl = Picture.GetAll();
-                            foreach (Picture p in pl)
+                        case nameof(tiArticle):
+
+                            break;
+                        case nameof(tiCustomer):
+                            //tiTask = () =>
+                            //{
+                            //    while (true)
+                            //    {
+                            //        model.LCustomer = new(Customer.GetAll());
+
+                            //        Thread.Sleep(20000);
+                            //    }
+
+                            //};
+                            break;
+                        case nameof(tiOrder):
+                            //if (model != null)
+                            //{
+                            //    tiTask = async () =>
+                            //    {
+                            //        while (true)
+                            //        {
+
+                            //            model.LCustomer = new(Customer.GetAll());
+                            //            if (model.SelCustomer != null)
+                            //            {
+                            //                Order? o = model.SelOrder;
+                            //                model.LOrder = new(Order.GetAllFromCustomer(model.SelCustomer.Id).FindAll(x => x.Status == model.SelStatus));
+
+                            //                if (o != null && model.LOrder.Contains(o))
+                            //                {
+                            //                    model.SelOrder = o;
+                            //                }
+                            //            }
+                            //            await Task.Delay(20000);
+                            //        }
+                            //    };
+                            //}
+
+                            break;
+
+                        case nameof(tiPicture):
+                            tiTask = async () =>
                             {
-                                if (Application.Current != null && Application.Current.Dispatcher != null)
+                                while (true)
                                 {
-                                    Application.Current.Dispatcher.Invoke(() =>
+                                    try
                                     {
-                                        if (imagesDisplay != null && p != null)
+                                        List<Picture> pl = Picture.GetAll();
+                                        foreach (Picture p in pl)
                                         {
-                                            imagesDisplay.Source = GetBitmapImage(p);
-                                            tiPicturePictureName.Content = p.Filename;
+                                            if (Application.Current != null && Application.Current.Dispatcher != null)
+                                            {
+                                                Application.Current.Dispatcher.Invoke(() =>
+                                                {
+                                                    if (imagesDisplay != null && p != null)
+                                                    {
+                                                        imagesDisplay.Source = GetBitmapImage(p);
+                                                        tiPicturePictureName.Content = p.Filename;
+                                                    }
+                                                });
+                                            }
+                                            await Task.Delay(3000);
                                         }
-                                    });
+                                    }
+                                    catch (Exception)
+                                    {
+                                        return false;
+                                    }
+
                                 }
-                                await Task.Delay(3000);
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            return false;
-                        }
+                            };
+
+
+
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (tiTask != null)
+                    {
+                        _tiTask = new(() => { tiTask(); });
+                        _tiTask.Start();
 
                     }
-                };
 
 
-                if (_pictureShowing == null)
-                {
-                    _pictureShowing = new Task(() => { displayList(); });
-
-                    _pictureShowing.Start();
                 }
+
             }
         }
         private void bimageToByteCode_Click(object sender, RoutedEventArgs e)
@@ -618,8 +709,8 @@ namespace DesktopApp
             MemoryStream ms = new MemoryStream();
 
             BitmapImage bitmap = new BitmapImage();
-            if(p.Data != null)
-            ms.Write(p.Data, 0, p.Data.Length);
+            if (p.Data != null)
+                ms.Write(p.Data, 0, p.Data.Length);
             ms.Seek(0, SeekOrigin.Begin);
             bitmap.BeginInit();
             bitmap.StreamSource = ms;
@@ -668,7 +759,7 @@ namespace DesktopApp
         {
             if (MessageBoxResult.Yes == MessageBox.Show("Beenden bestätigen?", "Beenden?", MessageBoxButton.YesNo, MessageBoxImage.Question))
             {
-                _pictureShowing = null;
+                _tiTask = null;
                 _resetAllData = null;
             }
             else
@@ -680,7 +771,7 @@ namespace DesktopApp
         {
             MessageLine.Text = null;
         }
- 
+
     }
 
 }

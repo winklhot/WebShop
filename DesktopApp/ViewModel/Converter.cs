@@ -34,11 +34,10 @@ namespace DesktopApp
                 switch (value)
                 {
                     case decimal:
-                        if (value != null && value.ToString() != null)
+                        if (value != null)
                         {
-                            // Writing comlplex because of null warning
-                            string? s = value != null && value.ToString() != null ? value.ToString() : "";
-                            o = value != null && (decimal)value < 9999.98m && value.ToString() != null && s != null ? s.Replace(".", ",") : "";
+                            decimal d = (decimal)value;
+                            o = d.ToString("#0.00 ").Replace('.', ',');
                         }
                         break;
                     case Article:

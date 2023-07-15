@@ -26,7 +26,7 @@
         string city = Model.sessionBasket.Customer != null ? Model.sessionBasket.Customer.Adress.City : Model.sessionBasket.NonCustomer.Adress.City;
         string country = Model.sessionBasket.Customer != null ? Model.sessionBasket.Customer.Adress.Country : Model.sessionBasket.NonCustomer.Adress.Country;
 
-        <h4 class="green">Ihre Bestellung wurde angenommen. <a href="/Basket" onclick="getPDF('@oid', '@name', '@street', '@house', '@postal', '@city', '@country', '@pDataString')">Zur Rechnung (Popup erlauben)</a></h4>
+        <h2 class="green">Ihre Bestellung wurde angenommen. <a style="font-size:1.0em" href="/Basket" onclick="getPDF('@oid', '@name', '@street', '@house', '@postal', '@city', '@country', '@pDataString')">Zur Rechnung (Popup erlauben)</a></h2>
 
         Customer c = Model.sessionBasket.Customer;
         Model.sessionBasket = new Order();

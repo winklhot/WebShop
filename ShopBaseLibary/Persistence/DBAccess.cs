@@ -134,7 +134,7 @@ namespace Layer3Access
                                "Id integer primary key autoincrement," +
                                "Active bool default false," +
                                "Name VARCHAR(30) not null," +
-                               "Description VARCHAR(70)," +
+                               "Description VARCHAR(60)," +
                                "Price Decimal(6,2)," +
                                "Count int not null" +
                                ");";
@@ -220,10 +220,10 @@ namespace Layer3Access
                             "(" +
                             "Id integer primary key autoincrement," +
                             "CreditScore int default 1000," +
-                            "EMail VARCHAR(50) unique not null," +
+                            "EMail VARCHAR(60) unique not null," +
                             "Password TEXT not null," +
-                            "Firstname VARCHAR(50) not null," +
-                            "Lastname VARCHAR(50) not null," +
+                            "Firstname VARCHAR(30) not null," +
+                            "Lastname VARCHAR(30) not null," +
                             "Gender Text not Null Check(Gender in('male','female','divers'))" +
                             ");";
 

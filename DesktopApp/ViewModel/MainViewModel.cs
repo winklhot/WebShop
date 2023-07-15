@@ -56,7 +56,7 @@ namespace DesktopApp
         public ObservableCollection<Customer> LCustomer { get => _lCustomer; set { _lCustomer = value; OnPropertyChanged(nameof(LCustomer)); } }
         public ObservableCollection<Order> LOrder { get => _lOrder; set { _lOrder = value; OnPropertyChanged(nameof(LOrder)); } }
         public Customer? SelCustomer { get => _selCustomer; set { _selCustomer = value; OnPropertyChanged(nameof(SelCustomer)); if (SelCustomer != null) LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == SelStatus)); OnPropertyChanged(nameof(LCustomer)); } }
-        public Order? SelOrder { get => _selOrder; set { _selOrder = value; OnPropertyChanged(nameof(SelOrder)); OnPropertyChanged(nameof(LOrder)); } }
+        public Order? SelOrder { get => _selOrder; set { _selOrder = value; OnPropertyChanged(nameof(SelOrder)); } }
         public Article? SelArticle
         {
             get => _selArticle;
@@ -100,6 +100,7 @@ namespace DesktopApp
             }
         }
         public Status? ChangedSelStatus { get => _changedSelStatus; set { _changedSelStatus = value; } }
+        public static string? ErrorMessage { get; set; }
 
 
 
@@ -165,6 +166,10 @@ namespace DesktopApp
                     mw.cbStatusChange.Width *= factor;
                     mw.cbStatusChange.FontSize *= factor;
                     mw.bOrderChange.Width *= factor;
+
+                    //btn setback
+
+                    mw.bSetBack.Width *= factor;
                 }
 
                 if (e.PreviousSize.Height != 0.00)
@@ -273,6 +278,7 @@ namespace DesktopApp
             LOrder = new();
             LStatus = new();
         }
+
 
     }
 

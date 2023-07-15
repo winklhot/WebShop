@@ -15,14 +15,14 @@ namespace ShopBase
 
         // Name may not be emty, desc can be emty according to database setup
         public string? Name { get => _name; set => _name = value != null && value.Length < 31 && value.Trim().Length > 0 ? value.Trim() : throw new Exception("Name zu lang oder keine Eingabe"); }
-        public string? Description { get => _desc; set => _desc = value != null && value.Length < 71 ? value : throw new Exception("Bezeichnung ist zu lang oder keine Eingabe");}
+        public string? Description { get => _desc; set => _desc = value != null && value.Length < 61 ? value : throw new Exception("Bezeichnung ist zu lang oder keine Eingabe");}
         // Price range limited by database setup
         public decimal Price 
         { 
             get => _price;
             set
             {
-                _price = value > 0.00m && value < 9999.99m ? value : throw new Exception("Preis gültig zwischen 0,00 und 9999,99");
+                _price = value > 0.00m && value < 1000000.00m ? value : throw new Exception("Preis gültig zwischen 0,00 und 9999,99");
             }
         }
         public int Count { get; set; }
