@@ -75,6 +75,7 @@ namespace DesktopApp
 
             bArticleChange.IsEnabled = lbArtList.SelectedItems.Count == 1 ? true : false;
             bArticleDelete.IsEnabled = lbArtList.SelectedItems.Count > 0 ? true : false;
+
         }
         private void bAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -125,6 +126,7 @@ namespace DesktopApp
                     if (model.NewArticle != null)
                     {
                         model.NewArticle.Active = true;
+                        model.NewArticle.Count = 9;
                         model.NewArticle.Name = tbAddName.Text;
                         model.NewArticle.Description = tbAddDesc.Text;
                         aId = model.NewArticle.Insert();
@@ -141,10 +143,28 @@ namespace DesktopApp
                             model.SelArticlePicture.Insert();
                         }
                     }
+                    else
+                    {
+                        if (model != null)
+                        {
+                            model.SelArticlePicture = TestData.GetQuestionMark();
+                            if (model.SelArticlePicture != null)
+                            {
+                                model.SelArticlePicture.Article = Article.Get(aId);
+                                model.SelArticlePicture.Insert();
+                            }
+                        }
+                    }
 
                     tbAddName.Text = null;
                     tbAddDesc.Text = null;
                     tbAddPrice.Text = null;
+                    if (model != null)
+                    {
+                        model.SelArticle = null;
+                        model.SelArticlePicture = null;
+                        model.NewArticle = null;
+                    }
 
                     SetMessageLine(false, "Artikel erfolgreich gespeichert");
                     isExe = true;
@@ -300,6 +320,7 @@ namespace DesktopApp
                 tiArticle.IsSelected = true;
                 tiCustomer.IsEnabled = true;
                 tiOrder.IsEnabled = true;
+                tiPicture.IsEnabled = true;
             }
         }
         private void bDelete_Click(object sender, RoutedEventArgs e)
@@ -412,7 +433,6 @@ namespace DesktopApp
                     tbCustomerLastname.Text = c.Lastname;
                     tbCustomerEMail.Text = c.EMail;
                 }
-
             }
 
         }

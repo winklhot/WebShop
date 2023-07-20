@@ -55,7 +55,7 @@ namespace DesktopApp
         public ObservableCollection<Article> LArticle { get => _lAricle; set { _lAricle = value; OnPropertyChanged(nameof(LArticle)); } }
         public ObservableCollection<Customer> LCustomer { get => _lCustomer; set { _lCustomer = value; OnPropertyChanged(nameof(LCustomer)); } }
         public ObservableCollection<Order> LOrder { get => _lOrder; set { _lOrder = value; OnPropertyChanged(nameof(LOrder)); } }
-        public Customer? SelCustomer { get => _selCustomer; set { _selCustomer = value; OnPropertyChanged(nameof(SelCustomer)); if (SelCustomer != null) LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == SelStatus)); OnPropertyChanged(nameof(LCustomer)); } }
+        public Customer? SelCustomer { get => _selCustomer; set { _selCustomer = value; OnPropertyChanged(nameof(SelCustomer)); OnPropertyChanged(nameof(SelStatus)); SelStatus = _selStatus; if (SelCustomer != null) LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == SelStatus)); OnPropertyChanged(nameof(LCustomer)); } }
         public Order? SelOrder { get => _selOrder; set { _selOrder = value; OnPropertyChanged(nameof(SelOrder)); } }
         public Article? SelArticle
         {
@@ -90,6 +90,10 @@ namespace DesktopApp
                 {
                     LChangeStatus = SelStatus == Status.Warenkorb ? new ObservableCollection<Status>() { Status.Bestellt, Status.Storniert } : SelStatus == Status.Bestellt ? new ObservableCollection<Status>() { Status.Versendet, Status.Storniert } : null; LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == SelStatus));
                 }
+                OnPropertyChanged(nameof(SelStatus));
+                OnPropertyChanged(nameof(LStatus));
+                OnPropertyChanged(nameof(ChangedSelStatus));
+                OnPropertyChanged(nameof(LChangeStatus));
             }
         }
         public ObservableCollection<Status>? LChangeStatus
@@ -134,6 +138,9 @@ namespace DesktopApp
                     mw.bArticleAdd.Width *= factor;
                     mw.bArticleChange.Width = mw.bArticleAdd.Width;
                     mw.bArticleDelete.Width = mw.bArticleAdd.Width;
+                    mw.bArticleChange.FontSize *= factor;
+                    mw.bArticleDelete.FontSize *= factor;
+                    mw.bArticleAdd.FontSize *= factor;
                     mw.bSetBack.FontSize *= factor;
 
                     mw.bArticleAdd.Margin = new(mw.bArticleAdd.Margin.Left, mw.bArticleAdd.Margin.Top, mw.bArticleAdd.Margin.Right, mw.bArticleAdd.Margin.Bottom / factor);
@@ -265,10 +272,11 @@ namespace DesktopApp
         {
             LArticle = new ObservableCollection<Article>(Article.GetAll().Where(item => item.Active));
             LCustomer = new ObservableCollection<Customer>(Customer.GetAll());
-            SelCustomer = LCustomer[0];
-            LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == Status.Warenkorb));
+            //SelCustomer = LCustomer[0];
+            //LOrder = new ObservableCollection<Order>(Order.GetAllFromCustomer(SelCustomer.Id).FindAll(x => x.Status == Status.Warenkorb));
             LStatus = Enum.GetValues(typeof(Status)).Cast<Status>().ToList();
             SelStatus = Status.Warenkorb;
+        
         }
         public void DeLoadData()
         {

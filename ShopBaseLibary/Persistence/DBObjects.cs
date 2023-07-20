@@ -415,10 +415,11 @@ namespace Layer3Objects
                             using (SqliteTransaction t = con.BeginTransaction())
                             {
                                 sql += $"Status = '{o.Status}' where Id = {((Order)item).Id};";
-                                sql = "";
 
                                 DBAccess.ExecuteNonQuery(sql, con, t);
 
+                                sql = "";
+                                
                                 if (o.Status == Status.Warenkorb && o.Positions != null)
                                 {
                                     o.Positions.ForEach(p =>

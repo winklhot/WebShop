@@ -282,14 +282,18 @@ namespace ShopBase
                 // For all other article question mark
                 if (al != null)
                 {
-                    for (int i = data.Count; i < al.Count; i++)
+                    for (int i = data.Count - 1; i < al.Count; i++)
                     {
                         string? name = al != null && al[i] != null && al[i].Name != null ? al[i].Name : "";
-                        (new Picture($"{(name != null ? name.Replace(' ', '_').Replace(',', '_') : "noname")}.jpg", data[data.Count - 1], Article.Get(i))).Insert();
+                        (new Picture($"{(name != null ? name.Replace(' ', '_').Replace(',', '_') : "noname")}.jpg", data[data.Count - 1], Article.Get(i + 1))).Insert();
                     }
                 }
             }
 
+        }
+        public static Picture? GetQuestionMark()
+        {
+            return Picture.Get(10);
         }
 
 
